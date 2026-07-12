@@ -1,0 +1,25 @@
+{
+  "name": "task-manager",
+  "version": "1.0.0",
+  "description": "A task manager app to handle and manage tasks",
+  "private": true,
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently -n CLIENT,SERVER -c blue,green \"npm run client\" \"npm run server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sammern-stack/task-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sammern-stack/task-manager/issues"
+  },
+  "homepage": "https://github.com/sammern-stack/task-manager#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
