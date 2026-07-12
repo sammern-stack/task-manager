@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react(), babel({ presets: [reactCompilerPreset()] }), svgr()],
   resolve: {
     alias: {
-      "@/*": path.resolve(__dirname, "./src/*"),
+      "@": path.resolve(__dirname, "src"),
     },
   },
   css: {
@@ -18,7 +18,13 @@ export default defineConfig({
     },
     preprocessorOptions: {
       scss: {
-        additionalData: '@use "@/shared/styles/mixins" as *',
+        additionalData: (src: string, filename: string) => {
+          const normalized = filename.replace(/\\/g, "/");
+          const shouldExclude = normalized.includes("/shared/styles");
+
+          if (shouldExclude) return src;
+          return `@use "@/shared/styles/mixins" as *;\n${src}`;
+        },
       },
     },
   },
