@@ -7,7 +7,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: var(--primary-fs);
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
@@ -17,6 +17,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: var(--primary-ff);
 }
 
 #root {
