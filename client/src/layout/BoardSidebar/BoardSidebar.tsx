@@ -1,7 +1,6 @@
 import styles from "./BoardSidebar.module.scss";
 import { useThemeStore } from "@/shared/stores";
-import PageLogoDark from "@/assets/logo-dark.svg?react";
-import PageLogoLight from "@/assets/logo-light.svg?react";
+import { PageLogo } from "@/shared/components"
 import LightThemeIcon from "@/assets/icon-light-theme.svg?react";
 import DarkThemeIcon from "@/assets/icon-dark-theme.svg?react";
 import HideSidebarIcon from "@/assets/icon-hide-sidebar.svg?react";
@@ -16,7 +15,7 @@ export const BoardSidebar = () => {
   return (
     <div className={styles.boardSidebar}>
       <div className={styles.boardSidebar__logo}>
-        {theme === "light" ? <PageLogoDark /> : <PageLogoLight />}
+        <PageLogo />
       </div>
       <div className={styles.boardSidebar__boards}>
         <h2 className={styles.boardSidebar__boardsTitle}>
