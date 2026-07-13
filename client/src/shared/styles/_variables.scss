@@ -24,4 +24,10 @@
   // States
   --color-danger-500: #ea5555;
   --color-danger-300: #ff9898;
+
+  // TODO: move this styles after theme toggle is implemented
+  --primary-bg: var(--color-grey-200);
+  --secondary-bg: var(--color-white);
+
+  --primary-border: var(--color-grey-300);
 }
