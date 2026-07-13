@@ -1,0 +1,31 @@
+.pageLayout {
+  flex: 1;
+  display: grid;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main";
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: auto 1fr;
+  background: var(--primary-bg);
+  min-height: 0;
+
+  &__header {
+    grid-area: header;
+    background: var(--secondary-bg);
+    border-bottom: px-to-rem(1px) solid var(--primary-border);
+    padding: px-to-rem(24px);
+  }
+
+  &__sidebar {
+    grid-area: sidebar;
+    background: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border-right: px-to-rem(1px) solid var(--primary-border);
+  }
+
+  &__main {
+    grid-area: main;
+  }
+}
