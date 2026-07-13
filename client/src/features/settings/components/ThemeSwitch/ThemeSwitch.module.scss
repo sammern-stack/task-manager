@@ -1,0 +1,10 @@
+.themeSwitch {
+  padding: px-to-rem(12px);
+  margin: px-to-rem(24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: px-to-rem(20px);
+  background: var(--primary-bg);
+  color: var(--secondary-text);
+}
