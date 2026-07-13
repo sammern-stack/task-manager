@@ -1,10 +1,13 @@
 import styles from "./Loading.module.scss";
+import { PageLayout } from "@/layout";
 
 const LoadingPage = () => {
   return (
-    <div className={styles.loading}>
-      <p>Loading...</p>
-    </div>
+    <PageLayout className={styles.loading} header={<div>Loading...</div>}>
+      <div className={styles.loading__content}>
+        <p>Loading...</p>
+      </div>
+    </PageLayout>
   );
 };
 

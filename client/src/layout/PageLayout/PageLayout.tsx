@@ -14,10 +14,12 @@ export const PageLayout = ({
   children,
 }: PageLayoutProps) => {
   return (
-    <div className={`${styles.pageLayout} ${className}`}>
+    <div className={styles.pageLayout}>
       <aside className={styles.pageLayout__sidebar}>{sidebar}</aside>
       <header className={styles.pageLayout__header}>{header}</header>
-      <main className={styles.pageLayout__main}>{children}</main>
+      <main className={`${styles.pageLayout__main} ${className}`}>
+        {children}
+      </main>
     </div>
   );
 };
