@@ -4,4 +4,4 @@ export type BoardSchema = {
   name: string;
 } & Document;
 
-export type BoardCreateBody = Pick<BoardSchema, "name">;
+export type BoardCreateBody = Partial<Pick<BoardSchema, "name">>;

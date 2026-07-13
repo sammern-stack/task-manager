@@ -18,7 +18,7 @@ export const getBoards = asyncHandler(async (_req: Request, res: Response) => {
 export const createBoard = asyncHandler(
   async (req: Request<{}, {}, BoardCreateBody>, res: Response) => {
     const newBoard = await boardService.createNewBoard(req.body);
-    res.status(204).json({
+    res.status(201).json({
       ok: true,
       message: "Board created successfully",
       data: newBoard,

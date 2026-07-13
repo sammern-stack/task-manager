@@ -19,6 +19,5 @@ export const errorHandler = (
   res.status(500).json({
     ok: false,
     message: isProd ? "Something went wrong" : err.message,
-    stack: isProd ? undefined : err.stack,
   });
 };
