@@ -25,9 +25,24 @@
   --color-danger-500: #ea5555;
   --color-danger-300: #ff9898;
 
-  // TODO: move this styles after theme toggle is implemented
+  // Global colors
+  --secondary-text: var(--color-grey-600);
+}
+
+:root[data-theme="light"] {
   --primary-bg: var(--color-grey-200);
   --secondary-bg: var(--color-white);
 
+  --primary-text: var(--color-black);
+
   --primary-border: var(--color-grey-300);
+}
+
+:root[data-theme="dark"] {
+  --primary-bg: var(--color-grey-900);
+  --secondary-bg: var(--color-grey-800);
+
+  --primary-text: var(--color-white);
+
+  --primary-border: var(--color-grey-700);
 }
