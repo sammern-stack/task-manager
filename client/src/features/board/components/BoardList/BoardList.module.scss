@@ -29,9 +29,12 @@
       left: 0;
       width: 0%;
       height: 100%;
+      opacity: 0;
       background: var(--brand-color);
       border-radius: 0 100vw 100vw 0;
-      transition: width 0.3s ease-out;
+      transition:
+        width 0.3s ease-in-out,
+        opacity 0.3s ease-in-out;
       z-index: -1;
     }
 
@@ -42,9 +45,12 @@
       left: 0;
       width: 0%;
       height: 100%;
+      opacity: 0;
       background: var(--board-card-hover);
       border-radius: 0 100vw 100vw 0;
-      transition: width 0.3s ease-out;
+      transition:
+        width 0.3s ease-in-out,
+        opacity 0.3s ease-in-out;
       z-index: -1;
     }
 
@@ -52,6 +58,7 @@
       color: var(--color-primary-500);
 
       &::after {
+        opacity: 1;
         width: 100%;
       }
     }
@@ -60,8 +67,13 @@
       color: var(--color-white);
 
       &::before {
+        opacity: 1;
         width: 100%;
       }
+    }
+
+    &--createBtn {
+      color: var(--color-primary-500);
     }
   }
 }

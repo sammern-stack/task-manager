@@ -30,6 +30,7 @@ export const BoardListCard = (props: BoardListCardProps) => {
 
   const boardCardClasses = [
     styles.boardList__card,
+    props.variant === "createBtn" ? styles["boardList__card--createBtn"] : "",
     props.variant === "board" && openBoardId === props.board._id
       ? styles["boardList__card--active"]
       : "",
