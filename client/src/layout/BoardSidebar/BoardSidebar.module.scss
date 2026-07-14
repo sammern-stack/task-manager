@@ -9,17 +9,6 @@
     padding: px-to-rem(24px);
   }
 
-  &__boards {
-    flex: 1;
-    color: var(--secondary-text);
-  }
-
-  &__boardsTitle {
-    font-size: px-to-rem(12px);
-    letter-spacing: px-to-rem(2.4px);
-    padding: px-to-rem(12px) px-to-rem(24px);
-  }
-
   &__hideBtn {
     display: flex;
     align-items: center;
