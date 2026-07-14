@@ -3,5 +3,6 @@ declare namespace NodeJS {
     PORT: string;
     NODE_ENV: "development" | "production";
     MONGODB_URI: string;
+    CLIENT_URL: string;
   }
 }
