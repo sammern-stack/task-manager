@@ -30,6 +30,8 @@
 }
 
 :root[data-theme="light"] {
+  --brand-color: var(--color-primary-300);
+
   --primary-bg: var(--color-grey-200);
   --secondary-bg: var(--color-white);
 
@@ -39,6 +41,8 @@
 }
 
 :root[data-theme="dark"] {
+  --brand-color: var(--color-primary-500);
+
   --primary-bg: var(--color-grey-900);
   --secondary-bg: var(--color-grey-800);
 

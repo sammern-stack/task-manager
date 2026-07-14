@@ -14,5 +14,9 @@
     align-items: center;
     gap: px-to-rem(16px);
     padding: px-to-rem(12px) px-to-rem(24px);
+
+    &--active {
+      background: var(--brand-color);
+    }
   }
 }
