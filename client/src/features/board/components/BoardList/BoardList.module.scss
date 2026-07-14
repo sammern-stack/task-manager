@@ -22,7 +22,7 @@
     isolation: isolate;
     cursor: pointer;
 
-    &:before {
+    &::before {
       content: "";
       position: absolute;
       top: 0;
@@ -35,9 +35,25 @@
       z-index: -1;
     }
 
-    &:hover:not(&--active) {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
       background: var(--board-card-hover);
+      border-radius: 0 100vw 100vw 0;
+      transition: width 0.3s ease-out;
+      z-index: -1;
+    }
+
+    &:hover:not(&--active) {
       color: var(--color-primary-500);
+
+      &::after {
+        width: 100%;
+      }
     }
 
     &--active {
