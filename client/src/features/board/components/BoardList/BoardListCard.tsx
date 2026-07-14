@@ -1,6 +1,7 @@
 import styles from "./BoardList.module.scss";
 import { useEffect } from "react";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
+import { useDialogStore } from "@/shared/stores/dialogStore";
 import { useBoards } from "../../hooks/useBoards";
 import BoardIcon from "@/assets/icon-board.svg?react";
 import type { BoardSchema } from "@/shared/types/board.types";
@@ -13,6 +14,7 @@ export const BoardListCard = (props: BoardListCardProps) => {
   const { data: boards } = useBoards();
   const openBoardId = useOpenBoardStore((s) => s.openBoardId);
   const setOpenBoardId = useOpenBoardStore((s) => s.setOpenBoardId);
+  const openDialog = useDialogStore((s) => s.openDialog);
 
   useEffect(() => {
     if (!boards?.data) return;
@@ -23,6 +25,7 @@ export const BoardListCard = (props: BoardListCardProps) => {
   const handleSelectBoard = () => {
     if (props.variant === "board") return setOpenBoardId(props.board._id);
     // Logic to create new board
+    openDialog("createBoard");
   };
 
   const cardLabel =
