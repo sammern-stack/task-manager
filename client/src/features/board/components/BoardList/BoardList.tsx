@@ -16,8 +16,9 @@ export const BoardList = () => {
         <span className={styles.boardList__count}>({boardCount})</span>
       </h2>
       {boardsList?.map((board) => (
-        <BoardListCard board={board} />
+        <BoardListCard variant="board" board={board} />
       ))}
+      <BoardListCard variant="createBtn" />
     </div>
   );
 };

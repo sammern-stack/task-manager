@@ -10,13 +10,42 @@
   }
 
   &__card {
+    position: relative;
     display: flex;
     align-items: center;
+    font-size: px-to-rem(15px);
+    font-weight: 700;
     gap: px-to-rem(16px);
     padding: px-to-rem(12px) px-to-rem(24px);
+    margin-right: px-to-rem(24px);
+    border-radius: 0 100vw 100vw 0;
+    isolation: isolate;
+    cursor: pointer;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: var(--brand-color);
+      border-radius: 0 100vw 100vw 0;
+      transition: width 0.3s ease-out;
+      z-index: -1;
+    }
+
+    &:hover:not(&--active) {
+      background: var(--board-card-hover);
+      color: var(--color-primary-500);
+    }
 
     &--active {
-      background: var(--brand-color);
+      color: var(--color-white);
+
+      &::before {
+        width: 100%;
+      }
     }
   }
 }

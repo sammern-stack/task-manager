@@ -5,11 +5,11 @@ import { useBoards } from "../../hooks/useBoards";
 import BoardIcon from "@/assets/icon-board.svg?react";
 import type { BoardSchema } from "@/shared/types/board.types";
 
-interface BoardListCardProps {
-  board: BoardSchema;
-}
+type BoardListCardProps =
+  | { variant: "board"; board: BoardSchema }
+  | { variant: "createBtn" };
 
-export const BoardListCard = ({ board }: BoardListCardProps) => {
+export const BoardListCard = (props: BoardListCardProps) => {
   const { data: boards } = useBoards();
   const openBoardId = useOpenBoardStore((s) => s.openBoardId);
   const setOpenBoardId = useOpenBoardStore((s) => s.setOpenBoardId);
@@ -20,21 +20,29 @@ export const BoardListCard = ({ board }: BoardListCardProps) => {
     setOpenBoardId(boards.data[0]._id);
   }, [boards, openBoardId, setOpenBoardId]);
 
-  const handleSelectBoard = (boardId: string) => setOpenBoardId(boardId);
+  const handleSelectBoard = () => {
+    if (props.variant === "board") return setOpenBoardId(props.board._id);
+    // Logic to create new board
+  };
+
+  const cardLabel =
+    props.variant === "board" ? props.board.name : "+ Create New Board";
 
   const boardCardClasses = [
     styles.boardList__card,
-    openBoardId === board._id ? styles["boardList__card--active"] : "",
+    props.variant === "board" && openBoardId === props.board._id
+      ? styles["boardList__card--active"]
+      : "",
   ].join(" ");
 
   return (
     <div
-      key={board._id}
+      key={props.variant === "board" ? props.board._id : "createBtn"}
       className={boardCardClasses}
-      onClick={() => handleSelectBoard(board._id)}
+      onClick={handleSelectBoard}
     >
       <BoardIcon />
-      <span>{board.name}</span>
+      <span>{cardLabel}</span>
     </div>
   );
 };
