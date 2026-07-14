@@ -1,0 +1,17 @@
+import axios from "@/shared/lib/axios";
+import { requestHandler } from "@/shared/utils/requestHandler";
+import type { BoardSchema, BoardCreateBody } from "@/shared/types/board.types";
+
+const BASE_URL = "/api/boards";
+
+export const boardApi = {
+  getAll: () =>
+    requestHandler<BoardSchema[]>(() =>
+      axios({ url: BASE_URL, method: "GET" }),
+    )(),
+
+  create: (board: BoardCreateBody) =>
+    requestHandler<BoardSchema>(() =>
+      axios({ url: BASE_URL, method: "POST", data: board }),
+    )(),
+};
