@@ -16,7 +16,10 @@
   &__boardNameLabel {
     display: flex;
     flex-direction: column;
-    gap: px-to-rem(12px);
+
+    > input {
+      margin: 12px 0 4px 0;
+    }
   }
 
   &__boardNameLabelText {
@@ -30,6 +33,11 @@
     padding: px-to-rem(12px);
     color: var(--secondary-text);
     border-radius: px-to-rem(6px);
+  }
+
+  &__helperText {
+    font-size: 12px;
+    color: var(--secondary-text);
   }
 
   &__submit {

@@ -43,6 +43,9 @@ export const CreateBoardDialog = () => {
             autoComplete="off"
             className={styles.createBoardDialog__input}
           />
+          <span className={styles.createBoardDialog__helperText}>
+            Optional - defaults to 'Untitled Board' if empty
+          </span>
         </label>
 
         <button
