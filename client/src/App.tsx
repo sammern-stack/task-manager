@@ -1,6 +1,6 @@
 import { Suspense, lazy, useEffect } from "react";
 import { Routes, Route } from "react-router";
-import { Dialog } from "@/shared/components";
+import { Dialog, Toast } from "@/shared/components";
 import { useThemeStore } from "@/shared/stores";
 
 const HomePage = lazy(() => import("@/pages/Home/Home"));
@@ -21,6 +21,7 @@ const App = () => {
         <Route path="*" element={<NoteFoundPage />} />
       </Routes>
       <Dialog />
+      <Toast />
     </Suspense>
   );
 };

@@ -1,6 +1,6 @@
 import styles from "./CreateBoardDialog.module.scss";
 import { useState } from "react";
-import { useDialogStore } from "@/shared/stores";
+import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
 import { useCreateBoard } from "../../hooks/useBoards";
 import type {
@@ -15,6 +15,7 @@ export const CreateBoardDialog = () => {
   const setOpenBoardId = useOpenBoardStore((s) => s.setOpenBoardId);
   const setOpenBoardName = useOpenBoardStore((s) => s.setOpenBoardName);
   const closeDialog = useDialogStore((s) => s.closeDialog);
+  const addToast = useToastStore((s) => s.addToast);
 
   const handleFormSubmit = (e: FormSubmitEvent) => {
     e.preventDefault();
@@ -25,6 +26,10 @@ export const CreateBoardDialog = () => {
           setOpenBoardId(newBoard.data._id);
           setOpenBoardName(newBoard.data.name);
           closeDialog();
+          addToast({
+            message: newBoard.message,
+            type: "success",
+          });
         },
         onError: (error) => setErrorMessage(error.message),
       },
