@@ -25,3 +25,14 @@ export const createBoard = asyncHandler(
     });
   },
 );
+
+export const deleteBoard = asyncHandler(
+  async (req: Request<{ id?: string }>, res: Response) => {
+    const board = await boardService.deleteBoard(req.params.id!);
+    res.status(200).json({
+      ok: true,
+      message: `Board: ${board.name} deleted successfully`,
+      data: board,
+    });
+  },
+);

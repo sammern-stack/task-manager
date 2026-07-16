@@ -1,5 +1,6 @@
 import Board from "../models/Board.js";
-import { ConflictError } from "@/shared/utils/customErrors.js";
+import { ConflictError, NotFoundError } from "@/shared/utils/customErrors.js";
+import { searchDocument } from "@/shared/utils/searchDocument.js";
 import type { BoardCreateBody } from "../types/board.types.js";
 
 export const getAllBoards = async () => {
@@ -18,4 +19,11 @@ export const createNewBoard = async (board: BoardCreateBody) => {
 
   const newBoard = await Board.create(board);
   return newBoard;
+};
+
+export const deleteBoard = async (boardId: string) => {
+  const board = await searchDocument(boardId, Board);
+  if (!board) throw new NotFoundError("board");
+  await Board.findByIdAndDelete(board._id);
+  return board;
 };

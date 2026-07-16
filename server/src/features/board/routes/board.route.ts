@@ -8,4 +8,6 @@ router
   .get(boardController.getBoards)
   .post(boardController.createBoard);
 
+router.route("/:id").delete(boardController.deleteBoard);
+
 export default router;
