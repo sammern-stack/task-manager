@@ -1,3 +1,7 @@
 @function px-to-rem($px, $base: var(--primary-fs)) {
   @return calc(($px / $base) * 1rem);
 }
+
+@mixin rounded-corners {
+  border-radius: 100vw;
+}

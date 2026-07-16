@@ -1,0 +1,56 @@
+$primary-bg: #635fc7;
+$primary-bg-hover: #a8a4ff;
+$primary-color: #ffffff;
+$destructive-bg: #ea5555;
+$destructive-bg-hover: #ff9898;
+
+.button {
+  @include rounded-corners;
+  padding: 10px 20px;
+
+  &--primaryLarge {
+    font-size: 15px;
+    line-height: 19px;
+    font-weight: 700;
+    background: $primary-bg;
+    color: $primary-color;
+
+    &:hover {
+      background: $primary-bg-hover;
+    }
+  }
+
+  &--primarySmall {
+    font-size: 13px;
+    line-height: 23px;
+    font-weight: 700;
+    background: $primary-bg;
+    color: $primary-color;
+
+    &:hover {
+      background: $primary-bg-hover;
+    }
+  }
+
+  &--secondary {
+    font-size: 13px;
+    line-height: 23px;
+    font-weight: 700;
+    background: lighten($color: $primary-bg, $amount: 10%);
+
+    &:hover {
+      background: lighten($color: $primary-bg, $amount: 25%);
+    }
+  }
+
+  &--destructive {
+    font-size: 13px;
+    line-height: 23px;
+    font-weight: 700;
+    background: $destructive-bg;
+
+    &:hover {
+      background: $destructive-bg-hover;
+    }
+  }
+}

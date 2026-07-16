@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
 import { useCreateBoard } from "../../hooks/useBoards";
+import { Button } from "@/shared/components";
 import type {
   FormSubmitEvent,
   InputChangeEvent,
@@ -78,9 +79,9 @@ export const CreateBoardDialog = () => {
           </span>
         </label>
 
-        <button type="submit" className={styles.createBoardDialog__submit}>
+        <Button type="submit" variant="primarySmall">
           Create New Board
-        </button>
+        </Button>
       </form>
     </div>
   );
