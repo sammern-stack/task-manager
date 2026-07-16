@@ -1,21 +1,37 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+type OpenBoard = {
+  id: string | null;
+  name: string;
+};
+
 interface OpenBoardStore {
-  openBoardId: string | null;
+  openBoard: OpenBoard;
   setOpenBoardId: (boardId: string) => void;
+  setOpenBoardName: (boardName: string) => void;
 }
 
 export const useOpenBoardStore = create<OpenBoardStore>()(
   persist(
     (set) => ({
-      openBoardId: null,
-      setOpenBoardId: (boardId) => set({ openBoardId: boardId }),
+      openBoard: {
+        id: null,
+        name: "",
+      },
+
+      setOpenBoardId: (boardId) => {
+        set((s) => ({ openBoard: { ...s.openBoard, id: boardId } }));
+      },
+
+      setOpenBoardName: (boardName) => {
+        set((s) => ({ openBoard: { ...s.openBoard, name: boardName } }));
+      },
     }),
     {
       name: "openBoard",
       partialize: (s) => ({
-        openBoardId: s.openBoardId,
+        openBoard: s.openBoard,
       }),
     },
   ),

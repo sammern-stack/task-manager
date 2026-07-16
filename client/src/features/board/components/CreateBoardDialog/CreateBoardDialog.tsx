@@ -1,22 +1,32 @@
 import styles from "./CreateBoardDialog.module.scss";
 import { useState } from "react";
 import { useDialogStore } from "@/shared/stores";
+import { useOpenBoardStore } from "../../stores/openBoardStore";
 import { useCreateBoard } from "../../hooks/useBoards";
 import type { FormSubmitEvent } from "@/shared/types/react.types";
 
 export const CreateBoardDialog = () => {
   const { mutate: createBoard } = useCreateBoard();
   const [boardName, setBoardName] = useState("");
+  const setOpenBoardId = useOpenBoardStore((s) => s.setOpenBoardId);
+  const setOpenBoardName = useOpenBoardStore((s) => s.setOpenBoardName);
   const closeDialog = useDialogStore((s) => s.closeDialog);
 
   const handleFormSubmit = (e: FormSubmitEvent) => {
     e.preventDefault();
-    handleNewBoard();
-  };
-
-  const handleNewBoard = () => {
-    createBoard({ name: boardName });
-    closeDialog();
+    createBoard(
+      { name: boardName },
+      {
+        onSuccess: (newBoard) => {
+          setOpenBoardId(newBoard.data._id);
+          setOpenBoardName(newBoard.data.name);
+          closeDialog();
+        },
+        onError: (error) => {
+          console.log(error.message);
+        },
+      },
+    );
   };
 
   return (
@@ -48,11 +58,7 @@ export const CreateBoardDialog = () => {
           </span>
         </label>
 
-        <button
-          type="submit"
-          className={styles.createBoardDialog__submit}
-          onClick={handleNewBoard}
-        >
+        <button type="submit" className={styles.createBoardDialog__submit}>
           Create New Board
         </button>
       </form>
