@@ -3,11 +3,15 @@ import { useState } from "react";
 import { useDialogStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
 import { useCreateBoard } from "../../hooks/useBoards";
-import type { FormSubmitEvent } from "@/shared/types/react.types";
+import type {
+  FormSubmitEvent,
+  InputChangeEvent,
+} from "@/shared/types/react.types";
 
 export const CreateBoardDialog = () => {
   const { mutate: createBoard } = useCreateBoard();
-  const [boardName, setBoardName] = useState("");
+  const [newBoardName, setNewBoardName] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const setOpenBoardId = useOpenBoardStore((s) => s.setOpenBoardId);
   const setOpenBoardName = useOpenBoardStore((s) => s.setOpenBoardName);
   const closeDialog = useDialogStore((s) => s.closeDialog);
@@ -15,18 +19,21 @@ export const CreateBoardDialog = () => {
   const handleFormSubmit = (e: FormSubmitEvent) => {
     e.preventDefault();
     createBoard(
-      { name: boardName },
+      { name: newBoardName },
       {
         onSuccess: (newBoard) => {
           setOpenBoardId(newBoard.data._id);
           setOpenBoardName(newBoard.data.name);
           closeDialog();
         },
-        onError: (error) => {
-          console.log(error.message);
-        },
+        onError: (error) => setErrorMessage(error.message),
       },
     );
+  };
+
+  const handleInputChange = (e: InputChangeEvent) => {
+    if (errorMessage) setErrorMessage(null);
+    setNewBoardName(e.target.value);
   };
 
   return (
@@ -43,15 +50,23 @@ export const CreateBoardDialog = () => {
           <span className={styles.createBoardDialog__boardNameLabelText}>
             Board Name
           </span>
+          {errorMessage && (
+            <span className={styles.createBoardDialog__nameError}>
+              {errorMessage}
+            </span>
+          )}
           <input
             type="text"
             id="boardName"
             name="boardName"
-            value={boardName}
-            onChange={(e) => setBoardName(e.target.value)}
+            value={newBoardName}
+            onChange={handleInputChange}
             placeholder="e.g. Web Design"
             autoComplete="off"
-            className={styles.createBoardDialog__input}
+            className={[
+              styles.createBoardDialog__input,
+              errorMessage ? styles["createBoardDialog__input--error"] : "",
+            ].join(" ")}
           />
           <span className={styles.createBoardDialog__helperText}>
             Optional - defaults to 'Untitled Board' if empty
