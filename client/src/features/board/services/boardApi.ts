@@ -14,4 +14,9 @@ export const boardApi = {
     requestHandler<BoardSchema>(() =>
       axios({ url: BASE_URL, method: "POST", data: board }),
     )(),
+
+  delete: (boardId: string) =>
+    requestHandler<BoardSchema>(() =>
+      axios({ url: `${BASE_URL}/${boardId}`, method: "DELETE" }),
+    )(),
 };
