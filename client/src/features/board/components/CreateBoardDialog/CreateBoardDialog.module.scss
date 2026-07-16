@@ -1,0 +1,43 @@
+.createBoardDialog {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__title {
+    font-size: 18px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__boardNameLabel {
+    display: flex;
+    flex-direction: column;
+    gap: px-to-rem(12px);
+  }
+
+  &__boardNameLabelText {
+    font-weight: 700;
+  }
+
+  &__input {
+    border: 1px solid #828FA3;
+    background: transparent;
+    outline: none;
+    padding: px-to-rem(12px);
+    color: var(--secondary-text);
+    border-radius: px-to-rem(6px);
+  }
+
+  &__submit {
+    width: 100%;
+    font-size: 12px;
+    color: var(--primary-text);
+    background: var(--brand-color);
+    padding: 10px 20px;
+    border-radius: 100vw;
+  }
+}
