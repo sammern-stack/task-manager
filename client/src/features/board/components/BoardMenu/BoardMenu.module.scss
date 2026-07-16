@@ -1,0 +1,22 @@
+.boardMenu {
+  display: flex;
+  flex-direction: column;
+
+  &__action {
+    color: var(--secondary-text);
+    padding: 8px 0;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--primary-text);
+    }
+
+    &:last-child {
+      color: var(--color-danger-500);
+
+      &:hover {
+        color: var(--color-danger-300);
+      }
+    }
+  }
+}
