@@ -13,7 +13,7 @@ export const BoardHeader = () => {
         className={styles.boardHeader__menuDropdown}
         toggle={boardMenuToggle}
       >
-        <BoardMenu />
+        {(closeMenu) => <BoardMenu closeMenu={closeMenu} />}
       </Dropdown>
     </div>
   );

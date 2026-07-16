@@ -3,7 +3,7 @@ import { useToastStore } from "@/shared/stores/toastStore";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
 import { useDeleteBoard } from "../../hooks/useBoards";
 
-export const BoardMenu = () => {
+export const BoardMenu = ({ closeMenu }: { closeMenu: () => void }) => {
   const { mutate: deleteBoard } = useDeleteBoard();
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const addToast = useToastStore((s) => s.addToast);
@@ -20,6 +20,7 @@ export const BoardMenu = () => {
           message: data.message,
           type: "error",
         });
+        closeMenu();
       },
     });
   };

@@ -4,14 +4,15 @@ import { useEffect, useRef, useState } from "react";
 interface DropdownProps {
   className: string;
   toggle: React.ReactElement;
-  children: (false | React.ReactElement)[] | React.ReactElement;
+  children: (closeMenu: () => void) => React.ReactNode;
 }
 
-export const Dropdown = (props: DropdownProps) => {
+export const Dropdown = ({ className, toggle, children }: DropdownProps) => {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [openMenu, setOpenMenu] = useState(false);
 
   const toggleMenu = () => setOpenMenu((prev) => (prev ? false : true));
+  const closeMenu = () => setOpenMenu(false);
 
   useEffect(() => {
     const closeMenu = (event: MouseEvent) => {
@@ -28,14 +29,14 @@ export const Dropdown = (props: DropdownProps) => {
   }, [openMenu]);
 
   return (
-    <div className={`${styles.dropdownMenu} ${props.className}`} ref={menuRef}>
+    <div className={`${styles.dropdownMenu} ${className}`} ref={menuRef}>
       <button data-dropdown="toggle" onClick={toggleMenu}>
-        {props.toggle}
+        {toggle}
       </button>
 
       {openMenu && (
         <div data-dropdown="menu" className={styles.dropdownMenu__menu}>
-          {props.children}
+          {children(closeMenu)}
         </div>
       )}
     </div>
