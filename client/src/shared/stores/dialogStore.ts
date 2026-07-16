@@ -1,15 +1,23 @@
 import { create } from "zustand";
 
+type Dialog = {
+  isOpen: boolean;
+  type: DialogType;
+  payload: DialogPayload;
+};
+
 type DialogType = "createBoard" | null;
+
 type DialogPayload = Record<string, unknown> | null;
 
-interface DialogStore {
-  dialog: {
-    isOpen: boolean;
-    type: DialogType;
-    payload: DialogPayload;
-  };
+const DEFAULT_DIALOG = {
+  isOpen: false,
+  type: null,
+  payload: null,
+};
 
+interface DialogStore {
+  dialog: Dialog;
   openDialog: (
     type: Exclude<DialogType, null>,
     payload?: DialogPayload,
@@ -18,19 +26,10 @@ interface DialogStore {
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
-  dialog: {
-    isOpen: false,
-    type: null,
-    payload: null,
-  },
-
+  dialog: DEFAULT_DIALOG,
   openDialog: (type, payload = null) =>
     set(() => ({
       dialog: { isOpen: true, type, payload },
     })),
-
-  closeDialog: () =>
-    set(() => ({
-      dialog: { isOpen: false, type: null, payload: null },
-    })),
+  closeDialog: () => set(() => ({ dialog: DEFAULT_DIALOG })),
 }));
