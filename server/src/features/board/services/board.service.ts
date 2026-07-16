@@ -1,4 +1,5 @@
 import Board from "../models/Board.js";
+import { ConflictError } from "@/shared/utils/customErrors.js";
 import type { BoardCreateBody } from "../types/board.types.js";
 
 export const getAllBoards = async () => {
@@ -12,7 +13,7 @@ export const createNewBoard = async (board: BoardCreateBody) => {
 
   const boardExists = await Board.findOne({ name: board.name });
   if (boardExists) {
-    throw new Error("Cant create. Board with same name already exist");
+    throw new ConflictError("Cant create. Board with same name already exist");
   }
 
   const newBoard = await Board.create(board);

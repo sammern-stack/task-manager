@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
+import { AppError } from "@/shared/utils/customErrors.js";
 import { NODE_ENV } from "@/config/env.js";
 
 export const errorHandler = (
@@ -12,11 +13,12 @@ export const errorHandler = (
   if (res.headersSent) return next(error);
 
   const isProd = NODE_ENV === "production";
-  const err = error instanceof Error ? error : new Error("Unknown Error");
+  const err = error instanceof AppError ? error : new Error("Unknown Error");
+  const statusCode = err instanceof AppError ? err.statusCode : 500;
 
   console.log(`Unexpected Error: ${err}`);
 
-  res.status(500).json({
+  res.status(statusCode).json({
     ok: false,
     message: isProd ? "Something went wrong" : err.message,
   });
