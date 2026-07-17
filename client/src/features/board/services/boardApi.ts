@@ -14,6 +14,11 @@ export const boardApi = {
       axios({ url: BASE_URL, method: "GET" }),
     )(),
 
+  getOne: (boardId: string) =>
+    requestHandler<BoardSchema>(() =>
+      axios({ url: `${BASE_URL}/${boardId}`, method: "GET" }),
+    )(),
+
   create: (board: BoardCreateBody) =>
     requestHandler<BoardSchema>(() =>
       axios({ url: BASE_URL, method: "POST", data: board }),

@@ -15,6 +15,13 @@ export const useBoards = () => {
   });
 };
 
+export const useBoard = (boardId: string) => {
+  return useQuery({
+    queryKey: [BOARD_KEY, boardId],
+    queryFn: () => boardApi.getOne(boardId),
+  });
+};
+
 export const useCreateBoard = () => {
   const queryClient = useQueryClient();
 
