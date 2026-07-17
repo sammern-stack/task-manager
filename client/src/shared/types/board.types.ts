@@ -6,4 +6,4 @@ export type BoardSchema = {
 };
 
 export type BoardCreateBody = Partial<Pick<BoardSchema, "name">>;
-// export type BoardCreateBody = Pick<BoardSchema, "name">;
+export type BoardUpdateBody = Partial<Pick<BoardSchema, "name">>;
