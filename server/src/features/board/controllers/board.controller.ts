@@ -1,22 +1,31 @@
 import type { Request, Response } from "express";
 import * as boardService from "../services/board.service.js";
 import { asyncHandler } from "@/shared/utils/asyncHandler.js";
-import type { BoardCreateBody, BoardUpdateBody } from "../types/board.types.js";
 
-export const getBoards = asyncHandler(async (_req: Request, res: Response) => {
-  const boards = await boardService.getAllBoards();
-  res.status(200).json({
-    ok: true,
-    message: "Board fetched successfully",
-    data: boards,
-    meta: {
-      length: boards.length,
-    },
-  });
-});
+import type { BoardCreateBody, BoardUpdateBody } from "../types/board.types.js";
+import type {
+  GetAllRequest,
+  CreateRequest,
+  DeleteRequest,
+  UpdateRequest,
+} from "@/shared/types/express.types.js";
+
+export const getBoards = asyncHandler(
+  async (_req: GetAllRequest, res: Response) => {
+    const boards = await boardService.getAllBoards();
+    res.status(200).json({
+      ok: true,
+      message: "Board fetched successfully",
+      data: boards,
+      meta: {
+        length: boards.length,
+      },
+    });
+  },
+);
 
 export const createBoard = asyncHandler(
-  async (req: Request<{}, {}, BoardCreateBody>, res: Response) => {
+  async (req: CreateRequest<BoardCreateBody>, res: Response) => {
     const newBoard = await boardService.createNewBoard(req.body);
     res.status(201).json({
       ok: true,
@@ -27,7 +36,7 @@ export const createBoard = asyncHandler(
 );
 
 export const deleteBoard = asyncHandler(
-  async (req: Request<{ id?: string }>, res: Response) => {
+  async (req: DeleteRequest, res: Response) => {
     const board = await boardService.deleteBoard(req.params.id!);
     res.status(200).json({
       ok: true,
@@ -38,7 +47,7 @@ export const deleteBoard = asyncHandler(
 );
 
 export const updateBoard = asyncHandler(
-  async (req: Request<{ id?: string }, {}, BoardUpdateBody>, res: Response) => {
+  async (req: UpdateRequest<BoardUpdateBody>, res: Response) => {
     const board = await boardService.updateBoard(req.params.id!, req.body);
     res.status(200).json({
       ok: true,
