@@ -2,13 +2,15 @@ import styles from "./BoardMenu.module.scss";
 import { useDialogStore } from "@/shared/stores";
 
 export const BoardMenu = ({ closeMenu }: { closeMenu: () => void }) => {
+  const openDialog = useDialogStore.getState().openDialog;
+
   const handleEditBoard = () => {
-    alert("Edit Board clicked");
-    // Logic to handle editing a board
+    openDialog("updateBoard");
+    closeMenu();
   };
 
   const handleDeleteBoard = async () => {
-    useDialogStore.getState().openDialog("deleteBoard");
+    openDialog("deleteBoard");
     closeMenu();
   };
 

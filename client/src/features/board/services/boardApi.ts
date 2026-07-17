@@ -31,6 +31,6 @@ export const boardApi = {
 
   update: (boardId: string, updates: BoardUpdateBody) =>
     requestHandler<BoardSchema>(() =>
-      axios({ url: `${BASE_URL}/${boardId}`, method: "POST", data: updates }),
+      axios({ url: `${BASE_URL}/${boardId}`, method: "PUT", data: updates }),
     )(),
 };
