@@ -10,6 +10,7 @@ router
 
 router
   .route("/:id")
+  .get(boardController.getBoard)
   .delete(boardController.deleteBoard)
   .put(boardController.updateBoard);
 

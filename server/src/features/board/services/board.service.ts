@@ -13,6 +13,12 @@ export const getAllBoards = async () => {
   return boards;
 };
 
+export const getBoardById = async (boardId: string) => {
+  const board = await searchDocument(boardId, Board);
+  if (!board) throw new NotFoundError("board");
+  return board;
+}
+
 export const createNewBoard = async (board: BoardCreateBody) => {
   // Create board with the default name
   if (!board.name) return await Board.create({});

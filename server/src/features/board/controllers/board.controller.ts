@@ -8,6 +8,7 @@ import type {
   CreateRequest,
   DeleteRequest,
   UpdateRequest,
+  GetOneRequest,
 } from "@/shared/types/express.types.js";
 
 export const getBoards = asyncHandler(
@@ -15,11 +16,22 @@ export const getBoards = asyncHandler(
     const boards = await boardService.getAllBoards();
     res.status(200).json({
       ok: true,
-      message: "Board fetched successfully",
+      message: "Boards fetched successfully",
       data: boards,
       meta: {
         length: boards.length,
       },
+    });
+  },
+);
+
+export const getBoard = asyncHandler(
+  async (req: GetOneRequest, res: Response) => {
+    const board = await boardService.getBoardById(req.params.id!);
+    res.status(200).json({
+      ok: true,
+      message: "Board fetched successfully",
+      data: board,
     });
   },
 );
