@@ -1,7 +1,8 @@
 import Board from "../models/Board.js";
+import { queryOptions } from "@/config/mongoose.js";
 import { ConflictError, NotFoundError } from "@/shared/utils/customErrors.js";
 import { searchDocument } from "@/shared/utils/searchDocument.js";
-import type { BoardCreateBody } from "../types/board.types.js";
+import type { BoardCreateBody, BoardUpdateBody } from "../types/board.types.js";
 
 export const getAllBoards = async () => {
   const boards = await Board.find();
@@ -26,4 +27,18 @@ export const deleteBoard = async (boardId: string) => {
   if (!board) throw new NotFoundError("board");
   await Board.findByIdAndDelete(board._id);
   return board;
+};
+
+export const updateBoard = async (
+  boardId: string,
+  updates: BoardUpdateBody,
+) => {
+  const board = await searchDocument(boardId, Board);
+  if (!board) throw new NotFoundError("board");
+  const updatedBoard = await Board.findByIdAndUpdate(
+    boardId,
+    updates,
+    queryOptions,
+  );
+  return updatedBoard;
 };
