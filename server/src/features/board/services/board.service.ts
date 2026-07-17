@@ -1,6 +1,10 @@
 import Board from "../models/Board.js";
 import { queryOptions } from "@/config/mongoose.js";
-import { ConflictError, NotFoundError } from "@/shared/utils/customErrors.js";
+import {
+  AppError,
+  ConflictError,
+  NotFoundError,
+} from "@/shared/utils/customErrors.js";
 import { searchDocument } from "@/shared/utils/searchDocument.js";
 import type { BoardCreateBody, BoardUpdateBody } from "../types/board.types.js";
 
@@ -40,5 +44,6 @@ export const updateBoard = async (
     updates,
     queryOptions,
   );
+  if (!updatedBoard) throw new AppError("Couldn't update board", 400);
   return updatedBoard;
 };

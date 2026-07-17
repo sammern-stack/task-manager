@@ -8,6 +8,9 @@ router
   .get(boardController.getBoards)
   .post(boardController.createBoard);
 
-router.route("/:id").delete(boardController.deleteBoard);
+router
+  .route("/:id")
+  .delete(boardController.deleteBoard)
+  .put(boardController.updateBoard);
 
 export default router;
