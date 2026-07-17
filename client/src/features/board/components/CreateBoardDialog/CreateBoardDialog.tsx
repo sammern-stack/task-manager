@@ -13,8 +13,7 @@ export const CreateBoardDialog = () => {
   const { mutate: createBoard } = useCreateBoard();
   const [newBoardName, setNewBoardName] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const setOpenBoardId = useOpenBoardStore((s) => s.setOpenBoardId);
-  const setOpenBoardName = useOpenBoardStore((s) => s.setOpenBoardName);
+  const setOpenBoard = useOpenBoardStore((s) => s.setOpenBoard);
   const closeDialog = useDialogStore((s) => s.closeDialog);
   const addToast = useToastStore((s) => s.addToast);
 
@@ -24,8 +23,7 @@ export const CreateBoardDialog = () => {
       { name: newBoardName },
       {
         onSuccess: ({ message, data }) => {
-          setOpenBoardId(data._id);
-          setOpenBoardName(data.name);
+          setOpenBoard({ id: data._id, name: data.name });
           closeDialog();
           addToast({ message, type: "success" });
         },

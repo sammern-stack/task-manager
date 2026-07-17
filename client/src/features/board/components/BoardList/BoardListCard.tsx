@@ -14,7 +14,7 @@ export const BoardListCard = (props: BoardListCardProps) => {
   const { data: boards } = useBoards();
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const setOpenBoardId = useOpenBoardStore((s) => s.setOpenBoardId);
-  const setOpenBoardName = useOpenBoardStore((s) => s.setOpenBoardName);
+  const setOpenBoard = useOpenBoardStore((s) => s.setOpenBoard);
   const openDialog = useDialogStore((s) => s.openDialog);
 
   useEffect(() => {
@@ -25,9 +25,7 @@ export const BoardListCard = (props: BoardListCardProps) => {
 
   const handleSelectBoard = () => {
     if (props.variant === "board") {
-      setOpenBoardId(props.board._id);
-      setOpenBoardName(props.board.name);
-      return;
+      return setOpenBoard({ id: props.board._id, name: props.board.name });
     }
     // Logic to create new board
     openDialog("createBoard");

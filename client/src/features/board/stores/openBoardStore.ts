@@ -8,6 +8,7 @@ type OpenBoard = {
 
 interface OpenBoardStore {
   openBoard: OpenBoard;
+  setOpenBoard: (board: OpenBoard) => void;
   setOpenBoardId: (boardId: string) => void;
   setOpenBoardName: (boardName: string) => void;
 }
@@ -19,6 +20,8 @@ export const useOpenBoardStore = create<OpenBoardStore>()(
         id: null,
         name: "",
       },
+
+      setOpenBoard: (board) => set({ openBoard: board }),
 
       setOpenBoardId: (boardId) => {
         set((s) => ({ openBoard: { ...s.openBoard, id: boardId } }));
