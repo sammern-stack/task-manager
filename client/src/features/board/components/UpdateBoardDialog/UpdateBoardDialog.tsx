@@ -12,26 +12,23 @@ import type {
 export const UpdateBoardDialog = () => {
   const openBoard = useOpenBoardStore((s) => s.openBoard);
   const setOpenBoardName = useOpenBoardStore((s) => s.setOpenBoardName);
+  const closeDialog = useDialogStore((s) => s.closeDialog);
+  const addToast = useToastStore((s) => s.addToast);
   const { mutate: updateBoard } = useUpdateBoard(openBoard.id ?? "");
   const [updatedBoard, setUpdatedBoard] = useState(openBoard.name);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const closeDialog = useDialogStore((s) => s.closeDialog);
-  const addToast = useToastStore((s) => s.addToast);
 
   const handleFormSubmit = (e: FormSubmitEvent) => {
     e.preventDefault();
     updateBoard(
       { name: updatedBoard },
       {
-        onSuccess: (updatedBoard) => {
+        onSuccess: ({ message, data }) => {
           closeDialog();
-          addToast({
-            message: updatedBoard.message,
-            type: "success",
-          });
-          setOpenBoardName(updatedBoard.data.name);
+          addToast({ message, type: "success" });
+          setOpenBoardName(data.name);
         },
-        onError: (error) => setErrorMessage(error.message),
+        onError: ({ message }) => setErrorMessage(message),
       },
     );
   };

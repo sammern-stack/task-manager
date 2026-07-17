@@ -23,16 +23,13 @@ export const CreateBoardDialog = () => {
     createBoard(
       { name: newBoardName },
       {
-        onSuccess: (newBoard) => {
-          setOpenBoardId(newBoard.data._id);
-          setOpenBoardName(newBoard.data.name);
+        onSuccess: ({ message, data }) => {
+          setOpenBoardId(data._id);
+          setOpenBoardName(data.name);
           closeDialog();
-          addToast({
-            message: newBoard.message,
-            type: "success",
-          });
+          addToast({ message, type: "success" });
         },
-        onError: (error) => setErrorMessage(error.message),
+        onError: ({ message }) => setErrorMessage(message),
       },
     );
   };
