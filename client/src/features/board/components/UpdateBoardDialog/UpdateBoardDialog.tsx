@@ -42,21 +42,21 @@ export const UpdateBoardDialog = () => {
   };
 
   return (
-    <div className={styles.createBoardDialog}>
-      <h2 className={styles.createBoardDialog__title}>Edit Board</h2>
+    <div className={styles.updateBoardDialog}>
+      <h2 className={styles.updateBoardDialog__title}>Edit Board</h2>
       <form
-        className={styles.createBoardDialog__form}
+        className={styles.updateBoardDialog__form}
         onSubmit={handleFormSubmit}
       >
         <label
           htmlFor="boardName"
-          className={styles.createBoardDialog__boardNameLabel}
+          className={styles.updateBoardDialog__boardNameLabel}
         >
-          <span className={styles.createBoardDialog__boardNameLabelText}>
+          <span className={styles.updateBoardDialog__boardNameLabelText}>
             Board Name
           </span>
           {errorMessage && (
-            <span className={styles.createBoardDialog__nameError}>
+            <span className={styles.updateBoardDialog__nameError}>
               {errorMessage}
             </span>
           )}
@@ -69,11 +69,11 @@ export const UpdateBoardDialog = () => {
             placeholder="e.g. Web Design"
             autoComplete="off"
             className={[
-              styles.createBoardDialog__input,
-              errorMessage ? styles["createBoardDialog__input--error"] : "",
+              styles.updateBoardDialog__input,
+              errorMessage ? styles["updateBoardDialog__input--error"] : "",
             ].join(" ")}
           />
-          <span className={styles.createBoardDialog__helperText}>
+          <span className={styles.updateBoardDialog__helperText}>
             Optional - defaults to 'Untitled Board' if empty
           </span>
         </label>
