@@ -40,7 +40,8 @@
 
   --primary-border: var(--color-grey-300);
 
-  --button-primaryL: 
+  --button-secondary: lighten($color: $primary-bg, $amount: 10%)
+    --button-secondary-hover: lighten($color: $primary-bg, $amount: 25%);
 }
 
 :root[data-theme="dark"] {
@@ -53,4 +54,7 @@
   --primary-text: var(--color-white);
 
   --primary-border: var(--color-grey-700);
+
+  --button-secondary: var(--color-white);
+  --button-secondary-hover: var(--color-white);
 }

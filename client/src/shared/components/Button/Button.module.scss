@@ -1,6 +1,7 @@
 $primary-bg: #635fc7;
 $primary-bg-hover: #a8a4ff;
 $primary-color: #ffffff;
+$secondary-color: #635fc7;
 $destructive-bg: #ea5555;
 $destructive-bg-hover: #ff9898;
 
@@ -36,10 +37,11 @@ $destructive-bg-hover: #ff9898;
     font-size: 13px;
     line-height: 23px;
     font-weight: 700;
-    background: lighten($color: $primary-bg, $amount: 10%);
+    color: $secondary-color;
+    background: var(--button-secondary);
 
     &:hover {
-      background: lighten($color: $primary-bg, $amount: 25%);
+      background: var(--button-secondary-hover);
     }
   }
 
@@ -47,6 +49,7 @@ $destructive-bg-hover: #ff9898;
     font-size: 13px;
     line-height: 23px;
     font-weight: 700;
+    color: $primary-color;
     background: $destructive-bg;
 
     &:hover {
