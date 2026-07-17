@@ -2,7 +2,7 @@ import styles from "./Dialog.module.scss";
 import { useDialogStore } from "@/shared/stores";
 import { RxCross1 } from "react-icons/rx";
 
-import { CreateBoardDialog } from "@/features/board";
+import { CreateBoardDialog, DeleteBoardDialog } from "@/features/board";
 
 export const Dialog = () => {
   const isOpen = useDialogStore((s) => s.dialog.isOpen);
@@ -23,6 +23,7 @@ export const Dialog = () => {
           <RxCross1 />
         </button>
         {dialogType === "createBoard" && <CreateBoardDialog />}
+        {dialogType === "deleteBoard" && <DeleteBoardDialog />}
       </dialog>
       <div className={styles.dialog__backdrop} onClick={closeDialog}></div>
     </>

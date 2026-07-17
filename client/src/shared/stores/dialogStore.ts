@@ -6,7 +6,7 @@ type Dialog = {
   payload: DialogPayload;
 };
 
-type DialogType = "createBoard" | null;
+type DialogType = "createBoard" | "deleteBoard" | null;
 
 type DialogPayload = Record<string, unknown> | null;
 

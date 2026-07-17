@@ -1,28 +1,15 @@
 import styles from "./BoardMenu.module.scss";
-import { useToastStore } from "@/shared/stores/toastStore";
-import { useOpenBoardStore } from "../../stores/openBoardStore";
-import { useDeleteBoard } from "../../hooks/useBoards";
+import { useDialogStore } from "@/shared/stores";
 
 export const BoardMenu = ({ closeMenu }: { closeMenu: () => void }) => {
-  const { mutate: deleteBoard } = useDeleteBoard();
-  const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
-  const addToast = useToastStore((s) => s.addToast);
-
   const handleEditBoard = () => {
     alert("Edit Board clicked");
     // Logic to handle editing a board
   };
 
   const handleDeleteBoard = async () => {
-    deleteBoard(openBoardId ?? "", {
-      onSuccess: (data) => {
-        addToast({
-          message: data.message,
-          type: "error",
-        });
-        closeMenu();
-      },
-    });
+    useDialogStore.getState().openDialog("deleteBoard");
+    closeMenu();
   };
 
   return (
