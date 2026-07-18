@@ -1,5 +1,5 @@
 import styles from "./Home.module.scss";
-import { PageLayout, BoardHeader, BoardSidebar } from "@/layout";
+import { PageLayout, BoardHeader, BoardSidebar, BoardContent } from "@/layout";
 
 const HomePage = () => {
   return (
@@ -8,7 +8,7 @@ const HomePage = () => {
       sidebar={<BoardSidebar />}
       header={<BoardHeader />}
     >
-      <h1>Home Page</h1>
+      <BoardContent />
     </PageLayout>
   );
 };

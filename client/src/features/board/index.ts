@@ -4,3 +4,4 @@ export { DeleteBoardDialog } from "./components/DeleteBoardDialog/DeleteBoardDia
 export { UpdateBoardDialog } from "./components/UpdateBoardDialog/UpdateBoardDialog";
 export { useOpenBoardStore } from "./stores/openBoardStore";
 export { BoardMenu } from "./components/BoardMenu/BoardMenu";
+export { ColumnList } from "./components/ColumnList/ColumnList";
