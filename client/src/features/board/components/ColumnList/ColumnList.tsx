@@ -15,6 +15,11 @@ export const ColumnList = () => {
           {column.name}
         </div>
       ))}
+      <div className={styles.columnList__column}>Test</div>
+      <div className={styles.columnList__column}>Test</div>
+      <div className={styles.columnList__column}>Test</div>
+      <div className={styles.columnList__column}>Test</div>
+      <div className={styles.columnList__column}>Test</div>
     </div>
   );
 };
