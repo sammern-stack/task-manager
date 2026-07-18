@@ -4,3 +4,5 @@ export type ColumnSchema = {
   name: string;
   boardId: Types.ObjectId;
 } & Document;
+
+export type ColumnCreateBody = Pick<ColumnSchema, "name">;
