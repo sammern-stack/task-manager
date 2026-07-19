@@ -2,13 +2,6 @@
   flex: 1;
   color: var(--secondary-text);
 
-  &__title {
-    font-size: px-to-rem(12px);
-    letter-spacing: px-to-rem(2.4px);
-    text-transform: uppercase;
-    padding: px-to-rem(12px) px-to-rem(24px);
-  }
-
   &__card {
     position: relative;
     display: flex;

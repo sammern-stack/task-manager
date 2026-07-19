@@ -1,6 +1,7 @@
 import styles from "./ColumnList.module.scss";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
 import { useGetColumnsByBoardId } from "../../hooks/useBoards";
+import { Heading } from "@/shared/components";
 
 export const ColumnList = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
@@ -12,14 +13,15 @@ export const ColumnList = () => {
     <div className={styles.columnList}>
       {columns?.data.map((column) => (
         <div key={column._id} className={styles.columnList__column}>
-          {column.name}
+          <Heading size="h2" className={styles.columnList__columnName}>
+            {column.name}
+          </Heading>
+          <div className={styles.columnList__columnTasks}></div>
         </div>
       ))}
-      <div className={styles.columnList__column}>Test</div>
-      <div className={styles.columnList__column}>Test</div>
-      <div className={styles.columnList__column}>Test</div>
-      <div className={styles.columnList__column}>Test</div>
-      <div className={styles.columnList__column}>Test</div>
+      <div className={styles.columnList__column}>
+        <div className={styles.columnList__columnAdd}>+ New Column</div>
+      </div>
     </div>
   );
 };

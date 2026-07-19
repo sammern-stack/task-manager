@@ -1,20 +1,20 @@
 import styles from "./BoardList.module.scss";
 import { BoardListCard } from "./BoardListCard";
 import { useBoards } from "../../hooks/useBoards";
+import { Heading } from "@/shared/components";
 
 export const BoardList = () => {
   const { data: boards } = useBoards();
 
   const boardsList = boards?.data;
   const metaLength = boards?.meta?.["length"];
-  const boardCount = typeof metaLength === "number" && metaLength;
+  const boardCount = (typeof metaLength === "number" && metaLength) as number;
 
   return (
     <div className={styles.boardList}>
-      <h2 className={styles.boardList__title}>
-        All boards{" "}
-        <span className={styles.boardList__count}>({boardCount})</span>
-      </h2>
+      <Heading size="h2" variant="withCount" count={boardCount}>
+        All boards
+      </Heading>
       {boardsList?.map((board) => (
         <BoardListCard key={board._id} variant="board" board={board} />
       ))}
