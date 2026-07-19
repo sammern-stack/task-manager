@@ -1,0 +1,9 @@
+.heading {
+  &--h2 {
+    font-size: 12px;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--secondary-text);
+    padding: 12px 24px;
+  }
+}
