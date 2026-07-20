@@ -1,72 +1,55 @@
 import styles from "./CreateBoardDialog.module.scss";
-import { useEffect, useRef, useState } from "react";
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
-import { useCreateBoard } from "../../hooks/useBoards";
+import { useCreateBoard, useCreateColumns } from "../../hooks/useBoards";
+import { useBoardDialog } from "../../hooks/useBoardDialog";
 import { Button } from "@/shared/components";
-import type {
-  FormSubmitEvent,
-  InputChangeEvent,
-} from "@/shared/types/react.types";
-import type { ColumnCreateBody } from "@/shared/types/column.types";
 import CrossIcon from "@/assets/icon-cross.svg?react";
-
-type Columns = ({ id: string } & ColumnCreateBody)[];
+import type { FormSubmitEvent } from "@/shared/types/react.types";
 
 export const CreateBoardDialog = () => {
+  const {
+    columnsContainerRef,
+    boardColumns,
+    boardName,
+    error,
+    setError,
+    handleAddColumn,
+    handleRemoveColumn,
+    handleInputChange,
+    handleColumnChange,
+  } = useBoardDialog("create");
   const { mutate: createBoard } = useCreateBoard();
-  const [newBoardName, setNewBoardName] = useState("");
-  const [columns, setColumns] = useState<Columns>([
-    { id: crypto.randomUUID(), name: "Todo" },
-  ]);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const shouldScrollToBottomRef = useRef(false);
-  const columnsContainerRef = useRef<HTMLDivElement | null>(null);
+  const { mutate: createColumns } = useCreateColumns();
   const setOpenBoard = useOpenBoardStore((s) => s.setOpenBoard);
   const closeDialog = useDialogStore((s) => s.closeDialog);
   const addToast = useToastStore((s) => s.addToast);
 
-  useEffect(() => {
-    if (!shouldScrollToBottomRef.current) return;
-
-    const container = columnsContainerRef.current;
-    if (!container) return;
-
-    container.scrollTo({
-      top: container.scrollHeight,
-      behavior: "smooth",
-    });
-
-    shouldScrollToBottomRef.current = false;
-  }, [columns.length]);
-
   const handleFormSubmit = (e: FormSubmitEvent) => {
     e.preventDefault();
     createBoard(
-      { name: newBoardName },
+      { name: boardName },
       {
         onSuccess: ({ message, data }) => {
+          const columnsToCreate = boardColumns
+            .map((column) => column.name.trim())
+            .filter((name) => name.length > 0)
+            .map((name) => ({ name }));
+
+          if (columnsToCreate.length > 0) {
+            createColumns({
+              boardId: data._id,
+              columns: { columns: columnsToCreate },
+            });
+          }
+
           setOpenBoard({ id: data._id, name: data.name });
           closeDialog();
           addToast({ message, type: "success" });
         },
-        onError: ({ message }) => setErrorMessage(message),
+        onError: ({ message }) => setError(message),
       },
     );
-  };
-
-  const handleInputChange = (e: InputChangeEvent) => {
-    if (errorMessage) setErrorMessage(null);
-    setNewBoardName(e.target.value);
-  };
-
-  const handleAddColumn = () => {
-    shouldScrollToBottomRef.current = true;
-    setColumns((prev) => [...prev, { id: crypto.randomUUID(), name: "" }]);
-  };
-
-  const handleRemoveColumn = (id: string) => {
-    setColumns((prev) => prev.filter((c) => c.id !== id));
   };
 
   return (
@@ -83,22 +66,20 @@ export const CreateBoardDialog = () => {
           <span className={styles.createBoardDialog__formLabelText}>
             Board Name
           </span>
-          {errorMessage && (
-            <span className={styles.createBoardDialog__nameError}>
-              {errorMessage}
-            </span>
+          {error && (
+            <span className={styles.createBoardDialog__nameError}>{error}</span>
           )}
           <input
             type="text"
             id="boardName"
             name="boardName"
-            value={newBoardName}
+            value={boardName}
             onChange={handleInputChange}
             placeholder="e.g. Web Design"
             autoComplete="off"
             className={[
               styles.createBoardDialog__input,
-              errorMessage ? styles["createBoardDialog__input--error"] : "",
+              error ? styles["createBoardDialog__input--error"] : "",
             ].join(" ")}
           />
           <span className={styles.createBoardDialog__helperText}>
@@ -117,11 +98,14 @@ export const CreateBoardDialog = () => {
             ref={columnsContainerRef}
             className={styles.createBoardDialog__columns}
           >
-            {columns.map((column) => (
+            {boardColumns.map((column) => (
               <div key={column.id} className={styles.createBoardDialog__column}>
                 <input
-                  value={column.name}
                   className={styles.createBoardDialog__input}
+                  value={column.name}
+                  onChange={(e) => handleColumnChange(e, column.id)}
+                  placeholder="e.g. Todos, Doing, etc."
+                  autoComplete="off"
                 />
                 <div onClick={() => handleRemoveColumn(column.id)}>
                   <CrossIcon />

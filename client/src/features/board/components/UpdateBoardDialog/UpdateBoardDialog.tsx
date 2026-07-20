@@ -1,41 +1,43 @@
 import styles from "./UpdateBoardDialog.module.scss";
-import { useState } from "react";
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
 import { useUpdateBoard } from "../../hooks/useBoards";
 import { Button } from "@/shared/components";
-import type {
-  FormSubmitEvent,
-  InputChangeEvent,
-} from "@/shared/types/react.types";
+import type { FormSubmitEvent } from "@/shared/types/react.types";
+import CrossIcon from "@/assets/icon-cross.svg?react";
+import { useBoardDialog } from "../../hooks/useBoardDialog";
 
 export const UpdateBoardDialog = () => {
+  const {
+    columnsContainerRef,
+    boardColumns,
+    boardName,
+    error,
+    setError,
+    handleAddColumn,
+    handleRemoveColumn,
+    handleInputChange,
+    handleColumnChange,
+  } = useBoardDialog("update");
   const openBoard = useOpenBoardStore((s) => s.openBoard);
   const setOpenBoardName = useOpenBoardStore((s) => s.setOpenBoardName);
   const closeDialog = useDialogStore((s) => s.closeDialog);
   const addToast = useToastStore((s) => s.addToast);
   const { mutate: updateBoard } = useUpdateBoard(openBoard.id ?? "");
-  const [updatedBoard, setUpdatedBoard] = useState(openBoard.name);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleFormSubmit = (e: FormSubmitEvent) => {
     e.preventDefault();
     updateBoard(
-      { name: updatedBoard },
+      { name: boardName },
       {
         onSuccess: ({ message, data }) => {
           closeDialog();
           addToast({ message, type: "success" });
           setOpenBoardName(data.name);
         },
-        onError: ({ message }) => setErrorMessage(message),
+        onError: ({ message }) => setError(message),
       },
     );
-  };
-
-  const handleInputChange = (e: InputChangeEvent) => {
-    if (errorMessage) setErrorMessage(null);
-    setUpdatedBoard(e.target.value);
   };
 
   return (
@@ -52,27 +54,56 @@ export const UpdateBoardDialog = () => {
           <span className={styles.updateBoardDialog__boardNameLabelText}>
             Board Name
           </span>
-          {errorMessage && (
-            <span className={styles.updateBoardDialog__nameError}>
-              {errorMessage}
-            </span>
+          {error && (
+            <span className={styles.updateBoardDialog__nameError}>{error}</span>
           )}
           <input
             type="text"
             id="boardName"
             name="boardName"
-            value={updatedBoard}
+            value={boardName}
             onChange={handleInputChange}
             placeholder="e.g. Web Design"
             autoComplete="off"
             className={[
               styles.updateBoardDialog__input,
-              errorMessage ? styles["updateBoardDialog__input--error"] : "",
+              error ? styles["updateBoardDialog__input--error"] : "",
             ].join(" ")}
           />
           <span className={styles.updateBoardDialog__helperText}>
             Optional - defaults to 'Untitled Board' if empty
           </span>
+        </label>
+
+        <label
+          htmlFor="boardColumns"
+          className={styles.updateBoardDialog__formLabel}
+        >
+          <span className={styles.updateBoardDialog__formLabelText}>
+            Board Columns
+          </span>
+          <div
+            ref={columnsContainerRef}
+            className={styles.updateBoardDialog__columns}
+          >
+            {boardColumns.map((column) => (
+              <div key={column.id} className={styles.updateBoardDialog__column}>
+                <input
+                  className={styles.updateBoardDialog__input}
+                  value={column.name}
+                  onChange={(e) => handleColumnChange(e, column.id)}
+                  placeholder="e.g. Todos, Doing, etc."
+                  autoComplete="off"
+                />
+                <div onClick={() => handleRemoveColumn(column.id)}>
+                  <CrossIcon />
+                </div>
+              </div>
+            ))}
+          </div>
+          <Button variant="secondary" onClick={handleAddColumn}>
+            + Add New Column
+          </Button>
         </label>
 
         <Button type="submit" variant="primarySmall">

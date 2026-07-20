@@ -78,14 +78,20 @@ export const useCreateColumn = (boardId: string) => {
   });
 };
 
-export const useCreateColumns = (boardId: string) => {
+export const useCreateColumns = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (columns: ColumnBulkCreateBody) => {
+    mutationFn: ({
+      boardId,
+      columns,
+    }: {
+      boardId: string;
+      columns: ColumnBulkCreateBody;
+    }) => {
       return boardApi.createColumns(boardId, columns);
     },
-    onSuccess: () => {
+    onSuccess: (_, { boardId }) => {
       queryClient.invalidateQueries({
         queryKey: [BOARD_KEY, boardId, "columns"],
       });

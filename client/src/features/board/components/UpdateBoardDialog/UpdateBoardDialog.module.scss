@@ -53,6 +53,42 @@
   &__nameError {
     color: var(--color-danger-500);
   }
+
+  &__columns {
+    max-height: 180px;
+    margin-bottom: 12px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__column {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+
+    > input {
+      flex: 1;
+      color: var(--color-white);
+    }
+
+    > div {
+      align-self: stretch;
+      display: grid;
+      place-items: center;
+      padding-left: 12px;
+      cursor: pointer;
+
+      // Cross icon for removing columns
+      > svg {
+        scale: 1.1;
+        color: var(--secondary-text);
+      }
+    }
+  }
 }
 
 @keyframes errorBounce {

@@ -54,9 +54,9 @@ export const boardApi = {
     )(),
 
   createColumns: (boardId: string, columns: ColumnBulkCreateBody) =>
-    requestHandler<ColumnSchema>(() =>
+    requestHandler<ColumnSchema[]>(() =>
       axios({
-        url: `${BASE_URL}/${boardId}/columns`,
+        url: `${BASE_URL}/${boardId}/columns/bulk`,
         method: "POST",
         data: columns,
       }),
