@@ -1,5 +1,5 @@
 import styles from "./ColumnList.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
 import { useGetColumnsByBoardId } from "../../hooks/useBoards";
 import { Button, Heading } from "@/shared/components";
@@ -21,6 +21,10 @@ export const ColumnList = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const { data: columns } = useGetColumnsByBoardId(openBoardId ?? "");
   const [newColumn, setNewColumn] = useState<NewColumn | null>(null);
+
+  useEffect(() => {
+    return () => setNewColumn(null);
+  }, [openBoardId]);
 
   const handleAddNewColumn = () => setNewColumn(DEFAULT_NEW_COLUMN);
 
