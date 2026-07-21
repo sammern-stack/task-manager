@@ -1,0 +1,64 @@
+.confirmDialog {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 23px;
+    color: var(--primary-text);
+  }
+
+  &--delete > &__title {
+    color: var(--color-danger-500);
+  }
+
+  &__description {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 23px;
+    color: var(--secondary-text);
+  }
+
+  &__buttonWrapper {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__button {
+    flex: 1;
+    font-size: 13px;
+    line-height: 23px;
+    font-weight: 700;
+    padding: 10px 20px;
+    @include rounded-corners;
+
+    &--cancel {
+      color: #635fc7;
+      background: var(--button-secondary);
+
+      &:hover {
+        background: var(--button-secondary-hover);
+      }
+    }
+
+    &--confirm {
+      color: #ffffff;
+      background: #635fc7;
+
+      &:hover {
+        background: #a8a4ff;
+      }
+    }
+
+    &--delete {
+      color: #ffffff;
+      background: #ea5555;
+
+      &:hover {
+        background: #ff9898;
+      }
+    }
+  }
+}

@@ -1,8 +1,14 @@
-import styles from "./DeleteBoardDialog.module.scss";
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
 import { useDeleteBoard } from "../../hooks/useBoards";
-import { Button } from "@/shared/components";
+
+import {
+  ConfirmDialog,
+  ConfirmDialogTitle,
+  ConfirmDialogDescription,
+  ConfirmDialogButtonWrapper,
+  ConfirmDialogButton,
+} from "@/shared/components/Dialog/ConfirmDialog";
 
 export const DeleteBoardDialog = () => {
   const { mutate: deleteBoard } = useDeleteBoard();
@@ -23,20 +29,20 @@ export const DeleteBoardDialog = () => {
   const handleCancel = () => closeDialog();
 
   return (
-    <div className={styles.deleteBoardDialog}>
-      <h2 className={styles.deleteBoardDialog__title}>Delete this board?</h2>
-      <p className={styles.deleteBoardDialog__description}>
+    <ConfirmDialog variant="delete">
+      <ConfirmDialogTitle>Delete this board?</ConfirmDialogTitle>
+      <ConfirmDialogDescription>
         Are you sure you want to delete the "{openBoardName}" board? This action
         will remove all columns and tasks and cannot be reversed.
-      </p>
-      <div className={styles.deleteBoardDialog__actions}>
-        <Button variant="destructive" onClick={handleDelete}>
+      </ConfirmDialogDescription>
+      <ConfirmDialogButtonWrapper>
+        <ConfirmDialogButton variant="delete" onDelete={handleDelete}>
           Delete
-        </Button>
-        <Button variant="secondary" onClick={handleCancel}>
+        </ConfirmDialogButton>
+        <ConfirmDialogButton variant="cancel" onCancel={handleCancel}>
           Cancel
-        </Button>
-      </div>
-    </div>
+        </ConfirmDialogButton>
+      </ConfirmDialogButtonWrapper>
+    </ConfirmDialog>
   );
 };
