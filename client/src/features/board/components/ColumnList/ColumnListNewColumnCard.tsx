@@ -16,7 +16,7 @@ interface ColumnListNewColumnCardProps {
 
 export const ColumnListNewColumnCard = ({
   newColumn,
-  setNewColumn
+  setNewColumn,
 }: ColumnListNewColumnCardProps) => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const { mutate: createColumn } = useCreateColumn(openBoardId ?? "");
@@ -45,7 +45,7 @@ export const ColumnListNewColumnCard = ({
 
   return (
     <form
-      className={styles.columnList__newColumn}
+      className={styles.columnList__column}
       onSubmit={handleSubmitNewColumn}
     >
       <input
@@ -55,12 +55,17 @@ export const ColumnListNewColumnCard = ({
         onChange={handleColumnName}
         placeholder="New column's name"
       />
-      <Button type="submit" variant="primarySmall">
-        Create
-      </Button>
-      <Button variant="secondary" onClick={handleCancelNewColumn}>
-        Cancel
-      </Button>
+      <div className={styles.columnList__addColumnContent}>
+        <div className={styles.columnList__columnOptions}></div>
+        <div className={styles.columnList__columnActions}>
+          <Button type="submit" variant="primarySmall">
+            Create
+          </Button>
+          <Button variant="secondary" onClick={handleCancelNewColumn}>
+            Cancel
+          </Button>
+        </div>
+      </div>
     </form>
   );
 };
