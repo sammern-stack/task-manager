@@ -1,0 +1,138 @@
+.boardDialog {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__title {
+    font-size: 18px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__button {
+    font-size: 13px;
+    line-height: 23px;
+    font-weight: 700;
+    padding: 10px 20px;
+    @include rounded-corners;
+
+    &--createColumn {
+      color: #635fc7;
+      background: #ffffff;
+    }
+
+    &--removeColumn {
+      > svg {
+        scale: 1.1;
+        color: var(--secondary-text);
+      }
+    }
+
+    &--submitBoard {
+      background: #635fc7;
+      color: #ffffff;
+
+      &:hover {
+        background: #a8a4ff;
+      }
+    }
+  }
+
+  &__input {
+    border: 1px solid #828fa3;
+    background: transparent;
+    outline: none;
+    padding: 12px;
+    color: var(--secondary-text);
+    border-radius: 6px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__fieldText {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  &__fieldError {
+    font-size: 12px;
+    color: var(--color-danger-500);
+  }
+
+  &__fieldInput {
+    border: 1px solid #828fa3;
+    background: transparent;
+    outline: none;
+    padding: 12px;
+    margin: 4px 0;
+    color: var(--secondary-text);
+    border-radius: 6px;
+
+    &--error {
+      border: 1px solid var(--color-danger-500) !important;
+      animation: bounceLeftToRight 0.5s ease-in-out;
+    }
+  }
+
+  &__fieldHelperText {
+    font-size: 12px;
+    color: var(--secondary-text);
+  }
+
+  &__columns {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__columnsTitle {
+    font-size: 18px;
+  }
+
+  &__columnsList {
+    max-height: 180px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__column {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  &__columnInput {
+    flex: 1;
+    color: var(--color-white);
+  }
+}
+
+@keyframes bounceLeftToRight {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-10px, 0);
+  }
+  50% {
+    transform: translate(10px, 0);
+  }
+  75% {
+    transform: translate(-5px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
