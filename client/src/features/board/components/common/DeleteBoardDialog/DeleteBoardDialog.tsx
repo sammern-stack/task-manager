@@ -1,6 +1,6 @@
 import { useDialogStore, useToastStore } from "@/shared/stores";
-import { useOpenBoardStore } from "../../stores/openBoardStore";
-import { useDeleteBoard } from "../../hooks/useBoards";
+import { useOpenBoardStore } from "../../../stores/openBoardStore";
+import { useDeleteBoard } from "../../../hooks/useBoards";
 
 import {
   ConfirmDialog,

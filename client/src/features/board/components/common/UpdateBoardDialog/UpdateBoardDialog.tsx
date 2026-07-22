@@ -1,16 +1,16 @@
 import { useDialogStore, useToastStore } from "@/shared/stores";
-import { useOpenBoardStore } from "../../stores/openBoardStore";
-import { useUpdateBoard } from "../../hooks/useBoards";
+import { useOpenBoardStore } from "../../../stores/openBoardStore";
+import { useUpdateBoard } from "../../../hooks/useBoards";
 import { Button } from "@/shared/components";
 import type { FormSubmitEvent } from "@/shared/types/react.types";
-import { useBoardDialog } from "../../hooks/useBoardDialog";
+import { useBoardDialog } from "../../../hooks/useBoardDialog";
 import {
   BoardDialog,
   BoardDialogColumns,
   BoardDialogField,
   BoardDialogForm,
   BoardDialogTitle,
-} from "../shared/BoardDialog";
+} from "../../shared/BoardDialog";
 
 export const UpdateBoardDialog = () => {
   const { boardName, error, setError, handleInputChange } =

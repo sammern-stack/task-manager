@@ -1,6 +1,6 @@
 import styles from "./BoardList.module.scss";
 import { BoardListCard } from "./BoardListCard";
-import { useBoards } from "../../hooks/useBoards";
+import { useBoards } from "../../../hooks/useBoards";
 import { Heading } from "@/shared/components";
 
 export const BoardList = () => {

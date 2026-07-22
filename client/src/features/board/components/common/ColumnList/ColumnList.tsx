@@ -1,7 +1,7 @@
 import styles from "./ColumnList.module.scss";
 import { useEffect, useState } from "react";
-import { useOpenBoardStore } from "../../stores/openBoardStore";
-import { useGetColumnsByBoardId } from "../../hooks/useBoards";
+import { useOpenBoardStore } from "../../../stores/openBoardStore";
+import { useGetColumnsByBoardId } from "../../../hooks/useBoards";
 import { Button, Heading } from "@/shared/components";
 
 import { ColumnListCard } from "./ColumnListCard";

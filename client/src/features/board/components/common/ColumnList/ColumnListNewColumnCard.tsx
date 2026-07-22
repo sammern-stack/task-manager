@@ -1,7 +1,7 @@
 import styles from "./ColumnList.module.scss";
 import { useToastStore } from "@/shared/stores";
-import { useCreateColumn } from "../../hooks/useBoards";
-import { useOpenBoardStore } from "../../stores/openBoardStore";
+import { useCreateColumn } from "../../../hooks/useBoards";
+import { useOpenBoardStore } from "../../../stores/openBoardStore";
 import type {
   FormSubmitEvent,
   InputChangeEvent,

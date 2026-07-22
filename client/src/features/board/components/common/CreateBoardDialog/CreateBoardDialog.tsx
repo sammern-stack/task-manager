@@ -1,7 +1,7 @@
 import { useDialogStore, useToastStore } from "@/shared/stores";
-import { useOpenBoardStore } from "../../stores/openBoardStore";
-import { useCreateBoard, useCreateColumns } from "../../hooks/useBoards";
-import { useBoardDialog } from "../../hooks/useBoardDialog";
+import { useOpenBoardStore } from "../../../stores/openBoardStore";
+import { useCreateBoard, useCreateColumns } from "../../../hooks/useBoards";
+import { useBoardDialog } from "../../../hooks/useBoardDialog";
 import { Button } from "@/shared/components";
 import type { FormSubmitEvent } from "@/shared/types/react.types";
 
@@ -11,7 +11,7 @@ import {
   BoardDialogForm,
   BoardDialogField,
   BoardDialogColumns,
-} from "../shared/BoardDialog";
+} from "../../shared/BoardDialog";
 
 export const CreateBoardDialog = () => {
   const { boardColumns, boardName, error, setError, handleInputChange } =
