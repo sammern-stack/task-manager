@@ -1,7 +1,18 @@
 import { Schema, model } from "mongoose";
-import type { BoardSchema, BoardModel } from "../types/board.types.js";
+import type {
+  BoardSchema,
+  BoardModel,
+  BoardStatics,
+} from "../types/board.types.js";
 
-const boardSchema = new Schema<BoardSchema, BoardModel>(
+const boardSchema = new Schema<
+  BoardSchema,
+  BoardModel,
+  {},
+  {},
+  {},
+  BoardStatics
+>(
   {
     name: {
       type: String,
@@ -12,9 +23,9 @@ const boardSchema = new Schema<BoardSchema, BoardModel>(
   { timestamps: true },
 );
 
-boardSchema.static("findByName", function (boardName: string) {
+boardSchema.statics.findByName = function (boardName) {
   return this.findOne({ name: boardName }).exec();
-});
+};
 
 const Board = model<BoardSchema, BoardModel>("board", boardSchema);
 export default Board;

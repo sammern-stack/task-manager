@@ -1,4 +1,4 @@
-import type { Document, HydratedDocument, Model } from "mongoose";
+import type { HydratedDocument, Model } from "mongoose";
 
 export type BoardSchema = {
   name: string;
@@ -6,13 +6,14 @@ export type BoardSchema = {
 
 export type BoardDocument = HydratedDocument<BoardSchema>;
 
-export interface BoardModel extends Model<BoardSchema> {
-  findByName(boardName: string): Promise<BoardDocument | null>;
+export interface BoardStatics {
+  findByName(
+    this: BoardModel,
+    boardName: string,
+  ): Promise<BoardDocument | null>;
 }
 
-// export type BoardSchema = {
-//   name: string;
-// } & Document;
+export interface BoardModel extends Model<BoardSchema>, BoardStatics {}
 
 export type BoardCreateBody = Partial<Pick<BoardSchema, "name">>;
 export type BoardUpdateBody = Partial<Pick<BoardSchema, "name">>;
