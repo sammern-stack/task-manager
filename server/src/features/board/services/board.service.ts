@@ -23,7 +23,7 @@ export const createNewBoard = async (board: BoardCreateBody) => {
   // Create board with the default name
   if (!board.name) return await Board.create({});
 
-  const boardExists = await Board.findOne({ name: board.name });
+  const boardExists = await Board.findByName(board.name)
   if (boardExists) {
     throw new ConflictError("Cant create. Board with same name already exist");
   }
