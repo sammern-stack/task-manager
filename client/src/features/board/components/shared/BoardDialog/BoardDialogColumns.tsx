@@ -1,5 +1,6 @@
 import styles from "./BoardDialog.module.scss";
 import { useBoardDialog } from "../../../hooks/useBoardDialog";
+import { useScrollToBottom } from "../../../hooks/useScrollToBottom";
 import CrossIcon from "@/assets/icon-cross.svg?react";
 import { BoardDialogButton } from "./BoardDialogButton";
 import { BoardDialogInput } from "./BoardDialogInput";
@@ -15,19 +16,21 @@ export const BoardDialogColumns = ({
 }: BoardDialogColumnsProps) => {
   const {
     boardColumns,
-    columnsContainerRef,
     handleColumnChange,
     handleAddColumn,
     handleRemoveColumn,
   } = useBoardDialog(formVariant);
+  const { containerRef, enableScroll } = useScrollToBottom(boardColumns.length);
+
+  const handleAddingColumn = () => {
+    enableScroll();
+    handleAddColumn();
+  };
 
   return (
     <div className={styles.boardDialog__columns}>
       <span className={styles.boardDialog__columnsTitle}>Board Columns</span>
-      <div
-        ref={columnsContainerRef}
-        className={styles.boardDialog__columnsList}
-      >
+      <div ref={containerRef} className={styles.boardDialog__columnsList}>
         {boardColumns.map((column) => (
           <label
             key={column.id}
@@ -52,7 +55,7 @@ export const BoardDialogColumns = ({
           </label>
         ))}
       </div>
-      <BoardDialogButton variant="createColumn" onClick={handleAddColumn}>
+      <BoardDialogButton variant="createColumn" onClick={handleAddingColumn}>
         + Add New Column
       </BoardDialogButton>
     </div>
