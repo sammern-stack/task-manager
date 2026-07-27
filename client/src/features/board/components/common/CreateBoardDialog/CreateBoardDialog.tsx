@@ -3,7 +3,10 @@ import { useOpenBoardStore } from "../../../stores/openBoardStore";
 import { useCreateBoard, useCreateColumns } from "../../../hooks/useBoards";
 import { useBoardDialog } from "../../../hooks/useBoardDialog";
 import { Button } from "@/shared/components";
-import type { FormSubmitEvent } from "@/shared/types/react.types";
+import type {
+  FormSubmitEvent,
+  InputChangeEvent,
+} from "@/shared/types/react.types";
 
 import {
   BoardDialog,
@@ -15,15 +18,19 @@ import {
 import { useBoardError } from "@/features/board/hooks/useBoardError";
 
 export const CreateBoardDialog = () => {
-  const { boardColumns, boardName, handleInputChange } =
-    useBoardDialog("create");
-  const { getError, setError } = useBoardError();
+  const { boardColumns, boardName, handleBoardName } = useBoardDialog("create");
+  const { getError, setError, clearError } = useBoardError();
 
   const { mutate: createBoard } = useCreateBoard();
   const { mutate: createColumns } = useCreateColumns();
   const setOpenBoard = useOpenBoardStore((s) => s.setOpenBoard);
   const closeDialog = useDialogStore((s) => s.closeDialog);
   const addToast = useToastStore((s) => s.addToast);
+
+  const handleBoardNameChange = (e: InputChangeEvent) => {
+    if (getError("boardName")) clearError("boardName");
+    handleBoardName(e.target.value);
+  };
 
   const handleCreateBoard = (e: FormSubmitEvent) => {
     e.preventDefault();
@@ -63,7 +70,7 @@ export const CreateBoardDialog = () => {
           label="Board Name"
           placeholder="e.g. Web Design"
           error={getError("boardName")}
-          handleValue={[boardName, handleInputChange]}
+          handleValue={[boardName, handleBoardNameChange]}
           helperText="Optional - defaults to 'Untitled Board' if empty"
         />
         <BoardDialogColumns formVariant="create" id="boardColumns" />

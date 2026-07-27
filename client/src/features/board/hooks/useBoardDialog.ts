@@ -17,13 +17,9 @@ export const useBoardDialog = (dialog: "create" | "update") => {
       : [{ id: crypto.randomUUID(), name: "Todo" }];
 
   const [boardName, setBoardName] = useState(initialBoardName);
-  const [error, setError] = useState<string | null>(null);
   const [boardColumns, setBoardColumns] = useState(initialBoardColumns);
 
-  const handleInputChange = (e: InputChangeEvent) => {
-    if (error) setError(null);
-    setBoardName(e.target.value);
-  };
+  const handleBoardName = (name: string) => setBoardName(name);
 
   const handleColumnChange = (e: InputChangeEvent, id: string) => {
     setBoardColumns((prev) =>
@@ -44,11 +40,9 @@ export const useBoardDialog = (dialog: "create" | "update") => {
   return {
     boardName,
     boardColumns,
-    error,
     setBoardName,
     setBoardColumns,
-    setError,
-    handleInputChange,
+    handleBoardName,
     handleColumnChange,
     handleAddColumn,
     handleRemoveColumn,
