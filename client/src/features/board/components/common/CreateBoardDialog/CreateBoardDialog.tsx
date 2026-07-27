@@ -12,10 +12,12 @@ import {
   BoardDialogField,
   BoardDialogColumns,
 } from "../../shared/BoardDialog";
+import { useBoardError } from "@/features/board/hooks/useBoardError";
 
 export const CreateBoardDialog = () => {
-  const { boardColumns, boardName, error, setError, handleInputChange } =
+  const { boardColumns, boardName, handleInputChange } =
     useBoardDialog("create");
+  const { getError, setError } = useBoardError();
 
   const { mutate: createBoard } = useCreateBoard();
   const { mutate: createColumns } = useCreateColumns();
@@ -45,7 +47,9 @@ export const CreateBoardDialog = () => {
           closeDialog();
           addToast({ message, type: "success" });
         },
-        onError: ({ message }) => setError(message),
+        onError: ({ message }) => {
+          setError("boardName", { message });
+        },
       },
     );
   };
@@ -58,7 +62,7 @@ export const CreateBoardDialog = () => {
           id="boardName"
           label="Board Name"
           placeholder="e.g. Web Design"
-          error={error}
+          error={getError("boardName")}
           handleValue={[boardName, handleInputChange]}
           helperText="Optional - defaults to 'Untitled Board' if empty"
         />

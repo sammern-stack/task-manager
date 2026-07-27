@@ -7,6 +7,11 @@ type SuccessResponse<D> = {
   meta?: Record<string, unknown>;
 };
 
+export type ErrorResponse = {
+  ok: false;
+  message: string;
+}
+
 type BaseRequest<D, P = void> = (
   params?: P,
 ) => Promise<AxiosResponse<SuccessResponse<D>>>;
