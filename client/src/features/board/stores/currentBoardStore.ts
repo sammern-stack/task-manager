@@ -1,7 +1,7 @@
 import type { ColumnSchema } from "@/shared/types/column.types";
 import { create } from "zustand";
 
-type NewColumn = Omit<
+export type NewColumn = Omit<
   ColumnSchema,
   "_id" | "boardId" | "createdAt" | "updatedAt"
 >;

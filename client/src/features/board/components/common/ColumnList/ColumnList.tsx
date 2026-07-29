@@ -6,16 +6,7 @@ import { Button, Heading } from "@/shared/components";
 
 import { ColumnListCard } from "./ColumnListCard";
 import { ColumnListNewColumnCard } from "./ColumnListNewColumnCard";
-
-export type NewColumn = {
-  id: `${string}-${string}-${string}-${string}-${string}`;
-  name: string;
-};
-
-const DEFAULT_NEW_COLUMN: NewColumn = {
-  id: crypto.randomUUID(),
-  name: "",
-};
+import type { NewColumn } from "@/features/board/stores/currentBoardStore";
 
 export const ColumnList = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
@@ -26,7 +17,7 @@ export const ColumnList = () => {
     return () => setNewColumn(null);
   }, [openBoardId]);
 
-  const handleAddNewColumn = () => setNewColumn(DEFAULT_NEW_COLUMN);
+  const handleAddNewColumn = () => setNewColumn({ name: "" });
 
   if (columns?.data.length === 0) {
     if (newColumn)

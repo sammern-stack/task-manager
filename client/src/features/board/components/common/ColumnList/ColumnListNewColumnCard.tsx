@@ -7,7 +7,7 @@ import type {
   InputChangeEvent,
 } from "@/shared/types/react.types";
 import { Button } from "@/shared/components";
-import type { NewColumn } from "./ColumnList";
+import type { NewColumn } from "@/features/board/stores/currentBoardStore";
 
 interface ColumnListNewColumnCardProps {
   newColumn: NewColumn | null;
