@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useOpenBoardStore } from "../../../stores/openBoardStore";
 import { useDialogStore } from "@/shared/stores/dialogStore";
 import { useBoards } from "../../../hooks/useBoards";
+import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import BoardIcon from "@/assets/icon-board.svg?react";
 import type { BoardSchema } from "@/shared/types/board.types";
 
@@ -16,6 +17,7 @@ export const BoardListCard = (props: BoardListCardProps) => {
   const setOpenBoardId = useOpenBoardStore((s) => s.setOpenBoardId);
   const setOpenBoard = useOpenBoardStore((s) => s.setOpenBoard);
   const openDialog = useDialogStore((s) => s.openDialog);
+  const startCreateBoard = useCurrentBoardStore((s) => s.startCreateBoard);
 
   useEffect(() => {
     if (!boards?.data) return;
@@ -28,6 +30,7 @@ export const BoardListCard = (props: BoardListCardProps) => {
       return setOpenBoard({ id: props.board._id, name: props.board.name });
     }
     // Logic to create new board
+    startCreateBoard();
     openDialog("createBoard");
   };
 

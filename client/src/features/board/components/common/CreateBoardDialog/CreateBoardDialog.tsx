@@ -1,8 +1,9 @@
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../../stores/openBoardStore";
 import { useCreateBoard, useCreateColumns } from "../../../hooks/useBoards";
-import { useBoardDialog } from "../../../hooks/useBoardDialog";
 import { Button } from "@/shared/components";
+import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
+import { useBoardError } from "@/features/board/hooks/useBoardError";
 import type {
   FormSubmitEvent,
   InputChangeEvent,
@@ -15,10 +16,8 @@ import {
   BoardDialogField,
   BoardDialogColumns,
 } from "../../shared/BoardDialog";
-import { useBoardError } from "@/features/board/hooks/useBoardError";
 
 export const CreateBoardDialog = () => {
-  const { boardColumns, boardName, handleBoardName } = useBoardDialog("create");
   const { getError, setError, clearError } = useBoardError();
 
   const { mutate: createBoard } = useCreateBoard();
@@ -26,20 +25,24 @@ export const CreateBoardDialog = () => {
   const setOpenBoard = useOpenBoardStore((s) => s.setOpenBoard);
   const closeDialog = useDialogStore((s) => s.closeDialog);
   const addToast = useToastStore((s) => s.addToast);
+  const board = useCurrentBoardStore((s) => s.board);
+  const setBoardName = useCurrentBoardStore((s) => s.setBoardName);
+
+  if (!board) return null;
 
   const handleBoardNameChange = (e: InputChangeEvent) => {
     if (getError("boardName")) clearError("boardName");
-    handleBoardName(e.target.value);
+    setBoardName(e.target.value);
   };
 
   const handleCreateBoard = (e: FormSubmitEvent) => {
     e.preventDefault();
     createBoard(
-      { name: boardName },
+      { name: board.name },
       {
         onSuccess: ({ message, data }) => {
-          const columnsToCreate = boardColumns
-            .map((column) => column.name.trim())
+          const columnsToCreate = board.columns
+            .map((col) => col.column.name)
             .filter((name) => name.length > 0)
             .map((name) => ({ name }));
 
@@ -70,10 +73,10 @@ export const CreateBoardDialog = () => {
           label="Board Name"
           placeholder="e.g. Web Design"
           error={getError("boardName")}
-          handleValue={[boardName, handleBoardNameChange]}
+          handleValue={[board.name, handleBoardNameChange]}
           helperText="Optional - defaults to 'Untitled Board' if empty"
         />
-        <BoardDialogColumns formVariant="create" id="boardColumns" />
+        <BoardDialogColumns id="boardColumns" />
         <Button type="submit" variant="primarySmall">
           Create New Board
         </Button>

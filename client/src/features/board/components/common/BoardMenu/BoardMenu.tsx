@@ -1,6 +1,7 @@
 import styles from "./BoardMenu.module.scss";
 import { useDialogStore } from "@/shared/stores";
 
+
 export const BoardMenu = ({ closeMenu }: { closeMenu: () => void }) => {
   const openDialog = useDialogStore.getState().openDialog;
 
