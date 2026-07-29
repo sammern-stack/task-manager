@@ -1,8 +1,6 @@
 import styles from "./BoardList.module.scss";
-import { useEffect } from "react";
 import { useOpenBoardStore } from "../../../stores/openBoardStore";
 import { useDialogStore } from "@/shared/stores/dialogStore";
-import { useBoards } from "../../../hooks/useBoards";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import BoardIcon from "@/assets/icon-board.svg?react";
 import type { BoardSchema } from "@/shared/types/board.types";
@@ -12,18 +10,10 @@ type BoardListCardProps =
   | { variant: "createBtn" };
 
 export const BoardListCard = (props: BoardListCardProps) => {
-  const { data: boards } = useBoards();
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
-  const setOpenBoardId = useOpenBoardStore((s) => s.setOpenBoardId);
   const setOpenBoard = useOpenBoardStore((s) => s.setOpenBoard);
   const openDialog = useDialogStore((s) => s.openDialog);
   const startCreateBoard = useCurrentBoardStore((s) => s.startCreateBoard);
-
-  useEffect(() => {
-    if (!boards?.data) return;
-    if (boards.data.some((board) => openBoardId === board._id)) return;
-    setOpenBoardId(boards.data[0]._id);
-  }, [boards, openBoardId, setOpenBoardId]);
 
   const handleSelectBoard = () => {
     if (props.variant === "board") {
