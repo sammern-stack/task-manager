@@ -83,6 +83,11 @@
     flex: 1;
   }
 
+  &__columnError {
+    color: var(--color-danger-500);
+    padding: 12px;
+  }
+
   &__columnActions {
     display: flex;
     gap: 8px;

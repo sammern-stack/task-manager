@@ -5,13 +5,15 @@ import { useOpenBoardStore } from "../../../stores/openBoardStore";
 import type {
   FormSubmitEvent,
   InputChangeEvent,
+  ReactSetState,
 } from "@/shared/types/react.types";
 import { Button } from "@/shared/components";
+import { useBoardError } from "@/features/board/hooks/useBoardError";
 import type { NewColumn } from "@/features/board/stores/currentBoardStore";
 
 interface ColumnListNewColumnCardProps {
   newColumn: NewColumn | null;
-  setNewColumn: React.Dispatch<React.SetStateAction<NewColumn | null>>;
+  setNewColumn: ReactSetState<NewColumn>;
 }
 
 export const ColumnListNewColumnCard = ({
@@ -21,6 +23,9 @@ export const ColumnListNewColumnCard = ({
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const { mutate: createColumn } = useCreateColumn(openBoardId ?? "");
   const addToast = useToastStore((s) => s.addToast);
+  const { getError, setError } = useBoardError();
+
+  const columnError = getError("columnName");
 
   const handleColumnName = (e: InputChangeEvent) => {
     if (!newColumn) return;
@@ -37,6 +42,7 @@ export const ColumnListNewColumnCard = ({
           setNewColumn(null);
           addToast({ message: data.message, type: "success" });
         },
+        onError: ({ message }) => setError("columnName", { message }),
       },
     );
   };
@@ -57,6 +63,11 @@ export const ColumnListNewColumnCard = ({
       />
       <div className={styles.columnList__addColumnContent}>
         <div className={styles.columnList__columnOptions}></div>
+        {columnError && (
+          <div className={styles.columnList__columnError}>
+            {columnError.message}
+          </div>
+        )}
         <div className={styles.columnList__columnActions}>
           <Button type="submit" variant="primarySmall">
             Create
