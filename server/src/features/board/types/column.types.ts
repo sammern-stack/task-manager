@@ -16,4 +16,6 @@ export interface ColumnStatics {
 
 export interface ColumnModel extends Model<ColumnSchema>, ColumnStatics {}
 
-export type ColumnCreateBody = Pick<ColumnSchema, "name">;
+export type ColumnCreateBody = Omit<ColumnSchema, "boardId">;
+
+export type ColumnUpdateBody = Omit<ColumnSchema, "boardId">;

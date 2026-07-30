@@ -6,7 +6,11 @@ import {
   ConflictError,
   NotFoundError,
 } from "@/shared/utils/customErrors.js";
-import type { ColumnCreateBody } from "../types/column.types.js";
+import type {
+  ColumnCreateBody,
+  ColumnUpdateBody,
+} from "../types/column.types.js";
+import { columnsQueryOptions } from "@/config/mongoose.js";
 
 export const getColumnsByBoardId = async (boardId: string) => {
   const board = await searchDocument(boardId, Board);
@@ -63,4 +67,40 @@ export const createColumns = async (
 
   const insertedColumns = await Column.insertMany(newColumns);
   return insertedColumns;
+};
+
+export const updateColumn = async (
+  columnId: string,
+  updates: ColumnUpdateBody,
+) => {
+  const updatedColumn = await Column.findByIdAndUpdate(
+    columnId,
+    updates,
+    columnsQueryOptions,
+  );
+  if (!updatedColumn) throw new NotFoundError("column");
+  return updatedColumn;
+};
+
+export const updateColumns = async (
+  columnIds: string[],
+  updates: ColumnUpdateBody[],
+) => {
+  const updatedColumns = await Promise.all(
+    columnIds.map((id, index) =>
+      Column.findByIdAndUpdate(id, updates[index], columnsQueryOptions),
+    ),
+  );
+  return updatedColumns;
+};
+
+export const deleteColumn = async (columnId: string) => {
+  const deletedColumn = await Column.findByIdAndDelete(columnId);
+  if (!deletedColumn) throw new NotFoundError("column");
+  return deletedColumn;
+};
+
+export const deleteColumns = async (columnIds: string[]) => {
+  const deletedColumns = await Column.deleteMany({ _id: { $in: columnIds } });
+  return deletedColumns;
 };
