@@ -1,6 +1,11 @@
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../../stores/openBoardStore";
-import { useUpdateBoard } from "../../../hooks/useBoards";
+import {
+  useUpdateBoard,
+  useCreateColumns,
+  useUpdateColumns,
+  useDeleteColumns,
+} from "../../../hooks/useBoards";
 import { Button } from "@/shared/components";
 import { useBoardError } from "@/features/board/hooks/useBoardError";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
@@ -20,12 +25,20 @@ export const UpdateBoardDialog = () => {
   const { getError, setError, clearError } = useBoardError();
 
   const openBoard = useOpenBoardStore((s) => s.openBoard);
-  const setOpenBoardName = useOpenBoardStore((s) => s.setOpenBoardName);
+  const { mutate: updateBoard } = useUpdateBoard(openBoard.id ?? "");
+  const { mutate: createColumns } = useCreateColumns();
+  const { mutate: updateColumns } = useUpdateColumns();
+  const { mutate: deleteColumns } = useDeleteColumns();
+  const setOpenBoard = useOpenBoardStore((s) => s.setOpenBoard);
   const closeDialog = useDialogStore((s) => s.closeDialog);
   const addToast = useToastStore((s) => s.addToast);
-  const { mutate: updateBoard } = useUpdateBoard(openBoard.id ?? "");
   const board = useCurrentBoardStore((s) => s.board);
-  const setBoardName = useCurrentBoardStore((s) => s.setBoardName);
+  const {
+    setBoardName,
+    buildCreateColumnsArray,
+    buildUpdateColumnsArray,
+    buildDeleteColumnsArray,
+  } = useCurrentBoardStore.getState();
 
   if (!board) return null;
 
@@ -40,9 +53,24 @@ export const UpdateBoardDialog = () => {
       { name: board.name },
       {
         onSuccess: ({ message, data }) => {
+          const boardId = data._id;
+
+          const columnsToCreate = buildCreateColumnsArray();
+          const columnsToUpdate = buildUpdateColumnsArray();
+          const columnsToDelete = buildDeleteColumnsArray();
+
+          if (columnsToCreate)
+            createColumns({ boardId, columns: columnsToCreate });
+
+          if (columnsToUpdate)
+            updateColumns({ boardId, columns: columnsToUpdate });
+
+          if (columnsToDelete)
+            deleteColumns({ boardId, columnIds: columnsToDelete });
+
           closeDialog();
           addToast({ message, type: "success" });
-          setOpenBoardName(data.name);
+          setOpenBoard({ name: data.name });
         },
         onError: ({ message }) => setError("boardName", { message }),
       },

@@ -9,11 +9,11 @@ import type {
 } from "@/shared/types/react.types";
 import { Button } from "@/shared/components";
 import { useBoardError } from "@/features/board/hooks/useBoardError";
-import type { NewColumn } from "@/features/board/stores/currentBoardStore";
+import type { ColumnProperties } from "@/shared/types/column.types";
 
 interface ColumnListNewColumnCardProps {
-  newColumn: NewColumn | null;
-  setNewColumn: ReactSetState<NewColumn>;
+  newColumn: ColumnProperties | null;
+  setNewColumn: ReactSetState<ColumnProperties>;
 }
 
 export const ColumnListNewColumnCard = ({

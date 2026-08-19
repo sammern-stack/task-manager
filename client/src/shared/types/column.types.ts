@@ -6,7 +6,15 @@ export type ColumnSchema = {
   updatedAt: string;
 };
 
-export type ColumnCreateBody = Pick<ColumnSchema, "name">;
-export type ColumnBulkCreateBody = {
-  columns: ColumnCreateBody[];
+export type ColumnProperties = Omit<
+  ColumnSchema,
+  "_id" | "boardId" | "createdAt" | "updatedAt"
+>;
+
+export type UpdateColumnBody = Partial<ColumnProperties>;
+export type CreateColumnBody = ColumnProperties;
+
+export type BulkUpdateColumnsBody = {
+  id: string;
+  updates: UpdateColumnBody;
 };

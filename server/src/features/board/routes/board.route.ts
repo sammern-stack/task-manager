@@ -20,6 +20,10 @@ router
   .get(columnController.getColumnsByBoardId)
   .post(columnController.createColumn);
 
-router.route("/:boardId/columns/bulk").post(columnController.createColumns);
+router
+  .route("/:boardId/columns/bulk")
+  .post(columnController.createColumns)
+  .put(columnController.updateColumnsByBoardId)
+  .delete(columnController.deleteColumnsByBoardId);
 
 export default router;

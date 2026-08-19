@@ -6,12 +6,12 @@ import { Button, Heading } from "@/shared/components";
 
 import { ColumnListCard } from "./ColumnListCard";
 import { ColumnListNewColumnCard } from "./ColumnListNewColumnCard";
-import type { NewColumn } from "@/features/board/stores/currentBoardStore";
+import type { ColumnProperties } from "@/shared/types/column.types";
 
 export const ColumnList = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const { data: columns } = useGetColumnsByBoardId(openBoardId ?? "");
-  const [newColumn, setNewColumn] = useState<NewColumn | null>(null);
+  const [newColumn, setNewColumn] = useState<ColumnProperties | null>(null);
 
   useEffect(() => {
     return () => setNewColumn(null);

@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import * as columnService from "../services/column.service.js";
 import { asyncHandler } from "@/shared/utils/asyncHandler.js";
 import type {
+  ColumnBulkCreateBody,
   ColumnCreateBody,
   ColumnUpdateBody,
 } from "../types/column.types.js";
@@ -65,21 +66,32 @@ export const updateColumn = asyncHandler(
   },
 );
 
-export const updateColumns = asyncHandler(
+export const updateColumnsByBoardId = asyncHandler(
   async (
-    req: Request<{}, {}, { columnIds: string[]; updates: ColumnUpdateBody[] }>,
+    req: Request<{}, {}, { columns: ColumnBulkCreateBody[] }>,
     res: Response,
   ) => {
-    const { columnIds, updates } = req.body;
-    const updatedColumns = await columnService.updateColumns(
-      columnIds,
-      updates,
+    const updatedColumns = await columnService.updateColumnsByBoardId(
+      req.body.columns,
     );
     res.status(200).json({
       ok: true,
       message: "Columns updated successfully",
       data: updatedColumns,
     });
+  },
+);
+
+export const deleteColumnsByBoardId = asyncHandler(
+  async (req: Request<{}, {}, { columnIds: string[] }>, res: Response) => {
+    const result = await columnService.deleteColumnsByBoardId(
+      req.body.columnIds,
+    );
+    res.status(200).json({
+      ok: true,
+      message: "Columns deleted successfully",
+      data: result,
+    })
   },
 );
 
@@ -90,17 +102,6 @@ export const deleteColumn = asyncHandler(
     res.status(200).json({
       ok: true,
       message: "Column deleted successfully",
-    });
-  },
-);
-
-export const deleteColumns = asyncHandler(
-  async (req: Request<{}, {}, { columnIds: string[] }>, res: Response) => {
-    const { columnIds } = req.body;
-    await columnService.deleteColumns(columnIds);
-    res.status(200).json({
-      ok: true,
-      message: "Columns deleted successfully",
     });
   },
 );

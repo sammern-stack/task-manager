@@ -11,8 +11,6 @@ type OpenBoard = {
 interface OpenBoardStore {
   openBoard: OpenBoard;
   setOpenBoard: (board: Partial<OpenBoard>) => void;
-  setOpenBoardId: (boardId: string) => void;
-  setOpenBoardName: (boardName: string) => void;
 }
 
 export const useOpenBoardStore = create<OpenBoardStore>()(
@@ -26,14 +24,6 @@ export const useOpenBoardStore = create<OpenBoardStore>()(
 
       setOpenBoard: (board) => {
         set((s) => ({ openBoard: { ...s.openBoard, ...board } }));
-      },
-
-      setOpenBoardId: (boardId) => {
-        set((s) => ({ openBoard: { ...s.openBoard, id: boardId } }));
-      },
-
-      setOpenBoardName: (boardName) => {
-        set((s) => ({ openBoard: { ...s.openBoard, name: boardName } }));
       },
     }),
     {

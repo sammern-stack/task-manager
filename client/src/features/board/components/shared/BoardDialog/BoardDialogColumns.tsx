@@ -14,9 +14,17 @@ export const BoardDialogColumns = ({ id }: { id: string }) => {
 
   if (!board) return null;
 
-  const handleAddingColumn = () => {
+  const onColumnAdd = () => {
     enableScroll();
     addColumn();
+  };
+
+  const onColumnRemove = (id: string) => {
+    removeColumn(id);
+  };
+
+  const onColumnChange = (name: string, id: string) => {
+    setColumnName(id, name);
   };
 
   return (
@@ -35,19 +43,19 @@ export const BoardDialogColumns = ({ id }: { id: string }) => {
               placeholder="e.g. Todos, Doing, etc."
               handleValue={[
                 column.column.name,
-                (e) => setColumnName(column.id, e.target.value),
+                (e) => onColumnChange(e.target.value, column.id),
               ]}
             />
             <BoardDialogButton
               variant="removeColumn"
-              onClick={() => removeColumn(column.id)}
+              onClick={() => onColumnRemove(column.id)}
             >
               <CrossIcon />
             </BoardDialogButton>
           </label>
         ))}
       </div>
-      <BoardDialogButton variant="createColumn" onClick={handleAddingColumn}>
+      <BoardDialogButton variant="createColumn" onClick={onColumnAdd}>
         + Add New Column
       </BoardDialogButton>
     </div>

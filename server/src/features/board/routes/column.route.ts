@@ -8,9 +8,4 @@ router
   .put(columnController.updateColumn)
   .delete(columnController.deleteColumn);
 
-router
-  .route("/bulk")
-  .put(columnController.updateColumns)
-  .delete(columnController.deleteColumns);
-
 export default router;
