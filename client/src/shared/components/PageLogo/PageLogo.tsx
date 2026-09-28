@@ -1,4 +1,5 @@
-import { useThemeStore } from "@/shared/stores";
+import { useThemeStore } from "@/features/settings";
+
 import PageLogoDark from "@/assets/logo-dark.svg?react";
 import PageLogoLight from "@/assets/logo-light.svg?react";
 

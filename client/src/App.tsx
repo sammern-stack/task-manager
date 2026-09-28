@@ -1,18 +1,14 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router";
 import { Dialog, Toast } from "@/shared/components";
-import { useThemeStore } from "@/shared/stores";
+import { useTheme } from "@/features/settings";
 
 const HomePage = lazy(() => import("@/pages/Home/Home"));
 const NoteFoundPage = lazy(() => import("@/pages/NotFound/NotFound"));
 const LoadingPage = lazy(() => import("@/pages/Loading/Loading"));
 
 const App = () => {
-  const theme = useThemeStore((s) => s.theme);
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
+  useTheme();
 
   return (
     <Suspense fallback={<LoadingPage />}>
