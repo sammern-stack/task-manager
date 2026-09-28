@@ -1,5 +1,4 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-// import { boardApi } from "../services/boardApi";
 import * as boardApi from "../services/boardApi";
 import type {
   BoardCreateBody,
@@ -17,6 +16,7 @@ export const useBoards = () => {
   return useQuery({
     queryKey: [BOARDS_KEY],
     queryFn: () => boardApi.getBoardsReq(),
+    select: (data) => data.data,
   });
 };
 

@@ -1,4 +1,4 @@
-.boardSidebar {
+.sidebar {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -15,5 +15,18 @@
     gap: px-to-rem(16px);
     padding: 0px 24px;
     color: var(--secondary-text);
+  }
+
+  &__boardList {
+    flex: 1;
+    color: var(--secondary-text);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

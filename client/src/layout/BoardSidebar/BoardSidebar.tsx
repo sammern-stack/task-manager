@@ -1,18 +1,30 @@
 import styles from "./BoardSidebar.module.scss";
 import { ThemeSwitch } from "@/features/settings";
-import { BoardList } from "@/features/board";
-import { PageLogo } from "@/shared/components";
+import { Heading, PageLogo } from "@/shared/components";
+import { useBoards } from "@/features/board/hooks/useBoards";
+import { Board, CreateBoard } from "@/features/board";
+import { useSelectFirstBoard } from "@/features/board/hooks/useSelectFirstBoard";
+
 import HideSidebarIcon from "@/assets/icon-hide-sidebar.svg?react";
 
 export const BoardSidebar = () => {
+  const { data: boards = [] } = useBoards();
+  useSelectFirstBoard(boards);
+
   return (
-    <div className={styles.boardSidebar}>
-      <div className={styles.boardSidebar__logo}>
+    <div className={styles.sidebar}>
+      <div className={styles.sidebar__logo}>
         <PageLogo />
       </div>
-      <BoardList />
+      <div className={styles.sidebar__boardList}>
+        <Heading size="h2">All boards ({boards.length})</Heading>
+        {boards.map((board) => (
+          <Board key={board._id} board={board} />
+        ))}
+        <CreateBoard />
+      </div>
       <ThemeSwitch />
-      <div className={styles.boardSidebar__hideBtn}>
+      <div className={styles.sidebar__hideBtn}>
         <HideSidebarIcon />
         <span>Hide Sidebar</span>
       </div>
