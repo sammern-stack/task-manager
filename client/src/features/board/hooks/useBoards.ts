@@ -63,6 +63,7 @@ export const useGetColumnsByBoardId = (boardId: string) => {
     queryKey: [BOARD_KEY, boardId, "columns"],
     queryFn: () => boardApi.getColumnsReq(boardId),
     enabled: Boolean(boardId),
+    select: (data) => data.data,
   });
 };
 

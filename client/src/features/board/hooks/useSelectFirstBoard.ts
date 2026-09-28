@@ -8,6 +8,6 @@ export const useSelectFirstBoard = (boards: BoardSchema[]) => {
   useEffect(() => {
     const { setOpenBoard } = useOpenBoardStore.getState();
     if (boards?.some((board) => openBoardId === board._id)) return;
-    setOpenBoard({ id: boards[0]._id });
+    setOpenBoard({ id: boards[0]?._id });
   }, [boards, openBoardId]);
 };

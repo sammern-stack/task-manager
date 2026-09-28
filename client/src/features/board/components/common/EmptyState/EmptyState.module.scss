@@ -1,0 +1,16 @@
+.empty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+
+  > p {
+    font-size: 12px;
+    letter-spacing: 2.4px;
+    color: var(--secondary-text);
+  }
+}

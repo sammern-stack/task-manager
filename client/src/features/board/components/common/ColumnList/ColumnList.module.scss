@@ -11,23 +11,6 @@
     display: none;
   }
 
-  &__emptyState {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-
-    > p {
-      font-size: 12px;
-      letter-spacing: 2.4px;
-      color: var(--secondary-text);
-    }
-  }
-
   &__column {
     flex: 0 0 280px;
     display: flex;
@@ -39,17 +22,6 @@
     background: color-mix(in srgb, var(--secondary-bg) 25%, transparent);
     display: grid;
     place-items: center;
-  }
-
-  &__column > &__columnName {
-    padding-top: 0;
-    padding-left: 0px;
-    padding-bottom: 20px;
-  }
-
-  &__columnTasks {
-    flex: 1;
-    border: 1px solid var(--primary-border);
   }
 
   &__columnAddInput {

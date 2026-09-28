@@ -9,11 +9,11 @@ export const BoardMenu = ({ closeMenu }: { closeMenu: () => void }) => {
   const startUpdateBoard = useCurrentBoardStore((s) => s.startUpdateBoard);
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const openBoardName = useOpenBoardStore((s) => s.openBoard.name);
-  const { data: columns } = useGetColumnsByBoardId(openBoardId ?? "");
+  const { data: columns = [] } = useGetColumnsByBoardId(openBoardId ?? "");
 
   const handleEditBoard = () => {
-    if (!columns?.data) return;
-    startUpdateBoard(openBoardName, columns.data);
+    if (!columns) return;
+    startUpdateBoard(openBoardName, columns);
     openDialog("updateBoard");
     closeMenu();
   };

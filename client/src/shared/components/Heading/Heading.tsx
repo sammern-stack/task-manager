@@ -1,34 +1,29 @@
 import styles from "./Heading.module.scss";
+import { cls } from "@/shared/utils/formatters";
+import type { ComponentPropsWithoutRef, PropsWithChildren } from "react";
 
 type Size = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-type Variant = "default" | "withCount";
 
-interface HeadingProps {
+type HeadingProps = PropsWithChildren & {
   size: Size;
   className?: string;
-  variant?: Variant;
-  count?: number;
-  children: React.ReactNode;
-}
+} & ComponentPropsWithoutRef<Size>;
 
 export const Heading = ({
-  size,
+  size: Size,
   className,
-  variant = "default",
-  count,
   children,
+  ...props
 }: HeadingProps) => {
-  const Heading = size;
-
-  const headingClasses = [
-    styles.heading,
-    styles[`heading--${size}`],
+  const headingClasses = cls(
     className,
-  ].join(" ");
+    styles.heading,
+    styles[`heading--${Size}`],
+  );
 
   return (
-    <Heading className={headingClasses}>
-      {children} {variant === "withCount" && <span>({count})</span>}
-    </Heading>
+    <Size className={headingClasses} {...props}>
+      {children}
+    </Size>
   );
 };

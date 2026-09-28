@@ -2,15 +2,16 @@ import styles from "./ColumnList.module.scss";
 import { useEffect, useState } from "react";
 import { useOpenBoardStore } from "../../../stores/openBoardStore";
 import { useGetColumnsByBoardId } from "../../../hooks/useBoards";
-import { Button, Heading } from "@/shared/components";
 
-import { ColumnListCard } from "./ColumnListCard";
 import { ColumnListNewColumnCard } from "./ColumnListNewColumnCard";
+import { Column } from "../Column/Column";
+import { EmptyState } from "../EmptyState/EmptyState";
 import type { ColumnProperties } from "@/shared/types/column.types";
+import { CreateColumn } from "../CreateColumn/CreateColumn";
 
 export const ColumnList = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
-  const { data: columns } = useGetColumnsByBoardId(openBoardId ?? "");
+  const { data: columns = [] } = useGetColumnsByBoardId(openBoardId ?? "");
   const [newColumn, setNewColumn] = useState<ColumnProperties | null>(null);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ export const ColumnList = () => {
 
   const handleAddNewColumn = () => setNewColumn({ name: "" });
 
-  if (columns?.data.length === 0) {
+  if (columns.length === 0) {
     if (newColumn)
       return (
         <ColumnListNewColumnCard
@@ -28,32 +29,15 @@ export const ColumnList = () => {
         />
       );
 
-    return (
-      <div className={styles.columnList__emptyState}>
-        <p>This board is empty. Create a new column to get started.</p>
-        <Button variant="primarySmall" onClick={handleAddNewColumn}>
-          + Create New Column
-        </Button>
-      </div>
-    );
+    return <EmptyState onCreate={handleAddNewColumn} />;
   }
 
   return (
     <div className={styles.columnList}>
-      {columns?.data.map((column) => (
-        <ColumnListCard key={column._id} column={column} />
+      {columns.map((column) => (
+        <Column key={column?._id} column={column} />
       ))}
-      {newColumn && (
-        <ColumnListNewColumnCard
-          newColumn={newColumn}
-          setNewColumn={setNewColumn}
-        />
-      )}
-      <div className={styles.columnList__column} onClick={handleAddNewColumn}>
-        <Heading size="h1" className={styles.columnList__columnAdd}>
-          + New Column
-        </Heading>
-      </div>
+      <CreateColumn />
     </div>
   );
 };

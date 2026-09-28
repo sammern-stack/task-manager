@@ -1,0 +1,15 @@
+.column {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+
+  &__name {
+    padding: 0 0 20px;
+  }
+
+  &__tasks {
+    flex: 1;
+    border: 1px solid var(--primary-border);
+  }
+}
