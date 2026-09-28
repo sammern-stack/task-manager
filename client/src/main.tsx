@@ -6,8 +6,10 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "@/shared/lib/queryClient.ts";
 import App from "./App.tsx";
 
-const root = document.getElementById("root")!;
-createRoot(root).render(
+const rootEl = document.getElementById("root")!;
+const root = createRoot(rootEl);
+
+root.render(
   <StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
