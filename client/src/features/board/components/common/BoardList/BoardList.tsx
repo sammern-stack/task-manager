@@ -1,14 +1,14 @@
 import styles from "./BoardList.module.scss";
 import { useEffect } from "react";
-import { BoardListCard } from "./BoardListCard";
 import { useBoards } from "../../../hooks/useBoards";
 import { Heading } from "@/shared/components";
 import { useOpenBoardStore } from "@/features/board/stores/openBoardStore";
+import { Board } from "../Board/Board";
 
 export const BoardList = () => {
   const { data: boards } = useBoards();
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
-  const { setOpenBoard } = useOpenBoardStore.getState()
+  const { setOpenBoard } = useOpenBoardStore.getState();
 
   const boardsList = boards?.data;
   const boardLength = boards?.meta?.["length"];
@@ -17,7 +17,7 @@ export const BoardList = () => {
   useEffect(() => {
     if (!boards?.data) return;
     if (boards.data.some((board) => openBoardId === board._id)) return;
-    setOpenBoard({ id: boards.data[0]._id })
+    setOpenBoard({ id: boards.data[0]._id });
   }, [boards, openBoardId, setOpenBoard]);
 
   return (
@@ -26,9 +26,9 @@ export const BoardList = () => {
         All boards
       </Heading>
       {boardsList?.map((board) => (
-        <BoardListCard key={board._id} variant="board" board={board} />
+        <Board key={board._id} variant="board" board={board} />
       ))}
-      <BoardListCard variant="createBtn" />
+      <Board variant="createBtn" />
     </div>
   );
 };
