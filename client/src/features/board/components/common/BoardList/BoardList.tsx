@@ -4,6 +4,7 @@ import { useBoards } from "../../../hooks/useBoards";
 import { Heading } from "@/shared/components";
 import { useOpenBoardStore } from "@/features/board/stores/openBoardStore";
 import { Board } from "../Board/Board";
+import { CreateBoard } from "../Board/CreateBoard";
 
 export const BoardList = () => {
   const { data: boards } = useBoards();
@@ -26,9 +27,9 @@ export const BoardList = () => {
         All boards
       </Heading>
       {boardsList?.map((board) => (
-        <Board key={board._id} variant="board" board={board} />
+        <Board key={board._id}  board={board} />
       ))}
-      <Board variant="createBtn" />
+      <CreateBoard />
     </div>
   );
 };
