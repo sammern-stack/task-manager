@@ -47,10 +47,7 @@ export const CreateBoardDialog = () => {
             .map((name) => ({ name }));
 
           if (columnsToCreate.length > 0) {
-            createColumns({
-              boardId: data._id,
-              columns: { columns: columnsToCreate },
-            });
+            createColumns({ boardId: data._id, columns: columnsToCreate });
           }
 
           setOpenBoard({ id: data._id, name: data.name });
