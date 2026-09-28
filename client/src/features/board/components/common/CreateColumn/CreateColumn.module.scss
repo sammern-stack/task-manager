@@ -1,5 +1,5 @@
 .createColumn {
-  flex: 0 0 280px;
+  flex: 0 0 260px;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -15,5 +15,14 @@
 
   &__form {
     flex: 1;
+  }
+
+  &__field {
+    input{
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--primary-border);
+      color: var(--secondary-text);
+    }
   }
 }
