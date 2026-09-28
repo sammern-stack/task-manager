@@ -1,14 +1,13 @@
 import styles from "./Home.module.scss";
-import { PageLayout, BoardHeader, BoardSidebar, BoardContent } from "@/layout";
+import { PageLayout } from "@/layout";
+import { ColumnList } from "@/features/board";
 
 const HomePage = () => {
   return (
-    <PageLayout
-      className={styles.home}
-      sidebar={<BoardSidebar />}
-      header={<BoardHeader />}
-    >
-      <BoardContent />
+    <PageLayout className={styles.home}>
+      <div className={styles.home__content}>
+        <ColumnList />
+      </div>
     </PageLayout>
   );
 };
