@@ -18,3 +18,7 @@ export type TaskDocument = HydratedDocument<TaskSchema>;
 export type TaskStatics = {};
 
 export interface TaskModel extends Model<TaskSchema>, TaskStatics {}
+
+export type CreateTaskBody = Omit<TaskSchema, "boardId" | "columnId">;
+
+export type UpdateTaskBody = Partial<Omit<TaskSchema, "boardId" | "columnId">>;
