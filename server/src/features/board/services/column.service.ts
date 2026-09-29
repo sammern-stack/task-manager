@@ -1,6 +1,10 @@
 import Column from "../models/Column.js";
 import Board from "../models/Board.js";
-import { searchDocument } from "@/shared/utils/searchDocument.js";
+import {
+  searchDocument,
+  searchDocumentAndDelete,
+  searchDocumentAndUpdate,
+} from "@/shared/utils/searchDocument.js";
 import {
   AppError,
   ConflictError,
@@ -54,8 +58,10 @@ export const createColumns = async (
   const board = await searchDocument(boardId, Board);
   if (!board) throw new NotFoundError("board");
 
-  const uniqueNames = [...new Set(columns.map((column) => column.name))];
-  const newColumns = uniqueNames.map((name) => {
+  const columnNames = columns.map((column) => column.name);
+  const uniqueNames = new Set(columnNames);
+
+  const newColumns = [...uniqueNames].map((name) => {
     const columnName = name.trim();
     if (columnName === "") {
       throw new AppError("Column name can't be empty", 400);
@@ -75,34 +81,28 @@ export const updateColumn = async (
   columnId: string,
   updates: ColumnUpdateBody,
 ) => {
-  const updatedColumn = await Column.findByIdAndUpdate(
-    columnId,
-    updates,
-    columnsQueryOptions,
-  );
-  if (!updatedColumn) throw new NotFoundError("column");
-  return updatedColumn;
+  const column = await searchDocumentAndUpdate(columnId, Column, updates);
+  if (!column) throw new NotFoundError("column");
+  return column;
 };
 
 export const updateColumnsByBoardId = async (
   columns: ColumnBulkCreateBody[],
 ) => {
   const updatedColumns = await Promise.all(
-    columns.map((column) =>
-      Column.findByIdAndUpdate(column.id, column.updates, columnsQueryOptions),
-    ),
+    columns.map((c) => searchDocumentAndUpdate(c.id, Column, c.updates)),
   );
   const filteredColumns = updatedColumns.filter((column) => column !== null);
   return filteredColumns;
 };
 
 export const deleteColumnsByBoardId = async (columnIds: string[]) => {
-  await Promise.all(columnIds.map((id) => Column.findByIdAndDelete(id)));
+  await Promise.all(columnIds.map((id) => searchDocumentAndDelete(id, Column)));
   return columnIds;
 };
 
 export const deleteColumn = async (columnId: string) => {
-  const deletedColumn = await Column.findByIdAndDelete(columnId);
+  const deletedColumn = await searchDocumentAndDelete(columnId, Column);
   if (!deletedColumn) throw new NotFoundError("column");
   return deletedColumn;
 };
