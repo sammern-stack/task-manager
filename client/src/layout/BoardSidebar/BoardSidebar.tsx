@@ -1,6 +1,6 @@
 import styles from "./BoardSidebar.module.scss";
 import { ThemeSwitch } from "@/features/settings";
-import { Heading, PageLogo } from "@/shared/components";
+import { Heading, Map, PageLogo } from "@/shared/components";
 import { useBoards } from "@/features/board/hooks/useBoards";
 import { Board, CreateBoard } from "@/features/board";
 import { useSelectFirstBoard } from "@/features/board/hooks/useSelectFirstBoard";
@@ -18,9 +18,7 @@ export const BoardSidebar = () => {
       </div>
       <div className={styles.sidebar__boardList}>
         <Heading size="h2">All boards ({boards.length})</Heading>
-        {boards.map((board) => (
-          <Board key={board._id} board={board} />
-        ))}
+        <Map data={boards} render={(b) => <Board key={b._id} board={b} />} />
         <CreateBoard />
       </div>
       <ThemeSwitch />
