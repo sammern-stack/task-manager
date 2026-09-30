@@ -5,8 +5,8 @@ import {
   CreateColumn,
   EmptyState,
   useOpenBoardStore,
+  useGetColumnsByBoardId,
 } from "@/features/board";
-import { useGetColumnsByBoardId } from "@/features/board/hooks/useBoards";
 
 const HomePage = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id) ?? "";

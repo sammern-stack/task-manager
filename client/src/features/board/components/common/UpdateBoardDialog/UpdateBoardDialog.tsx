@@ -1,11 +1,11 @@
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../../stores/openBoardStore";
+import { useUpdateBoard } from "../../../hooks/useBoards";
 import {
-  useUpdateBoard,
   useCreateColumns,
   useUpdateColumns,
   useDeleteColumns,
-} from "../../../hooks/useBoards";
+} from "../../../hooks/useColumns";
 import { Button } from "@/shared/components";
 import { useBoardError } from "@/features/board/hooks/useBoardError";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";

@@ -1,6 +1,7 @@
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../../stores/openBoardStore";
-import { useCreateBoard, useCreateColumns } from "../../../hooks/useBoards";
+import { useCreateBoard } from "../../../hooks/useBoards";
+import { useCreateColumns } from "../../../hooks/useColumns";
 import { Button } from "@/shared/components";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import { useBoardError } from "@/features/board/hooks/useBoardError";
