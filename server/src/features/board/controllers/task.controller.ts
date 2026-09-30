@@ -16,9 +16,12 @@ export const getTasksByBoardId = asyncHandler(
 );
 
 export const getTaskById = asyncHandler(
-  async (req: Request<{ taskId?: string }>, res: Response) => {
-    const { taskId } = req.params;
-    const task = await taskService.getTaskById(taskId!);
+  async (
+    req: Request<{ boardId?: string; taskId?: string }>,
+    res: Response,
+  ) => {
+    const { boardId, taskId } = req.params;
+    const task = await taskService.getTaskById(boardId!, taskId!);
     res.status(200).json({
       ok: true,
       message: `Task with id ${task._id} fetched successfully`,
@@ -44,11 +47,11 @@ export const createTask = asyncHandler(
 
 export const updateTask = asyncHandler(
   async (
-    req: Request<{ taskId?: string }, {}, UpdateTaskBody>,
+    req: Request<{ boardId?: string; taskId?: string }, {}, UpdateTaskBody>,
     res: Response,
   ) => {
-    const { taskId } = req.params;
-    const task = await taskService.updateTask(taskId!, req.body);
+    const { boardId, taskId } = req.params;
+    const task = await taskService.updateTask(boardId!, taskId!, req.body);
     res.status(200).json({
       ok: true,
       message: `Task with id ${task._id} updated successfully`,
@@ -58,9 +61,12 @@ export const updateTask = asyncHandler(
 );
 
 export const deleteTask = asyncHandler(
-  async (req: Request<{ taskId?: string }>, res: Response) => {
-    const { taskId } = req.params;
-    const task = await taskService.deleteTask(taskId!);
+  async (
+    req: Request<{ boardId?: string; taskId?: string }>,
+    res: Response,
+  ) => {
+    const { boardId, taskId } = req.params;
+    const task = await taskService.deleteTask(boardId!, taskId!);
     res.status(200).json({
       ok: true,
       message: `Task with id ${task._id} deleted successfully`,

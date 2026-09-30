@@ -66,7 +66,7 @@ export const updateColumn = asyncHandler(
   },
 );
 
-export const updateColumnsByBoardId = asyncHandler(
+export const updateColumns = asyncHandler(
   async (
     req: Request<{}, {}, { columns: ColumnBulkCreateBody[] }>,
     res: Response,
@@ -81,7 +81,7 @@ export const updateColumnsByBoardId = asyncHandler(
   },
 );
 
-export const deleteColumnsByBoardId = asyncHandler(
+export const deleteColumns = asyncHandler(
   async (req: Request<{}, {}, { columnIds: string[] }>, res: Response) => {
     const { columnIds } = req.body;
     const result = await columnService.deleteColumnsByBoardId(columnIds);

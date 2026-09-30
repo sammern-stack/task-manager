@@ -17,8 +17,8 @@ export const getTasksByBoardId = async (boardId: string) => {
   return tasks;
 };
 
-export const getTaskById = async (taskId: string) => {
-  const task = await searchDocument(taskId, Task);
+export const getTaskById = async (boardId: string, taskId: string) => {
+  const task = await searchDocument({ _id: taskId, boardId }, Task);
   if (!task) throw new NotFoundError(`task with id ${taskId}`);
   return task;
 };
@@ -41,14 +41,25 @@ export const createTask = async (
   return newTask;
 };
 
-export const updateTask = async (taskId: string, updates: UpdateTaskBody) => {
-  const updatedTask = await searchDocumentAndUpdate(taskId, Task, updates);
+export const updateTask = async (
+  boardId: string,
+  taskId: string,
+  updates: UpdateTaskBody,
+) => {
+  const updatedTask = await searchDocumentAndUpdate(
+    { _id: taskId, boardId },
+    Task,
+    updates,
+  );
   if (!updatedTask) throw new NotFoundError(`task with id ${taskId}`);
   return updatedTask;
 };
 
-export const deleteTask = async (taskId: string) => {
-  const deletedTask = await searchDocumentAndDelete(taskId, Task);
+export const deleteTask = async (boardId: string, taskId: string) => {
+  const deletedTask = await searchDocumentAndDelete(
+    { _id: taskId, boardId },
+    Task,
+  );
   if (!deletedTask) throw new NotFoundError(`task with id ${taskId}`);
   return deletedTask;
 };
