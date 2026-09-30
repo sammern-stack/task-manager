@@ -4,8 +4,9 @@ import { BoardDialogButton } from "./BoardDialogButton";
 import { BoardDialogInput } from "./BoardDialogInput";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import CrossIcon from "@/assets/icon-cross.svg?react";
+import { Button } from "@/shared/components";
 
-export const BoardDialogColumns = ({ id }: { id: string }) => {
+export const BoardDialogColumns = () => {
   const board = useCurrentBoardStore((s) => s.board);
   const { addColumn, removeColumn, setColumnName } =
     useCurrentBoardStore.getState();
@@ -14,50 +15,37 @@ export const BoardDialogColumns = ({ id }: { id: string }) => {
 
   if (!board) return null;
 
-  const onColumnAdd = () => {
-    enableScroll();
-    addColumn();
-  };
-
-  const onColumnRemove = (id: string) => {
-    removeColumn(id);
-  };
-
-  const onColumnChange = (name: string, id: string) => {
-    setColumnName(id, name);
-  };
-
   return (
     <div className={styles.boardDialog__columns}>
       <span className={styles.boardDialog__columnsTitle}>Board Columns</span>
       <div ref={containerRef} className={styles.boardDialog__columnsList}>
-        {board.columns.map((column) => (
+        {board.columns.map(({ id, column }) => (
           <label
-            key={column.id}
-            htmlFor={id}
+            key={id}
+            htmlFor="columns"
             className={styles.boardDialog__column}
           >
             <BoardDialogInput
-              id={id}
+              id="columns"
               className={styles.boardDialog__columnInput}
               placeholder="e.g. Todos, Doing, etc."
               handleValue={[
-                column.column.name,
-                (e) => onColumnChange(e.target.value, column.id),
+                column.name,
+                (e) => setColumnName(e.target.value, id),
               ]}
             />
             <BoardDialogButton
               variant="removeColumn"
-              onClick={() => onColumnRemove(column.id)}
+              onClick={() => removeColumn(id)}
             >
               <CrossIcon />
             </BoardDialogButton>
           </label>
         ))}
       </div>
-      <BoardDialogButton variant="createColumn" onClick={onColumnAdd}>
+      <Button variant="secondary" onClick={() => (enableScroll(), addColumn())}>
         + Add New Column
-      </BoardDialogButton>
+      </Button>
     </div>
   );
 };

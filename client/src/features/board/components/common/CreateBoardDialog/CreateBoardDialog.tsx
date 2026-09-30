@@ -74,7 +74,7 @@ export const CreateBoardDialog = () => {
           handleValue={[board.name, handleBoardNameChange]}
           helperText="Optional - defaults to 'Untitled Board' if empty"
         />
-        <BoardDialogColumns id="boardColumns" />
+        <BoardDialogColumns />
         <Button type="submit" variant="primarySmall">
           Create New Board
         </Button>
