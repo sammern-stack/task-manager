@@ -1,33 +1,21 @@
 import type { Request, Response } from "express";
 import * as boardService from "../services/board.service.js";
 import { asyncHandler } from "@/shared/utils/asyncHandler.js";
-
 import type { BoardCreateBody, BoardUpdateBody } from "../types/board.types.js";
-import type {
-  GetAllRequest,
-  CreateRequest,
-  DeleteRequest,
-  UpdateRequest,
-  GetOneRequest,
-} from "@/shared/types/express.types.js";
 
-export const getBoards = asyncHandler(
-  async (_req: GetAllRequest, res: Response) => {
-    const boards = await boardService.getAllBoards();
-    res.status(200).json({
-      ok: true,
-      message: "Boards fetched successfully",
-      data: boards,
-      meta: {
-        length: boards.length,
-      },
-    });
-  },
-);
+export const getBoards = asyncHandler(async (_req: Request, res: Response) => {
+  const boards = await boardService.getAllBoards();
+  res.status(200).json({
+    ok: true,
+    message: "Boards fetched successfully",
+    data: boards,
+  });
+});
 
 export const getBoard = asyncHandler(
-  async (req: GetOneRequest, res: Response) => {
-    const board = await boardService.getBoardById(req.params.id!);
+  async (req: Request<{ boardId?: string }>, res: Response) => {
+    const { boardId } = req.params;
+    const board = await boardService.getBoardById(boardId!);
     res.status(200).json({
       ok: true,
       message: "Board fetched successfully",
@@ -37,7 +25,7 @@ export const getBoard = asyncHandler(
 );
 
 export const createBoard = asyncHandler(
-  async (req: CreateRequest<BoardCreateBody>, res: Response) => {
+  async (req: Request<{}, {}, BoardCreateBody>, res: Response) => {
     const newBoard = await boardService.createNewBoard(req.body);
     res.status(201).json({
       ok: true,
@@ -48,8 +36,9 @@ export const createBoard = asyncHandler(
 );
 
 export const deleteBoard = asyncHandler(
-  async (req: DeleteRequest, res: Response) => {
-    const board = await boardService.deleteBoard(req.params.id!);
+  async (req: Request<{ boardId?: string }>, res: Response) => {
+    const { boardId } = req.params;
+    const board = await boardService.deleteBoard(boardId!);
     res.status(200).json({
       ok: true,
       message: `Board: ${board.name} deleted successfully`,
@@ -59,8 +48,12 @@ export const deleteBoard = asyncHandler(
 );
 
 export const updateBoard = asyncHandler(
-  async (req: UpdateRequest<BoardUpdateBody>, res: Response) => {
-    const board = await boardService.updateBoard(req.params.id!, req.body);
+  async (
+    req: Request<{ boardId?: string }, {}, BoardUpdateBody>,
+    res: Response,
+  ) => {
+    const { boardId } = req.params;
+    const board = await boardService.updateBoard(boardId!, req.body);
     res.status(200).json({
       ok: true,
       message: `Board: ${board.name} updated successfully`,

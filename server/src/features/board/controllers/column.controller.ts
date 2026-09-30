@@ -71,9 +71,8 @@ export const updateColumnsByBoardId = asyncHandler(
     req: Request<{}, {}, { columns: ColumnBulkCreateBody[] }>,
     res: Response,
   ) => {
-    const updatedColumns = await columnService.updateColumnsByBoardId(
-      req.body.columns,
-    );
+    const { columns } = req.body;
+    const updatedColumns = await columnService.updateColumnsByBoardId(columns);
     res.status(200).json({
       ok: true,
       message: "Columns updated successfully",
@@ -84,14 +83,13 @@ export const updateColumnsByBoardId = asyncHandler(
 
 export const deleteColumnsByBoardId = asyncHandler(
   async (req: Request<{}, {}, { columnIds: string[] }>, res: Response) => {
-    const result = await columnService.deleteColumnsByBoardId(
-      req.body.columnIds,
-    );
+    const { columnIds } = req.body;
+    const result = await columnService.deleteColumnsByBoardId(columnIds);
     res.status(200).json({
       ok: true,
       message: "Columns deleted successfully",
       data: result,
-    })
+    });
   },
 );
 
