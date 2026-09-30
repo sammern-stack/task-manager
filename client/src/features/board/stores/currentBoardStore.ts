@@ -11,7 +11,7 @@ type Board = {
   columns: BoardColumn[];
 };
 
-type BoardColumn = { id: string; column: ColumnSchema | ColumnProperties };
+export type BoardColumn = { id: string; column: ColumnSchema | ColumnProperties };
 
 interface CurrentBoard {
   boardVariant: "createBoard" | "updateBoard" | null;

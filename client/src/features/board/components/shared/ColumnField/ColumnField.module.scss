@@ -1,0 +1,25 @@
+.column {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+
+  input {
+    flex: 1;
+    border: 1px solid #828fa3;
+    background: transparent;
+    outline: none;
+    padding: 12px;
+    color: var(--color-white);
+    border-radius: 6px;
+  }
+
+  button {
+    padding: 0 10px;
+
+    > svg {
+      scale: 1.1;
+      color: var(--secondary-text);
+    }
+  }
+}
