@@ -4,3 +4,4 @@ export { Dropdown } from "./Dropdown/Dropdown";
 export { Toast } from "./Toast/Toast";
 export { Button } from "./Button/Button";
 export { Heading } from "./Heading/Heading";
+export { Map } from "./Map/Map";

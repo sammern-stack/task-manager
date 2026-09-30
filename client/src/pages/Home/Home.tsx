@@ -7,26 +7,25 @@ import {
   useOpenBoardStore,
   useGetColumnsByBoardId,
 } from "@/features/board";
+import { Map } from "@/shared/components";
 
 const HomePage = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id) ?? "";
   const { data: columns = [] } = useGetColumnsByBoardId(openBoardId);
-  const isColumnsEmpty = columns.length === 0;
 
   return (
     <PageLayout className={styles.home}>
-      <div className={styles.home__content}>
-        {!isColumnsEmpty ? (
-          <div className={styles.columnList}>
-            {columns.map((column) => (
-              <Column key={column._id} column={column} />
-            ))}
-            <CreateColumn />
-          </div>
-        ) : (
-          <EmptyState />
-        )}
-      </div>
+      {columns.length !== 0 ? (
+        <div className={styles.home__columns}>
+          <Map
+            data={columns}
+            render={(column) => <Column key={column._id} column={column} />}
+          />
+          <CreateColumn />
+        </div>
+      ) : (
+        <EmptyState />
+      )}
     </PageLayout>
   );
 };
