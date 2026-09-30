@@ -2,7 +2,7 @@ import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore"
 import styles from "./BoardMenu.module.scss";
 import { useDialogStore } from "@/shared/stores";
 import { useOpenBoardStore } from "@/features/board/stores/openBoardStore";
-import { useGetColumnsByBoardId } from "@/features/board/hooks/useBoards";
+import { useGetColumnsByBoardId } from "@/features/board";
 
 export const BoardMenu = ({ closeMenu }: { closeMenu: () => void }) => {
   const openDialog = useDialogStore.getState().openDialog;

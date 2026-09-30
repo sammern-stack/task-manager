@@ -1,29 +1,23 @@
 import styles from "./Button.module.scss";
+import { cls } from "@/shared/utils/formatters";
+import type { ComponentPropsWithoutRef } from "react";
 
-interface ButtonProps {
-  className?: string;
-  onClick?: () => void;
-  children: React.ReactNode;
+type ButtonProps = {
   variant?: "primaryLarge" | "primarySmall" | "secondary" | "destructive";
-  type?: "button" | "submit" | "reset";
-}
+} & ComponentPropsWithoutRef<"button">;
 
-export const Button = ({
-  className,
-  onClick = () => {},
-  children,
-  variant = "primaryLarge",
-  type = "button",
-}: ButtonProps) => {
-  const buttonClassNames = [
+export const Button = ({ variant = "primaryLarge", ...props }: ButtonProps) => {
+  const buttonType = props.type ?? "button";
+
+  const buttonClassNames = cls(
+    props.className,
     styles.button,
-    className ?? "",
     styles[`button--${variant}`],
-  ].join(" ");
+  );
 
   return (
-    <button type={type} className={buttonClassNames} onClick={onClick}>
-      {children}
+    <button type={buttonType} className={buttonClassNames} {...props}>
+      {props.children}
     </button>
   );
 };

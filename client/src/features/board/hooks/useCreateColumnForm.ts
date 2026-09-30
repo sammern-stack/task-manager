@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../stores/openBoardStore";
-import { useCreateColumn } from "./useBoards";
+import { useCreateColumn } from "../";
 import type { FormikConfig } from "formik";
 
 export const useCreateColumnForm = (
