@@ -1,4 +1,8 @@
-.deleteBoardDialog {
+.confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
   &__title {
     font-size: 18px;
     font-weight: 700;
@@ -11,14 +15,13 @@
     font-weight: 500;
     line-height: 23px;
     color: var(--secondary-text);
-    margin: 20px 0;
   }
 
   &__actions {
     display: flex;
     gap: 16px;
 
-    > * {
+    > button {
       flex: 1;
     }
   }

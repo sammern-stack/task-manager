@@ -1,18 +1,14 @@
 import styles from "./Dialog.module.scss";
 import { useDialogStore } from "@/shared/stores";
+import { BoardCreateDialog, BoardUpdateDialog } from "@/features/board";
+import { Confirm } from "../Confirm/Confirm";
 import { RxCross1 } from "react-icons/rx";
 
-import {
-  BoardCreateDialog,
-  BoardUpdateDialog,
-  DeleteBoardDialog,
-} from "@/features/board";
-
 export const Dialog = () => {
-  const dialog = useDialogStore((s) => s.dialog);
+  const { type, isOpen, payload } = useDialogStore((s) => s.dialog);
   const closeDialog = useDialogStore((s) => s.closeDialog);
 
-  if (!dialog.isOpen) return null;
+  if (!isOpen) return null;
 
   return (
     <>
@@ -25,9 +21,15 @@ export const Dialog = () => {
         >
           <RxCross1 />
         </button>
-        {dialog.type === "createBoard" && <BoardCreateDialog />}
-        {dialog.type === "deleteBoard" && <DeleteBoardDialog />}
-        {dialog.type === "updateBoard" && <BoardUpdateDialog />}
+        {type === "createBoard" && <BoardCreateDialog />}
+        {type === "deleteBoard" && (
+          <Confirm
+            title={payload?.title as string}
+            description={payload?.description as string}
+            onConfirm={payload?.onDelete as () => void}
+          />
+        )}
+        {type === "updateBoard" && <BoardUpdateDialog />}
       </dialog>
       <div className={styles.dialog__backdrop} onClick={closeDialog}></div>
     </>

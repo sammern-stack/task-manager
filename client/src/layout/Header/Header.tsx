@@ -1,29 +1,11 @@
 import styles from "./Header.module.scss";
-import { useGetColumnsByBoardId, useOpenBoardStore } from "@/features/board";
+import { useHeader } from "./useHeader";
 import { useDropdown } from "@/shared/hooks/useDropdown";
-
 import VerticalEllipsisIcon from "@/assets/icon-vertical-ellipsis.svg?react";
-import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
-import { useDialogStore } from "@/shared/stores";
 
 export const Header = () => {
   const { dropdownRef, openDropdown, toggle } = useDropdown();
-  const { openDialog } = useDialogStore.getState();
-  const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
-  const { data: columns = [] } = useGetColumnsByBoardId(openBoardId);
-  const boardName = useOpenBoardStore((s) => s.openBoard.name);
-  const startUpdateBoard = useCurrentBoardStore((s) => s.startUpdateBoard);
-
-  const onEditBoard = () => {
-    startUpdateBoard(boardName, columns);
-    openDialog("updateBoard");
-    toggle();
-  };
-
-  const onDeleteBoard = async () => {
-    openDialog("deleteBoard");
-    toggle();
-  };
+  const { onEditBoard, onDeleteBoard, boardName } = useHeader();
 
   return (
     <div className={styles.header}>
@@ -35,8 +17,8 @@ export const Header = () => {
 
         {openDropdown && (
           <ul className={styles.header__boardMenu}>
-            <li onClick={onEditBoard}>Edit Board</li>
-            <li onClick={onDeleteBoard}>Delete Board</li>
+            <li onClick={() => (onEditBoard(), toggle())}>Edit Board</li>
+            <li onClick={() => (onDeleteBoard(), toggle())}>Delete Board</li>
           </ul>
         )}
       </div>
