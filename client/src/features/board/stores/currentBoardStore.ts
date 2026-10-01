@@ -11,16 +11,19 @@ type Board = {
   columns: BoardColumn[];
 };
 
-export type BoardColumn = { id: string; column: ColumnSchema | ColumnProperties };
+export type BoardColumn = {
+  id: string;
+  column: ColumnSchema | ColumnProperties;
+};
 
 interface CurrentBoard {
   boardVariant: "createBoard" | "updateBoard" | null;
   board: Board | null;
   originalColumns: BoardColumn[] | null;
 
-  buildCreateColumnsArray: () => CreateColumnBody[] | undefined;
-  buildUpdateColumnsArray: () => BulkUpdateColumnsBody[] | undefined;
-  buildDeleteColumnsArray: () => string[] | undefined;
+  buildCreateColumnsArray: () => CreateColumnBody[];
+  buildUpdateColumnsArray: () => BulkUpdateColumnsBody[];
+  buildDeleteColumnsArray: () => string[];
 
   startCreateBoard: () => void;
   startUpdateBoard: (name: string, columns: ColumnSchema[]) => void;
@@ -39,7 +42,7 @@ export const useCurrentBoardStore = create<CurrentBoard>((set, get) => ({
 
   buildCreateColumnsArray: () => {
     const state = get();
-    if (!state.board || !state.originalColumns) return;
+    if (!state.board || !state.originalColumns) return [];
 
     const current = state.board.columns;
 
@@ -51,7 +54,7 @@ export const useCurrentBoardStore = create<CurrentBoard>((set, get) => ({
   },
   buildUpdateColumnsArray: () => {
     const state = get();
-    if (!state.board || !state.originalColumns) return;
+    if (!state.board || !state.originalColumns) return [];
 
     const original = state.originalColumns;
     const current = state.board.columns;
@@ -85,7 +88,7 @@ export const useCurrentBoardStore = create<CurrentBoard>((set, get) => ({
   },
   buildDeleteColumnsArray: () => {
     const state = get();
-    if (!state.board || !state.originalColumns) return;
+    if (!state.board || !state.originalColumns) return [];
 
     const original = state.originalColumns;
     const current = state.board.columns;

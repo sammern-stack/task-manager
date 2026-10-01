@@ -1,0 +1,30 @@
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__title {
+    font-size: 18px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__columns {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__columnsList {
+    max-height: 180px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

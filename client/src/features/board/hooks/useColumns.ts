@@ -32,16 +32,14 @@ export const useCreateColumn = (boardId: string) => {
 export const useCreateColumns = () => {
   const queryClient = useQueryClient();
 
+  interface MutationFnProps {
+    boardId: string;
+    columns: CreateColumnBody[];
+  }
+
   return useMutation({
-    mutationFn: ({
-      boardId,
-      columns,
-    }: {
-      boardId: string;
-      columns: CreateColumnBody[];
-    }) => {
-      return columnApi.createColumnsReq(boardId, columns);
-    },
+    mutationFn: ({ boardId, columns }: MutationFnProps) =>
+      columnApi.createColumnsReq(boardId, columns),
     onSuccess: (_, { boardId }) => {
       queryClient.invalidateQueries({
         queryKey: [BOARD_KEY, boardId, "columns"],
@@ -53,16 +51,14 @@ export const useCreateColumns = () => {
 export const useUpdateColumns = () => {
   const queryClient = useQueryClient();
 
+  interface MutationFnProps {
+    boardId: string;
+    columns: BulkUpdateColumnsBody[];
+  }
+
   return useMutation({
-    mutationFn: ({
-      boardId,
-      columns,
-    }: {
-      boardId: string;
-      columns: BulkUpdateColumnsBody[];
-    }) => {
-      return columnApi.updateColumnsReq(boardId, columns);
-    },
+    mutationFn: ({ boardId, columns }: MutationFnProps) =>
+      columnApi.updateColumnsReq(boardId, columns),
     onSuccess(_, { boardId }) {
       queryClient.invalidateQueries({
         queryKey: [BOARD_KEY, boardId, "columns"],
@@ -74,16 +70,14 @@ export const useUpdateColumns = () => {
 export const useDeleteColumns = () => {
   const queryClient = useQueryClient();
 
+  interface MutationFnProps {
+    boardId: string;
+    columnIds: string[];
+  }
+
   return useMutation({
-    mutationFn: ({
-      boardId,
-      columnIds,
-    }: {
-      boardId: string;
-      columnIds: string[];
-    }) => {
-      return columnApi.deleteColumnsReq(boardId, columnIds);
-    },
+    mutationFn: ({ boardId, columnIds }: MutationFnProps) =>
+      columnApi.deleteColumnsReq(boardId, columnIds),
     onSuccess(_, { boardId }) {
       queryClient.invalidateQueries({
         queryKey: [BOARD_KEY, boardId, "columns"],

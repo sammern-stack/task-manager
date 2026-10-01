@@ -3,9 +3,9 @@ import { useDialogStore } from "@/shared/stores";
 import { RxCross1 } from "react-icons/rx";
 
 import {
-  CreateBoardDialog,
+  BoardCreateDialog,
+  BoardUpdateDialog,
   DeleteBoardDialog,
-  UpdateBoardDialog,
 } from "@/features/board";
 
 export const Dialog = () => {
@@ -25,9 +25,9 @@ export const Dialog = () => {
         >
           <RxCross1 />
         </button>
-        {dialog.type === "createBoard" && <CreateBoardDialog />}
+        {dialog.type === "createBoard" && <BoardCreateDialog />}
         {dialog.type === "deleteBoard" && <DeleteBoardDialog />}
-        {dialog.type === "updateBoard" && <UpdateBoardDialog />}
+        {dialog.type === "updateBoard" && <BoardUpdateDialog />}
       </dialog>
       <div className={styles.dialog__backdrop} onClick={closeDialog}></div>
     </>

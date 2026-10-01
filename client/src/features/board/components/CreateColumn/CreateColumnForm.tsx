@@ -1,6 +1,6 @@
 import styles from "./CreateColumn.module.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useCreateColumnForm } from "../../../hooks/useCreateColumnForm";
+import { useCreateColumnForm } from "../../hooks/useCreateColumnForm";
 
 interface CreateColumnFormProps {
   toggleForm: () => void;
