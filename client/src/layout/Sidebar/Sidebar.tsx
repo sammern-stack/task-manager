@@ -1,4 +1,4 @@
-import styles from "./BoardSidebar.module.scss";
+import styles from "./Sidebar.module.scss";
 import { ThemeSwitch } from "@/features/settings";
 import { Heading, Map, PageLogo } from "@/shared/components";
 import { useBoards } from "@/features/board/hooks/useBoards";
@@ -7,7 +7,7 @@ import { useSelectFirstBoard } from "@/features/board/hooks/useSelectFirstBoard"
 
 import HideSidebarIcon from "@/assets/icon-hide-sidebar.svg?react";
 
-export const BoardSidebar = () => {
+export const Sidebar = () => {
   const { data: boards = [] } = useBoards();
   useSelectFirstBoard(boards);
 

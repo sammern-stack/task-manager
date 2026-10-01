@@ -1,5 +1,5 @@
 import styles from "./PageLayout.module.scss";
-import { BoardHeader, BoardSidebar } from "@/layout";
+import { Header, Sidebar } from "@/layout";
 import { cls } from "@/shared/utils/formatters";
 import type { PropsWithChildren } from "react";
 
@@ -15,10 +15,10 @@ export const PageLayout = (props: PageLayoutProps) => {
   return (
     <div className={styles.pageLayout}>
       <header className={styles.pageLayout__header}>
-        {header ?? <BoardHeader />}
+        {header ?? <Header />}
       </header>
       <aside className={styles.pageLayout__sidebar}>
-        {sidebar ?? <BoardSidebar />}
+        {sidebar ?? <Sidebar />}
       </aside>
       <main className={cls(styles.pageLayout__main, className)}>
         {children}

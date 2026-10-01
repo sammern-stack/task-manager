@@ -1,4 +1,4 @@
-.boardHeader {
+.header {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -10,12 +10,12 @@
     font-weight: 700;
     line-height: 30px;
   }
-}
 
-.dropdown {
-  position: relative;
+  &__boardDropdown {
+    position: relative;
+  }
 
-  &__toggle {
+  &__boardToggle {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -28,7 +28,7 @@
     }
   }
 
-  &__menu {
+  &__boardMenu {
     position: absolute;
     top: 40px;
     right: 0;
