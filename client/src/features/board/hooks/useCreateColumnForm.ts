@@ -8,7 +8,7 @@ export const useCreateColumnForm = (
   toggleForm: () => void,
 ): FormikConfig<{ name: string }> => {
   const addToast = useToastStore((s) => s.addToast);
-  const openBoardId = useOpenBoardStore((s) => s.openBoard.id) ?? "";
+  const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const { mutate: createColumn } = useCreateColumn(openBoardId);
 
   return {

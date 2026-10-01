@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import type { ColumnSchema } from "@/shared/types/column.types";
 
 type OpenBoard = {
-  id: string | null;
+  id: string;
   name: string;
   columns: ColumnSchema[] | null;
 };
@@ -17,7 +17,7 @@ export const useOpenBoardStore = create<OpenBoardStore>()(
   persist(
     (set) => ({
       openBoard: {
-        id: null,
+        id: "",
         name: "",
         columns: null,
       },

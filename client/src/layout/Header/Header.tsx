@@ -10,7 +10,7 @@ export const Header = () => {
   const { dropdownRef, openDropdown, toggle } = useDropdown();
   const { openDialog } = useDialogStore.getState();
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
-  const { data: columns = [] } = useGetColumnsByBoardId(openBoardId ?? "");
+  const { data: columns = [] } = useGetColumnsByBoardId(openBoardId);
   const boardName = useOpenBoardStore((s) => s.openBoard.name);
   const startUpdateBoard = useCurrentBoardStore((s) => s.startUpdateBoard);
 

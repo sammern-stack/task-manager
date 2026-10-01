@@ -8,7 +8,7 @@ import {
 } from "@/features/board";
 
 const HomePage = () => {
-  const openBoardId = useOpenBoardStore((s) => s.openBoard.id) ?? "";
+  const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const { data: columns = [] } = useGetColumnsByBoardId(openBoardId);
 
   return (

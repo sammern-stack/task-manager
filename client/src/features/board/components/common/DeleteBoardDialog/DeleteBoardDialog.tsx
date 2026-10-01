@@ -18,7 +18,7 @@ export const DeleteBoardDialog = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
 
   const handleDelete = () => {
-    deleteBoard(openBoardId ?? "", {
+    deleteBoard(openBoardId, {
       onSuccess: (data) => {
         addToast({ message: data.message, type: "success" });
         closeDialog();
