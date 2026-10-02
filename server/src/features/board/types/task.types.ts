@@ -8,7 +8,7 @@ export type SubtaskSchema = {
 export type TaskSchema = {
   name: string;
   description: string;
-  subtasks: SubtaskSchema[];
+  subtasks: Types.DocumentArray<SubtaskSchema>;
   boardId: Types.ObjectId;
   columnId: Types.ObjectId;
 };
@@ -19,6 +19,14 @@ export type TaskStatics = {};
 
 export interface TaskModel extends Model<TaskSchema>, TaskStatics {}
 
-export type CreateTaskBody = Omit<TaskSchema, "boardId">;
-
+export type CreateTaskBody = Omit<TaskSchema, "boardId" | "subtasks"> & {
+  subtasks: SubtaskSchema[];
+};
 export type UpdateTaskBody = Partial<Omit<TaskSchema, "boardId" | "subtasks">>;
+
+export type CreateSubtasksBody = Omit<SubtaskSchema, "isCompleted">[];
+export type UpdateSubtasksBody = {
+  id: string;
+  subtask: Partial<Omit<SubtaskSchema, "isCompleted">>;
+}[];
+export type DeleteSubtasksBody = { id: string }[];
