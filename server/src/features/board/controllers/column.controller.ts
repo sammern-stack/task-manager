@@ -7,14 +7,29 @@ import type {
   ColumnUpdateBody,
 } from "../types/column.types.js";
 
-export const getColumnsByBoardId = asyncHandler(
+export const getColumns = asyncHandler(
   async (req: Request<{ boardId?: string }>, res: Response) => {
     const { boardId } = req.params;
-    const columns = await columnService.getColumnsByBoardId(boardId!);
+    const columns = await columnService.getColumns(boardId!);
     res.status(200).json({
       ok: true,
       message: "Columns fetched successfully",
       data: columns,
+    });
+  },
+);
+
+export const getColumnById = asyncHandler(
+  async (
+    req: Request<{ boardId?: string; columnId?: string }>,
+    res: Response,
+  ) => {
+    const { boardId, columnId } = req.params;
+    const column = await columnService.getColumnById(boardId!, columnId!);
+    res.status(200).json({
+      ok: true,
+      message: "Column fetched successfully",
+      data: column,
     });
   },
 );
@@ -30,22 +45,6 @@ export const createColumn = asyncHandler(
       ok: true,
       message: "Column created successfully",
       data: newColumn,
-    });
-  },
-);
-
-export const createColumns = asyncHandler(
-  async (
-    req: Request<{ boardId?: string }, {}, { columns: ColumnCreateBody[] }>,
-    res: Response,
-  ) => {
-    const { boardId } = req.params;
-    const { columns } = req.body;
-    const newColumns = await columnService.createColumns(columns, boardId!);
-    res.status(201).json({
-      ok: true,
-      message: "Columns created successfully",
-      data: newColumns,
     });
   },
 );
@@ -66,13 +65,42 @@ export const updateColumn = asyncHandler(
   },
 );
 
+export const deleteColumn = asyncHandler(
+  async (req: Request<{ columnId?: string }>, res: Response) => {
+    const { columnId } = req.params;
+    await columnService.deleteColumn(columnId!);
+    res.status(200).json({
+      ok: true,
+      message: "Column deleted successfully",
+    });
+  },
+);
+
+export const createColumns = asyncHandler(
+  async (
+    req: Request<{ boardId?: string }, {}, { columns: ColumnCreateBody[] }>,
+    res: Response,
+  ) => {
+    const { boardId } = req.params;
+    const { columns } = req.body;
+    const newColumns = await columnService.createColumns(columns, boardId!);
+    res.status(201).json({
+      ok: true,
+      message: "Columns created successfully",
+      data: newColumns,
+    });
+  },
+);
+
+
+
 export const updateColumns = asyncHandler(
   async (
     req: Request<{}, {}, { columns: ColumnBulkCreateBody[] }>,
     res: Response,
   ) => {
     const { columns } = req.body;
-    const updatedColumns = await columnService.updateColumnsByBoardId(columns);
+    const updatedColumns = await columnService.updateColumns(columns);
     res.status(200).json({
       ok: true,
       message: "Columns updated successfully",
@@ -84,7 +112,7 @@ export const updateColumns = asyncHandler(
 export const deleteColumns = asyncHandler(
   async (req: Request<{}, {}, { columnIds: string[] }>, res: Response) => {
     const { columnIds } = req.body;
-    const result = await columnService.deleteColumnsByBoardId(columnIds);
+    const result = await columnService.deleteColumns(columnIds);
     res.status(200).json({
       ok: true,
       message: "Columns deleted successfully",
@@ -93,13 +121,4 @@ export const deleteColumns = asyncHandler(
   },
 );
 
-export const deleteColumn = asyncHandler(
-  async (req: Request<{ columnId?: string }>, res: Response) => {
-    const { columnId } = req.params;
-    await columnService.deleteColumn(columnId!);
-    res.status(200).json({
-      ok: true,
-      message: "Column deleted successfully",
-    });
-  },
-);
+

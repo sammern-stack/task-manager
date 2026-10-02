@@ -3,10 +3,10 @@ import * as taskService from "../services/task.service.js";
 import { asyncHandler } from "@/shared/utils/asyncHandler.js";
 import type { CreateTaskBody, UpdateTaskBody } from "../types/task.types.js";
 
-export const getTasksByBoardId = asyncHandler(
+export const getTasks = asyncHandler(
   async (req: Request<{ boardId?: string }>, res: Response) => {
     const { boardId } = req.params;
-    const tasks = await taskService.getTasksByBoardId(boardId!);
+    const tasks = await taskService.getTasks(boardId!);
     res.status(200).json({
       ok: true,
       message: `Tasks for board ${boardId} fetched successfully`,
@@ -32,11 +32,11 @@ export const getTaskById = asyncHandler(
 
 export const createTask = asyncHandler(
   async (
-    req: Request<{ boardId?: string; columnId?: string }, {}, CreateTaskBody>,
+    req: Request<{ boardId?: string }, {}, CreateTaskBody>,
     res: Response,
   ) => {
-    const { boardId, columnId } = req.params;
-    const task = await taskService.createTask(boardId!, columnId!, req.body);
+    const { boardId } = req.params;
+    const task = await taskService.createTask(boardId!, req.body);
     res.status(201).json({
       ok: true,
       message: "Task created successfully",

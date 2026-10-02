@@ -22,3 +22,9 @@ export class NotFoundError extends AppError {
     super(`${resource} not found`, 404, true);
   }
 }
+
+export class BadRequestError extends AppError {
+  constructor(message: string) {
+    super(message, 400);
+  }
+}

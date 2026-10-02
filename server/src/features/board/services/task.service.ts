@@ -9,7 +9,7 @@ import {
 } from "@/shared/utils/searchDocument.js";
 import type { CreateTaskBody, UpdateTaskBody } from "../types/task.types.js";
 
-export const getTasksByBoardId = async (boardId: string) => {
+export const getTasks = async (boardId: string) => {
   const board = await searchDocument(boardId, Board);
   if (!board) throw new NotFoundError(`board with id (${boardId})`);
 
@@ -23,21 +23,17 @@ export const getTaskById = async (boardId: string, taskId: string) => {
   return task;
 };
 
-export const createTask = async (
-  boardId: string,
-  columnId: string,
-  task: CreateTaskBody,
-) => {
+export const createTask = async (boardId: string, task: CreateTaskBody) => {
   const board = await searchDocument(boardId, Board);
   if (!board) throw new NotFoundError(`board with id (${boardId})`);
 
   const column = await searchDocument(
-    { boardId: board._id, _id: columnId },
+    { boardId: board._id, _id: task.columnId },
     Column,
   );
-  if (!column) throw new NotFoundError(`column with id (${columnId})`);
+  if (!column) throw new NotFoundError(`column with id (${task.columnId})`);
 
-  const newTask = await Task.create({ ...task, boardId, columnId });
+  const newTask = await Task.create({ ...task, boardId });
   return newTask;
 };
 
@@ -46,6 +42,12 @@ export const updateTask = async (
   taskId: string,
   updates: UpdateTaskBody,
 ) => {
+  const column = await searchDocument(
+    { boardId, _id: updates.columnId },
+    Column,
+  );
+  if (!column) throw new NotFoundError(`column with id (${updates.columnId})`);
+
   const updatedTask = await searchDocumentAndUpdate(
     { _id: taskId, boardId },
     Task,

@@ -7,6 +7,7 @@ import {
 } from "@/shared/utils/searchDocument.js";
 import {
   AppError,
+  BadRequestError,
   ConflictError,
   NotFoundError,
 } from "@/shared/utils/customErrors.js";
@@ -15,15 +16,27 @@ import type {
   ColumnCreateBody,
   ColumnUpdateBody,
 } from "../types/column.types.js";
-import { columnsQueryOptions } from "@/config/mongoose.js";
-import type { Schema, Types } from "mongoose";
+import type { Types } from "mongoose";
 
-export const getColumnsByBoardId = async (boardId: string) => {
+export const getColumns = async (boardId: string) => {
   const board = await searchDocument(boardId, Board);
   if (!board) throw new NotFoundError("board");
 
   const columns = await Column.find({ boardId: board._id });
   return columns;
+};
+
+export const getColumnById = async (boardId: string, columnId: string) => {
+  const board = await searchDocument(boardId, Board);
+  if (!board) throw new NotFoundError(`Board with id ${boardId}`);
+
+  const column = await searchDocument(
+    { _id: columnId, boardId: board._id },
+    Column,
+  );
+  if (!column) throw new NotFoundError(`Column with id ${columnId}`);
+
+  return column;
 };
 
 export const createColumn = async (
@@ -51,32 +64,6 @@ export const createColumn = async (
   return newColumn;
 };
 
-export const createColumns = async (
-  columns: ColumnCreateBody[],
-  boardId: string,
-) => {
-  const board = await searchDocument(boardId, Board);
-  if (!board) throw new NotFoundError("board");
-
-  const columnNames = columns.map((column) => column.name);
-  const uniqueNames = new Set(columnNames);
-
-  const newColumns = [...uniqueNames].map((name) => {
-    const columnName = name.trim();
-    if (columnName === "") {
-      throw new AppError("Column name can't be empty", 400);
-    }
-
-    return {
-      name: columnName,
-      boardId: board._id,
-    };
-  });
-
-  const insertedColumns = await Column.insertMany(newColumns);
-  return insertedColumns;
-};
-
 export const updateColumn = async (
   columnId: string,
   updates: ColumnUpdateBody,
@@ -86,7 +73,35 @@ export const updateColumn = async (
   return column;
 };
 
-export const updateColumnsByBoardId = async (
+export const deleteColumn = async (columnId: string) => {
+  const deletedColumn = await searchDocumentAndDelete(columnId, Column);
+  if (!deletedColumn) throw new NotFoundError("column");
+  return deletedColumn;
+};
+
+
+export const createColumns = async (
+  columns: ColumnCreateBody[],
+  boardId: string,
+) => {
+  const board = await searchDocument(boardId, Board);
+  if (!board) throw new NotFoundError("board");
+
+  const columnNames = columns.map((column) => column.name.trim());
+  const uniqueNames = new Set(columnNames);
+
+  const newColumns = [...uniqueNames].map((name) => {
+    if (name === "") throw new BadRequestError("Column name can't be empty");
+    return { name, boardId: board._id };
+  });
+
+  const insertedColumns = await Column.insertMany(newColumns);
+  return insertedColumns;
+};
+
+
+
+export const updateColumns = async (
   columns: ColumnBulkCreateBody[],
 ) => {
   const updatedColumns = await Promise.all(
@@ -96,13 +111,8 @@ export const updateColumnsByBoardId = async (
   return filteredColumns;
 };
 
-export const deleteColumnsByBoardId = async (columnIds: string[]) => {
+export const deleteColumns = async (columnIds: string[]) => {
   await Promise.all(columnIds.map((id) => searchDocumentAndDelete(id, Column)));
   return columnIds;
 };
 
-export const deleteColumn = async (columnId: string) => {
-  const deletedColumn = await searchDocumentAndDelete(columnId, Column);
-  if (!deletedColumn) throw new NotFoundError("column");
-  return deletedColumn;
-};

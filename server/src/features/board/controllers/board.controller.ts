@@ -4,7 +4,7 @@ import { asyncHandler } from "@/shared/utils/asyncHandler.js";
 import type { BoardCreateBody, BoardUpdateBody } from "../types/board.types.js";
 
 export const getBoards = asyncHandler(async (_req: Request, res: Response) => {
-  const boards = await boardService.getAllBoards();
+  const boards = await boardService.getBoards();
   res.status(200).json({
     ok: true,
     message: "Boards fetched successfully",
@@ -12,7 +12,7 @@ export const getBoards = asyncHandler(async (_req: Request, res: Response) => {
   });
 });
 
-export const getBoard = asyncHandler(
+export const getBoardById = asyncHandler(
   async (req: Request<{ boardId?: string }>, res: Response) => {
     const { boardId } = req.params;
     const board = await boardService.getBoardById(boardId!);
@@ -26,7 +26,7 @@ export const getBoard = asyncHandler(
 
 export const createBoard = asyncHandler(
   async (req: Request<{}, {}, BoardCreateBody>, res: Response) => {
-    const newBoard = await boardService.createNewBoard(req.body);
+    const newBoard = await boardService.createBoard(req.body);
     res.status(201).json({
       ok: true,
       message: "Board created successfully",

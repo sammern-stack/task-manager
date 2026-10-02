@@ -11,7 +11,7 @@ import {
 } from "@/shared/utils/searchDocument.js";
 import type { BoardCreateBody, BoardUpdateBody } from "../types/board.types.js";
 
-export const getAllBoards = async () => {
+export const getBoards = async () => {
   const boards = await Board.find();
   return boards;
 };
@@ -22,7 +22,7 @@ export const getBoardById = async (boardId: string) => {
   return board;
 };
 
-export const createNewBoard = async (board: BoardCreateBody) => {
+export const createBoard = async (board: BoardCreateBody) => {
   // Create board with the default name
   if (!board.name) return await Board.create({});
 
