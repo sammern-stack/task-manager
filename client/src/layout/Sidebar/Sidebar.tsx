@@ -1,7 +1,12 @@
 import styles from "./Sidebar.module.scss";
 import { ThemeSwitch } from "@/features/settings";
 import { Heading, Map, PageLogo } from "@/shared/components";
-import { Board, CreateBoard, useBoards, useSelectFirstBoard } from "@/features/board";
+import {
+  Board,
+  CreateBoard,
+  useBoards,
+  useSelectFirstBoard,
+} from "@/features/board";
 
 import HideSidebarIcon from "@/assets/icon-hide-sidebar.svg?react";
 
