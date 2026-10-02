@@ -9,6 +9,6 @@ router
   .put(subtaskController.updateSubtasks)
   .delete(subtaskController.deleteSubtasks);
 
-router.use("/:subtaskId/toggle", subtaskController.toggleSubtask);
+router.patch("/:subtaskId/toggle", subtaskController.toggleSubtask);
 
 export default router;
