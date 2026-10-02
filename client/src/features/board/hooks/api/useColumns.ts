@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import * as columnApi from "../services/columnApi";
+import * as columnApi from "../../services/columnApi";
 import { BOARD_KEY } from "./useBoards";
 import type {
   BulkUpdateColumnsBody,
   CreateColumnBody,
 } from "@/shared/types/column.types";
 
-export const useGetColumnsByBoardId = (boardId: string) => {
+export const useGetColumns = (boardId: string) => {
   return useQuery({
     queryKey: [BOARD_KEY, boardId, "columns"],
     queryFn: () => columnApi.getColumnsReq(boardId),

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import * as boardApi from "../services/boardApi";
+import * as boardApi from "../../services/boardApi";
 import type {
   BoardCreateBody,
   BoardUpdateBody,

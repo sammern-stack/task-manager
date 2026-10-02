@@ -3,13 +3,13 @@ import { PageLayout } from "@/layout";
 import {
   EmptyState,
   useOpenBoardStore,
-  useGetColumnsByBoardId,
+  useGetColumns,
   BoardView,
 } from "@/features/board";
 
 const HomePage = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
-  const { data: columns = [] } = useGetColumnsByBoardId(openBoardId);
+  const { data: columns = [] } = useGetColumns(openBoardId);
 
   return (
     <PageLayout className={styles.home}>

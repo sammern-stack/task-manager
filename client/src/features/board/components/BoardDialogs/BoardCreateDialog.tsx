@@ -1,8 +1,8 @@
 import styles from "./BoardDialog.module.scss";
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../stores/openBoardStore";
-import { useCreateBoard } from "../../hooks/useBoards";
-import { useCreateColumns } from "../../hooks/useColumns";
+import { useCreateBoard } from "../../hooks/api/useBoards";
+import { useCreateColumns } from "../../hooks/api/useColumns";
 import { Button, FormField, Map } from "@/shared/components";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import { useBoardError } from "@/features/board/hooks/useBoardError";

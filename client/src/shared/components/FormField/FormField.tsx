@@ -1,6 +1,6 @@
 import styles from "./FormField.module.scss";
 import type { InputChangeEvent } from "@/shared/types/react.types";
-import type { Error } from "@/features/board/hooks/useBoardError";
+import type { Error } from "@/features/board";
 import { cls } from "@/shared/utils/formatters";
 
 interface BoardDialogFieldProps {

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useOpenBoardStore } from "../stores/openBoardStore";
-import { useGetColumnsByBoardId } from "./useBoards";
+import { useGetColumns } from "./api/useColumns";
 import type { InputChangeEvent } from "@/shared/types/react.types";
 
 export const useBoardDialog = (dialog: "create" | "update") => {
   const openBoard = useOpenBoardStore((s) => s.openBoard);
-  const { data: columns = [] } = useGetColumnsByBoardId(openBoard.id ?? "");
+  const { data: columns = [] } = useGetColumns(openBoard.id);
 
   const initialBoardName = dialog === "create" ? "" : openBoard.name;
   const initialBoardColumns =

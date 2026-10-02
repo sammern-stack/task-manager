@@ -1,16 +1,16 @@
 import {
   useDeleteBoard,
-  useGetColumnsByBoardId,
+  useGetColumns,
+  useCurrentBoardStore,
   useOpenBoardStore,
 } from "@/features/board";
-import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import { useDialogStore, useToastStore } from "@/shared/stores";
 
 export const useHeader = () => {
   const { openDialog, closeDialog } = useDialogStore.getState();
   const boardName = useOpenBoardStore((s) => s.openBoard.name);
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
-  const { data: columns = [] } = useGetColumnsByBoardId(openBoardId);
+  const { data: columns = [] } = useGetColumns(openBoardId);
   const { mutate: deleteBoard } = useDeleteBoard();
   const startUpdateBoard = useCurrentBoardStore((s) => s.startUpdateBoard);
   const addToast = useToastStore((s) => s.addToast);
