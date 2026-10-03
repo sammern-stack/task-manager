@@ -6,6 +6,7 @@ export const useGetTasks = (boardId: string) => {
   return useQuery({
     queryFn: () => taskApi.getTasksReq(boardId),
     queryKey: ["tasks", boardId],
+    select: (response) => response.data
   });
 };
 
@@ -13,6 +14,7 @@ export const useGetTask = (boardId: string, taskId: string) => {
   return useQuery({
     queryFn: () => taskApi.getTaskReq(boardId, taskId),
     queryKey: ["task", boardId, taskId],
+    select: (response) => response.data
   });
 };
 
