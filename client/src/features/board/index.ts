@@ -11,7 +11,6 @@ export { CreateColumnForm } from "./components/CreateColumn/CreateColumnForm";
 export { EmptyState } from "./components/EmptyState/EmptyState";
 
 // Hooks
-export { useBoardDialog } from "./hooks/useBoardDialog";
 export { useBoardError } from "./hooks/useBoardError";
 export type { Error } from "./hooks/useBoardError";
 export { useCreateColumnForm } from "./hooks/useCreateColumnForm";

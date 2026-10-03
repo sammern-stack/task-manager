@@ -18,9 +18,9 @@
   &__boardToggle {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    width: 40px;
-    height: 40px;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
     color: var(--secondary-text);
 
     > svg {
@@ -30,7 +30,7 @@
 
   &__boardMenu {
     position: absolute;
-    top: 40px;
+    top: 30px;
     right: 0;
     margin-top: 10px;
     border-radius: 8px;
