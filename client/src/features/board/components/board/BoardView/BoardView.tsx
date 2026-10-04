@@ -1,7 +1,7 @@
 import styles from "./BoardView.module.scss";
 import { Map } from "@/shared/components";
-import { Column } from "../Column/Column";
-import { CreateColumn } from "../CreateColumn/CreateColumn";
+import { Column } from "../../column/Column/Column";
+import { CreateColumn } from "../../column/CreateColumn/CreateColumn";
 import type { ColumnSchema } from "@/shared/types/column.types";
 import type { TaskSchema } from "@/shared/types/task.types";
 

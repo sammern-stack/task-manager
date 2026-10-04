@@ -1,70 +1,74 @@
 import styles from "./BoardDialog.module.scss";
-import { useDialogStore, useToastStore } from "@/shared/stores";
-import { useOpenBoardStore } from "../../stores/openBoardStore";
-import { useCreateBoard } from "../../hooks/api/useBoards";
-import { useCreateColumns } from "../../hooks/api/useColumns";
 import { Button, FormField, Map } from "@/shared/components";
-import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import { useBoardError } from "@/features/board/hooks/useBoardError";
+import {
+  useUpdateBoard,
+  useCreateColumns,
+  useDeleteColumns,
+  useUpdateColumns,
+} from "@/features/board";
+import { useOpenBoardStore } from "@/features/board/stores/openBoardStore";
+import { useDialogStore, useToastStore } from "@/shared/stores";
+import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import type {
   FormSubmitEvent,
   InputChangeEvent,
 } from "@/shared/types/react.types";
+import { ColumnField } from "../../column/ColumnField/ColumnField";
 import { useScrollToBottom } from "@/features/board/hooks/useScrollToBottom";
-import { ColumnField } from "../ColumnField/ColumnField";
 
-export const BoardCreateDialog = () => {
+export const BoardUpdateDialog = () => {
   const { getError, setError, clearError } = useBoardError();
-
-  const { mutate: createBoard } = useCreateBoard();
+  const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
+  const { mutate: updateBoard } = useUpdateBoard(openBoardId);
   const { mutate: createColumns } = useCreateColumns();
+  const { mutate: updateColumns } = useUpdateColumns();
+  const { mutate: deleteColumns } = useDeleteColumns();
   const setOpenBoard = useOpenBoardStore((s) => s.setOpenBoard);
   const closeDialog = useDialogStore((s) => s.closeDialog);
   const addToast = useToastStore((s) => s.addToast);
   const board = useCurrentBoardStore((s) => s.board);
+  const {
+    setBoardName,
+    addColumn,
+    buildCreateColumnsArray,
+    buildUpdateColumnsArray,
+    buildDeleteColumnsArray,
+  } = useCurrentBoardStore.getState();
   const columnsLength = board?.columns.length ?? 0;
   const { containerRef, enableScroll } = useScrollToBottom(columnsLength);
-  const { addColumn, setBoardName } = useCurrentBoardStore.getState();
 
   if (!board) return null;
-
-  const onAddColumn = () => (enableScroll(), addColumn());
 
   const onBoardNameChange = (e: InputChangeEvent) => {
     if (getError("boardName")) clearError("boardName");
     setBoardName(e.target.value);
   };
 
-  const onCreateBoard = (e: FormSubmitEvent) => {
+  const onAddColumn = () => (enableScroll(), addColumn());
+
+  const onUpdateBoard = (e: FormSubmitEvent) => {
     e.preventDefault();
-    createBoard(
+    updateBoard(
       { name: board.name },
       {
-        onSuccess: ({ message, data }) => {
-          const columnsToCreate = board.columns
-            .map((col) => col.column.name)
-            .filter((name) => name.length > 0)
-            .map((name) => ({ name }));
-
-          if (columnsToCreate.length > 0) {
-            createColumns({ boardId: data._id, columns: columnsToCreate });
-          }
-
-          setOpenBoard({ id: data._id, name: data.name });
-          closeDialog();
+        onSuccess: ({ message, data: board }) => {
+          const boardId = board._id;
+          setOpenBoard({ name: board.name });
+          createColumns({ boardId, columns: buildCreateColumnsArray() });
+          updateColumns({ boardId, columns: buildUpdateColumnsArray() });
+          deleteColumns({ boardId, columnIds: buildDeleteColumnsArray() });
           addToast({ message, type: "success" });
+          closeDialog();
         },
-        onError: ({ message }) => {
-          setError("boardName", { message });
-        },
+        onError: ({ message }) => setError("boardName", { message }),
       },
     );
   };
-
   return (
     <div className={styles.dialog}>
-      <h2 className={styles.dialog__title}>Add New Board</h2>
-      <form className={styles.dialog__form} onSubmit={onCreateBoard}>
+      <h2 className={styles.dialog__title}>Update Board</h2>
+      <form className={styles.dialog__form} onSubmit={onUpdateBoard}>
         <FormField
           id="boardName"
           label="Board Name"
@@ -86,7 +90,7 @@ export const BoardCreateDialog = () => {
           </Button>
         </div>
         <Button type="submit" variant="primarySmall">
-          Create new Board
+          Save Changes
         </Button>
       </form>
     </div>

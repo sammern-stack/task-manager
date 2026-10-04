@@ -1,14 +1,14 @@
 // Components
-export { Board } from "./components/Board/Board";
-export { CreateBoard } from "./components/Board/CreateBoard";
-export { BoardCreateDialog } from "./components/BoardDialogs/BoardCreateDialog";
-export { BoardUpdateDialog } from "./components/BoardDialogs/BoardUpdateDialog";
-export { BoardView } from "./components/BoardView/BoardView";
-export { Column } from "./components/Column/Column";
-export { ColumnField } from "./components/ColumnField/ColumnField";
-export { CreateColumn } from "./components/CreateColumn/CreateColumn";
-export { CreateColumnForm } from "./components/CreateColumn/CreateColumnForm";
-export { EmptyState } from "./components/EmptyState/EmptyState";
+export { Board } from "./components/board/Board/Board";
+export { CreateBoard } from "./components/board/Board/CreateBoard";
+export { BoardCreateDialog } from "./components/board/BoardDialogs/BoardCreateDialog";
+export { BoardUpdateDialog } from "./components/board/BoardDialogs/BoardUpdateDialog";
+export { BoardView } from "./components/board/BoardView/BoardView";
+export { Column } from "./components/column/Column/Column";
+export { ColumnField } from "./components/column/ColumnField/ColumnField";
+export { CreateColumn } from "./components/column/CreateColumn/CreateColumn";
+export { CreateColumnForm } from "./components/column/CreateColumn/CreateColumnForm";
+export { EmptyState } from "./components/board/EmptyState/EmptyState";
 
 // Hooks
 export { useBoardError } from "./hooks/useBoardError";

@@ -1,5 +1,5 @@
 import styles from "./Board.module.scss";
-import { useOpenBoardStore } from "../../stores/openBoardStore";
+import { useOpenBoardStore } from "../../../stores/openBoardStore";
 import { cls } from "@/shared/utils/formatters";
 import type { BoardSchema } from "@/shared/types/board.types";
 

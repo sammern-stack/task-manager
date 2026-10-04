@@ -1,6 +1,6 @@
 import styles from "./EmptyState.module.scss";
 import { useEffect, useState } from "react";
-import { CreateColumn } from "../CreateColumn/CreateColumn";
+import { CreateColumn } from "../../column/CreateColumn/CreateColumn";
 import { Button } from "@/shared/components";
 import { useOpenBoardStore } from "@/features/board/stores/openBoardStore";
 
