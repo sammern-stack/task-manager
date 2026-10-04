@@ -1,5 +1,5 @@
 import styles from "./BoardDialog.module.scss";
-import { Button, FormField, Map } from "@/shared/components";
+import { Button, FormField } from "@/shared/components";
 import { useBoardError } from "@/features/board/hooks/useBoardError";
 import {
   useUpdateBoard,
@@ -14,8 +14,7 @@ import type {
   FormSubmitEvent,
   InputChangeEvent,
 } from "@/shared/types/react.types";
-import { ColumnField } from "../../column/ColumnField/ColumnField";
-import { useScrollToBottom } from "@/features/board/hooks/useScrollToBottom";
+import { EditingColumns } from "../../column/EditingColumns/EditingColumns";
 
 export const BoardUpdateDialog = () => {
   const { getError, setError, clearError } = useBoardError();
@@ -30,13 +29,10 @@ export const BoardUpdateDialog = () => {
   const board = useCurrentBoardStore((s) => s.board);
   const {
     setBoardName,
-    addColumn,
     buildCreateColumnsArray,
     buildUpdateColumnsArray,
     buildDeleteColumnsArray,
   } = useCurrentBoardStore.getState();
-  const columnsLength = board?.columns.length ?? 0;
-  const { containerRef, enableScroll } = useScrollToBottom(columnsLength);
 
   if (!board) return null;
 
@@ -44,8 +40,6 @@ export const BoardUpdateDialog = () => {
     if (getError("boardName")) clearError("boardName");
     setBoardName(e.target.value);
   };
-
-  const onAddColumn = () => (enableScroll(), addColumn());
 
   const onUpdateBoard = (e: FormSubmitEvent) => {
     e.preventDefault();
@@ -77,18 +71,7 @@ export const BoardUpdateDialog = () => {
           handleValue={[board.name, onBoardNameChange]}
           helperText="Optional - defaults to 'Untitled Board' if empty"
         />
-        <div className={styles.dialog__columns}>
-          <span className={styles.dialog__title}>Board Columns</span>
-          <div ref={containerRef} className={styles.dialog__columnsList}>
-            <Map
-              data={board.columns}
-              render={(c) => <ColumnField key={c.id} column={c} />}
-            />
-          </div>
-          <Button variant="secondary" onClick={onAddColumn}>
-            + Add New Column
-          </Button>
-        </div>
+        <EditingColumns columns={board.columns} />
         <Button type="submit" variant="primarySmall">
           Save Changes
         </Button>
