@@ -4,46 +4,29 @@ import type { Error } from "@/features/board";
 import { cls } from "@/shared/utils/formatters";
 
 interface BoardDialogFieldProps {
-  id: string;
   label: string;
   error: Error | null;
   type?: React.HTMLInputTypeAttribute;
   placeholder: string;
   helperText: string;
-  handleValue: [string, (e: InputChangeEvent) => void];
+  value: string;
+  onChange: (e: InputChangeEvent) => void;
 }
 
-export const FormField = ({
-  id,
-  label,
-  error,
-  type = "text",
-  placeholder,
-  helperText,
-  handleValue,
-}: BoardDialogFieldProps) => {
-  const value = handleValue[0];
-  const onValueChange = handleValue[1];
+export const FormField = (props: BoardDialogFieldProps) => {
+  const { type = "text", label, error, helperText, ...restProps } = props;
+
+  const inputClassNames = cls(
+    styles.field__input,
+    error && styles["field__input--error"],
+  );
 
   return (
-    <label htmlFor={id} className={styles.formField}>
-      <span className={styles.formField__label}>{label}</span>
-      {error && (
-        <span className={styles.formField__error}>{error.message}</span>
-      )}
-      <input
-        type={type}
-        id={id}
-        name={id}
-        className={cls(
-          styles.formField__input,
-          error && styles["formField__input--error"],
-        )}
-        placeholder={placeholder}
-        value={value}
-        onChange={onValueChange}
-      />
-      <span className={styles.formField__helper}>{helperText}</span>
+    <label className={styles.field}>
+      <span className={styles.field__label}>{label}</span>
+      {error && <span className={styles.field__error}>{error.message}</span>}
+      <input type={type} className={inputClassNames} {...restProps} />
+      <span className={styles.field__helper}>{helperText}</span>
     </label>
   );
 };

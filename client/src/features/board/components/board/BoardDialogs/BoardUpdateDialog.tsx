@@ -10,11 +10,8 @@ import {
 import { useOpenBoardStore } from "@/features/board/stores/openBoardStore";
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
-import type {
-  FormSubmitEvent,
-  InputChangeEvent,
-} from "@/shared/types/react.types";
 import { EditingColumns } from "../../column/EditingColumns/EditingColumns";
+import type { FormSubmitEvent } from "@/shared/types/react.types";
 
 export const BoardUpdateDialog = () => {
   const { getError, setError, clearError } = useBoardError();
@@ -36,9 +33,9 @@ export const BoardUpdateDialog = () => {
 
   if (!board) return null;
 
-  const onBoardNameChange = (e: InputChangeEvent) => {
+  const boardNameHandler = (name: string) => {
     if (getError("boardName")) clearError("boardName");
-    setBoardName(e.target.value);
+    setBoardName(name);
   };
 
   const onUpdateBoard = (e: FormSubmitEvent) => {
@@ -64,11 +61,11 @@ export const BoardUpdateDialog = () => {
       <h2 className={styles.dialog__title}>Update Board</h2>
       <form className={styles.dialog__form} onSubmit={onUpdateBoard}>
         <FormField
-          id="boardName"
           label="Board Name"
           placeholder="e.g. Web Design"
+          value={board.name}
+          onChange={(e) => boardNameHandler(e.target.value)}
           error={getError("boardName")}
-          handleValue={[board.name, onBoardNameChange]}
           helperText="Optional - defaults to 'Untitled Board' if empty"
         />
         <EditingColumns columns={board.columns} />
