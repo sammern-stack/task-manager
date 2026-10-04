@@ -14,7 +14,7 @@ import { EditingColumns } from "../../column/EditingColumns/EditingColumns";
 import type { FormSubmitEvent } from "@/shared/types/react.types";
 
 export const BoardUpdateDialog = () => {
-  const { getError, setError, clearError } = useBoardError();
+  const { getError, setError } = useBoardError();
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const { mutate: updateBoard } = useUpdateBoard(openBoardId);
   const { mutate: createColumns } = useCreateColumns();
@@ -33,22 +33,26 @@ export const BoardUpdateDialog = () => {
 
   if (!board) return null;
 
-  const boardNameHandler = (name: string) => {
-    if (getError("boardName")) clearError("boardName");
-    setBoardName(name);
-  };
-
   const onUpdateBoard = (e: FormSubmitEvent) => {
     e.preventDefault();
     updateBoard(
       { name: board.name },
       {
-        onSuccess: ({ message, data: board }) => {
-          const boardId = board._id;
-          setOpenBoard({ name: board.name });
-          createColumns({ boardId, columns: buildCreateColumnsArray() });
-          updateColumns({ boardId, columns: buildUpdateColumnsArray() });
-          deleteColumns({ boardId, columnIds: buildDeleteColumnsArray() });
+        onSuccess: ({ message, data: { _id: boardId, name } }) => {
+          setOpenBoard({ name });
+
+          const toCreateColumns = buildCreateColumnsArray();
+          if (toCreateColumns.length > 0)
+            createColumns({ boardId, columns: toCreateColumns });
+
+          const toUpdateColumns = buildUpdateColumnsArray();
+          if (toUpdateColumns.length > 0)
+            updateColumns({ boardId, columns: toUpdateColumns });
+
+          const toDeleteColumns = buildDeleteColumnsArray();
+          if (toDeleteColumns.length > 0)
+            deleteColumns({ boardId, columnIds: toDeleteColumns });
+
           addToast({ message, type: "success" });
           closeDialog();
         },
@@ -64,7 +68,7 @@ export const BoardUpdateDialog = () => {
           label="Board Name"
           placeholder="e.g. Web Design"
           value={board.name}
-          onChange={(e) => boardNameHandler(e.target.value)}
+          onChange={(e) => setBoardName(e.target.value)}
           error={getError("boardName")}
           helperText="Optional - defaults to 'Untitled Board' if empty"
         />
