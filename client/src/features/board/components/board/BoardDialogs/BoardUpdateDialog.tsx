@@ -1,5 +1,4 @@
-import styles from "./BoardDialog.module.scss";
-import { Button, FormField } from "@/shared/components";
+import { FormField } from "@/shared/components";
 import { useBoardError } from "@/features/board/hooks/useBoardError";
 import {
   useUpdateBoard,
@@ -11,7 +10,7 @@ import { useOpenBoardStore } from "@/features/board/stores/openBoardStore";
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import { EditingColumns } from "../../column/EditingColumns/EditingColumns";
-import type { FormSubmitEvent } from "@/shared/types/react.types";
+import { FormDialog } from "@/shared/components";
 
 export const BoardUpdateDialog = () => {
   const { getError, setError } = useBoardError();
@@ -33,8 +32,7 @@ export const BoardUpdateDialog = () => {
 
   if (!board) return null;
 
-  const onUpdateBoard = (e: FormSubmitEvent) => {
-    e.preventDefault();
+  const onUpdateBoard = () => {
     updateBoard(
       { name: board.name },
       {
@@ -60,23 +58,22 @@ export const BoardUpdateDialog = () => {
       },
     );
   };
+
   return (
-    <div className={styles.dialog}>
-      <h2 className={styles.dialog__title}>Update Board</h2>
-      <form className={styles.dialog__form} onSubmit={onUpdateBoard}>
-        <FormField
-          label="Board Name"
-          placeholder="e.g. Web Design"
-          value={board.name}
-          onChange={(e) => setBoardName(e.target.value)}
-          error={getError("boardName")}
-          helperText="Optional - defaults to 'Untitled Board' if empty"
-        />
-        <EditingColumns columns={board.columns} />
-        <Button type="submit" variant="primarySmall">
-          Save Changes
-        </Button>
-      </form>
-    </div>
+    <FormDialog
+      title="Update Board"
+      onSubmit={onUpdateBoard}
+      submitLabel="Save Changes"
+    >
+      <FormField
+        label="Board Name"
+        placeholder="e.g. Web Design"
+        value={board.name}
+        onChange={(e) => setBoardName(e.target.value)}
+        error={getError("boardName")}
+        helperText="Optional - defaults to 'Untitled Board' if empty"
+      />
+      <EditingColumns columns={board.columns} />
+    </FormDialog>
   );
 };

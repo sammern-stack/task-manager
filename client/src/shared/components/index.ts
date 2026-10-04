@@ -4,4 +4,5 @@ export { Toast } from "./Toast/Toast";
 export { Button } from "./Button/Button";
 export { Heading } from "./Heading/Heading";
 export { Map } from "./Map/Map";
-export { FormField } from "./FormField/FormField"
+export { FormField } from "./FormField/FormField";
+export { FormDialog } from "./FormDialog/FormDialog";
