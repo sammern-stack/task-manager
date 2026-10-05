@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 import styles from "./FormDialog.module.scss";
 import type { FormSubmitEvent } from "@/shared/types/react.types";
-import { Button } from "../Button/Button";
+import { Button } from "../../Button/Button";
 
 interface FormDialogProps extends PropsWithChildren {
   title: string;
