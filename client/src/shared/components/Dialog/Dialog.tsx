@@ -8,6 +8,7 @@ import {
 } from "@/features/board";
 import { Confirm } from "../Confirm/Confirm";
 import { RxCross1 } from "react-icons/rx";
+import type { TaskSchema } from "@/shared/types/task.types";
 
 export const Dialog = () => {
   const { type, isOpen, payload } = useDialogStore((s) => s.dialog);
@@ -36,7 +37,7 @@ export const Dialog = () => {
         )}
         {type === "updateBoard" && <BoardUpdateDialog />}
         {type === "createTask" && <TaskCreateDialog />}
-        {type === "taskView" && <TaskView />}
+        {type === "taskView" && <TaskView task={payload?.task as TaskSchema} />}
       </dialog>
       <div className={styles.dialog__backdrop} onClick={closeDialog}></div>
     </>

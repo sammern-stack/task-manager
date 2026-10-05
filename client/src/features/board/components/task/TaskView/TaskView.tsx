@@ -1,5 +1,10 @@
+import type { TaskSchema } from "@/shared/types/task.types";
 import styles from "./TaskView.module.scss";
 
-export const TaskView = () => {
-  return <div className={styles.taskView}>task view</div>;
+interface TaskViewProps {
+  task: TaskSchema;
+}
+
+export const TaskView = ({ task }: TaskViewProps) => {
+  return <div className={styles.taskView}>{task.name}</div>;
 };

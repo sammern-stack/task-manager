@@ -9,7 +9,7 @@ interface TaskProps {
 export const Task = ({ task }: TaskProps) => {
   const openDialog = useDialogStore((s) => s.openDialog);
 
-  const handleOpenTask = () => openDialog("taskView");
+  const handleOpenTask = () => openDialog("taskView", { task });
 
   return (
     <button className={styles.task} onClick={handleOpenTask}>
