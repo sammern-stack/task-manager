@@ -63,6 +63,7 @@ export const TaskView = ({ taskId, column }: TaskViewProps) => {
             data={selectedTask.subtasks}
             render={(sub) => (
               <li
+                key={sub._id}
                 className={cls(
                   styles.taskView__subtask,
                   sub.isCompleted && styles["taskView__subtask--completed"],
