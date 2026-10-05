@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as taskApi from "../../services/taskApi";
+import { useToastStore } from "@/shared/stores";
 import type { CreateTaskBody, UpdateTaskBody } from "@/shared/types/task.types";
 
 export const useGetTasks = (boardId: string) => {
   return useQuery({
     queryFn: () => taskApi.getTasksReq(boardId),
     queryKey: ["tasks", boardId],
-    select: (response) => response.data
+    select: (response) => response.data,
   });
 };
 
@@ -14,7 +15,7 @@ export const useGetTask = (boardId: string, taskId: string) => {
   return useQuery({
     queryFn: () => taskApi.getTaskReq(boardId, taskId),
     queryKey: ["task", boardId, taskId],
-    select: (response) => response.data
+    select: (response) => response.data,
   });
 };
 
@@ -52,8 +53,9 @@ export const useDeleteTask = (boardId: string) => {
 
   return useMutation({
     mutationFn: (taskId: string) => taskApi.deleteTaskReq(boardId, taskId),
-    onSuccess: () => {
+    onSuccess: ({ message }) => {
       queryClient.invalidateQueries({ queryKey: ["tasks", boardId] });
+      useToastStore.getState().addToast({ message, type: "success" });
     },
   });
 };

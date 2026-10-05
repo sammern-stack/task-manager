@@ -54,6 +54,13 @@ export const Dialog = () => {
             column={payload?.column as ColumnSchema}
           />
         )}
+        {type === "deleteTask" && (
+          <Confirm
+            title={payload?.title as string}
+            description={payload?.description as string}
+            onConfirm={payload?.onDelete as () => void}
+          />
+        )}
       </dialog>
       <div className={styles.dialog__backdrop} onClick={closeDialog}></div>
     </>

@@ -12,6 +12,7 @@ type DialogType =
   | "updateBoard"
   | "createTask"
   | "updateTask"
+  | "deleteTask"
   | "taskView"
   | null;
 
