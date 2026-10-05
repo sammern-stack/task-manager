@@ -7,11 +7,17 @@ import {
   useGetTasks,
   useOpenBoardStore,
 } from "@/features/board";
+import { useEffect } from "react";
 
 const HomePage = () => {
   const openBoardId = useOpenBoardStore((s) => s.openBoard.id);
   const { data: columns = [] } = useGetColumns(openBoardId);
   const { data: tasks = [] } = useGetTasks(openBoardId);
+
+  useEffect(() => {
+    const { setOpenBoard } = useOpenBoardStore.getState();
+    setOpenBoard({ columns });
+  }, [columns]);
 
   return (
     <PageLayout className={styles.home}>
