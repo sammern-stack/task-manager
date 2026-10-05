@@ -8,7 +8,7 @@ import {
 } from "@/features/board";
 import { Confirm } from "../Confirm/Confirm";
 import { RxCross1 } from "react-icons/rx";
-import type { TaskSchema } from "@/shared/types/task.types";
+import type { ColumnSchema } from "@/shared/types/column.types";
 
 export const Dialog = () => {
   const { type, isOpen, payload } = useDialogStore((s) => s.dialog);
@@ -16,17 +16,24 @@ export const Dialog = () => {
 
   if (!isOpen) return null;
 
+  const renderCloseBtn = () => {
+    if (type === "taskView") return;
+    return (
+      <button
+        type="button"
+        className={styles.dialog__close}
+        onClick={closeDialog}
+        aria-label="Close dialog"
+      >
+        <RxCross1 />
+      </button>
+    );
+  };
+
   return (
     <>
       <dialog className={styles.dialog} open>
-        <button
-          type="button"
-          className={styles.dialog__close}
-          onClick={closeDialog}
-          aria-label="Close dialog"
-        >
-          <RxCross1 />
-        </button>
+        {renderCloseBtn()}
         {type === "createBoard" && <BoardCreateDialog />}
         {type === "deleteBoard" && (
           <Confirm
@@ -37,7 +44,12 @@ export const Dialog = () => {
         )}
         {type === "updateBoard" && <BoardUpdateDialog />}
         {type === "createTask" && <TaskCreateDialog />}
-        {type === "taskView" && <TaskView task={payload?.task as TaskSchema} />}
+        {type === "taskView" && (
+          <TaskView
+            taskId={payload?.taskId as string}
+            column={payload?.column as ColumnSchema}
+          />
+        )}
       </dialog>
       <div className={styles.dialog__backdrop} onClick={closeDialog}></div>
     </>

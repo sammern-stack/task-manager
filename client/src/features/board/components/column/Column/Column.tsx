@@ -9,16 +9,16 @@ interface ColumnProps {
   tasks: TaskSchema[];
 }
 
-export const Column = ({ column: { name }, tasks }: ColumnProps) => {
+export const Column = ({ column, tasks }: ColumnProps) => {
   return (
     <div className={styles.column}>
       <Heading size="h2" className={styles.column__name}>
-        {name}
+        {column.name} ({tasks.length})
       </Heading>
       <div className={styles.column__tasks}>
         <Map
           data={tasks}
-          render={(task) => <Task key={task._id} task={task} />}
+          render={(task) => <Task key={task._id} task={task} column={column} />}
         />
       </div>
     </div>

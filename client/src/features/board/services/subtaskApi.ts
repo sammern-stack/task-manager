@@ -60,7 +60,7 @@ export const toggleSubtaskReq = (
   subtaskId: string,
 ) => {
   const api = axios({
-    url: `${baseUrl(boardId, columnId, taskId)}/${subtaskId}`,
+    url: `${baseUrl(boardId, columnId, taskId)}/${subtaskId}/toggle`,
     method: "PATCH",
   });
   return requestHandler<TaskSchema>(() => api)();

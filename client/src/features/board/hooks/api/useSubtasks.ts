@@ -24,7 +24,7 @@ export const useCreateSubtasks = () => {
     onSuccess: ({ data: task }) => {
       queryClient.invalidateQueries({ queryKey: ["tasks", task.boardId] });
       queryClient.invalidateQueries({
-        queryKey: ["task", task._id, task.boardId, task.columnId],
+        queryKey: ["task", task.boardId, task._id],
       });
     },
   });
@@ -48,7 +48,7 @@ export const useUpdateSubtasks = () => {
     onSuccess: ({ data: task }) => {
       queryClient.invalidateQueries({ queryKey: ["tasks", task.boardId] });
       queryClient.invalidateQueries({
-        queryKey: ["task", task._id, task.boardId, task.columnId],
+        queryKey: ["task", task.boardId, task._id],
       });
     },
   });
@@ -72,7 +72,7 @@ export const useDeleteSubtasks = () => {
     onSuccess: ({ data: task }) => {
       queryClient.invalidateQueries({ queryKey: ["tasks", task.boardId] });
       queryClient.invalidateQueries({
-        queryKey: ["task", task._id, task.boardId, task.columnId],
+        queryKey: ["task", task.boardId, task._id],
       });
     },
   });
@@ -96,7 +96,7 @@ export const useToggleSubtask = () => {
     onSuccess: ({ data: task }) => {
       queryClient.invalidateQueries({ queryKey: ["tasks", task.boardId] });
       queryClient.invalidateQueries({
-        queryKey: ["task", task._id, task.boardId, task.columnId],
+        queryKey: ["task", task.boardId, task._id],
       });
     },
   });

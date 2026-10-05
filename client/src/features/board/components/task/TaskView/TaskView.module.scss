@@ -1,0 +1,126 @@
+.taskView {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__name {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  &__dropdown {
+    position: relative;
+  }
+
+  &__dropdownToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--secondary-text);
+
+    > svg {
+      color: inherit;
+    }
+  }
+
+  &__dropdownMenu {
+    position: absolute;
+    top: -14px;
+    right: 30px;
+    margin-top: 10px;
+    border-radius: 4px;
+    width: 120px;
+    background: var(--primary-bg);
+    border: 1px solid var(--primary-border);
+    padding: 8px;
+    z-index: 10;
+
+    li {
+      color: var(--secondary-text);
+      padding: 4px;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--primary-text);
+      }
+
+      &:last-child {
+        color: var(--color-danger-500);
+
+        &:hover {
+          color: var(--color-danger-300);
+        }
+      }
+    }
+  }
+
+  &__description {
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--secondary-text);
+  }
+
+  &__subtasks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__subtasksList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__subtask {
+    background: var(--primary-bg);
+    padding: 12px;
+    border-radius: 4px;
+    display: flex;
+    font-weight: 700;
+    font-size: 12px;
+    transition: all 0.3s ease;
+
+    &--completed {
+      color: var(--secondary-text);
+      text-decoration: line-through;
+    }
+
+    label {
+      flex: 1;
+      display: flex;
+      gap: 8px;
+      cursor: pointer;
+    }
+  }
+
+  &__subtasksCount {
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  &__status {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__statusTitle {
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  &__statusName {
+    border: 1px solid var(--primary-border);
+    padding: 12px;
+    border-radius: 4px;
+  }
+}
