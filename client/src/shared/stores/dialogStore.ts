@@ -11,6 +11,7 @@ type DialogType =
   | "deleteBoard"
   | "updateBoard"
   | "createTask"
+  | "taskView"
   | null;
 
 type DialogPayload = Record<string, unknown> | null;

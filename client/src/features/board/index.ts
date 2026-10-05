@@ -9,6 +9,7 @@ export { Column } from "./components/column/Column/Column";
 export { CreateColumn } from "./components/column/CreateColumn/CreateColumn";
 export { CreateColumnForm } from "./components/column/CreateColumn/CreateColumnForm";
 export { EmptyState } from "./components/board/EmptyState/EmptyState";
+export { TaskView } from "./components/task/TaskView/TaskView";
 
 // Hooks
 export { useBoardError } from "./hooks/useBoardError";

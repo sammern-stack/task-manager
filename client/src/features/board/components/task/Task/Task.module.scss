@@ -1,0 +1,26 @@
+.task {
+  width: 100%;
+  text-align: left;
+  background: var(--secondary-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px 0px rgb(54 78 126 / 0.1);
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__name {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: var(--color-white);
+  }
+
+  &__subtaskCount {
+    display: flex;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--secondary-text);
+  }
+}

@@ -1,21 +1,27 @@
-import type { TaskSchema } from "@/shared/types/task.types";
 import styles from "./Task.module.scss";
-import { Heading } from "@/shared/components";
+import { useDialogStore } from "@/shared/stores";
+import type { TaskSchema } from "@/shared/types/task.types";
 
 interface TaskProps {
   task: TaskSchema;
 }
 
 export const Task = ({ task }: TaskProps) => {
+  const openDialog = useDialogStore((s) => s.openDialog);
+
+  const handleOpenTask = () => openDialog("taskView");
+
   return (
-    <div className={styles.task}>
-      <Heading size="h2">{task.name}</Heading>
+    <button className={styles.task} onClick={handleOpenTask}>
+      <h2 className={styles.task__name}>{task.name}</h2>
       <div className={styles.task__subtaskCount}>
-        {task.subtasks.filter((subtask) => subtask.isCompleted).length}
-        of
-        {task.subtasks.length}
-        subtasks
+        <span>
+          {task.subtasks.filter((subtask) => subtask.isCompleted).length}
+        </span>
+        <span>of</span>
+        <span>{task.subtasks.length}</span>
+        <span>subtasks</span>
       </div>
-    </div>
+    </button>
   );
 };

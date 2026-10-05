@@ -4,6 +4,7 @@ import {
   BoardCreateDialog,
   BoardUpdateDialog,
   TaskCreateDialog,
+  TaskView,
 } from "@/features/board";
 import { Confirm } from "../Confirm/Confirm";
 import { RxCross1 } from "react-icons/rx";
@@ -35,6 +36,7 @@ export const Dialog = () => {
         )}
         {type === "updateBoard" && <BoardUpdateDialog />}
         {type === "createTask" && <TaskCreateDialog />}
+        {type === "taskView" && <TaskView />}
       </dialog>
       <div className={styles.dialog__backdrop} onClick={closeDialog}></div>
     </>
