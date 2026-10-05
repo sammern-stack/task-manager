@@ -1,6 +1,10 @@
 .dropdown {
   position: relative;
 
+  &__title {
+    font-size: 12px;
+  }
+
   &__toggle {
     width: 100%;
     border: 1px solid #828fa3;

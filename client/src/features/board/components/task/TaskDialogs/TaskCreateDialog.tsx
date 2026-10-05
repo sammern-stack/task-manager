@@ -100,6 +100,7 @@ recharge the batteries a little."
         buttonLabel="+ Add new subtask"
       />
       <div className={styles.dropdown} ref={dropdownRef}>
+        <h2 className={styles.dropdown__title}>Status</h2>
         <button className={styles.dropdown__toggle} onClick={toggle}>
           {selectedColumn ?? "Select column"} <IoIosArrowDown />
         </button>
