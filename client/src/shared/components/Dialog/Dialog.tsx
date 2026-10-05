@@ -4,6 +4,7 @@ import {
   BoardCreateDialog,
   BoardUpdateDialog,
   TaskCreateDialog,
+  TaskUpdateDialog,
   TaskView,
 } from "@/features/board";
 import { Confirm } from "../Confirm/Confirm";
@@ -44,6 +45,9 @@ export const Dialog = () => {
         )}
         {type === "updateBoard" && <BoardUpdateDialog />}
         {type === "createTask" && <TaskCreateDialog />}
+        {type === "updateTask" && (
+          <TaskUpdateDialog taskId={payload?.taskId as string} />
+        )}
         {type === "taskView" && (
           <TaskView
             taskId={payload?.taskId as string}

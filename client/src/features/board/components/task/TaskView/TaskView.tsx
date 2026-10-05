@@ -7,6 +7,8 @@ import VerticalEllipsisIcon from "@/assets/icon-vertical-ellipsis.svg?react";
 import { useGetTask } from "@/features/board/hooks/api/useTasks";
 import type { ColumnSchema } from "@/shared/types/column.types";
 import { cls } from "@/shared/utils/formatters";
+import { useDialogStore } from "@/shared/stores";
+import { useTaskFormStore } from "@/features/board/stores/taskFormStore";
 
 interface TaskViewProps {
   taskId: string;
@@ -18,12 +20,24 @@ export const TaskView = ({ taskId, column }: TaskViewProps) => {
   const { mutate: toggleSubtask } = useToggleSubtask();
   const boardId = useOpenBoardStore((s) => s.openBoard.id);
   const { data: selectedTask } = useGetTask(boardId, taskId);
+  const openDialog = useDialogStore((s) => s.openDialog);
+  const startUpdateTask = useTaskFormStore((s) => s.startUpdateTask);
 
   if (!selectedTask) return;
 
   const completedSubtasks = selectedTask.subtasks.filter(
     (sub) => sub.isCompleted,
   ).length;
+
+  const onEditTask = () => {
+    startUpdateTask(
+      selectedTask.name,
+      selectedTask.description,
+      selectedTask.subtasks,
+      selectedTask.columnId,
+    );
+    openDialog("updateTask", { taskId });
+  };
 
   const onToggleSubtask = (subtaskId: string) => {
     toggleSubtask({
@@ -45,7 +59,7 @@ export const TaskView = ({ taskId, column }: TaskViewProps) => {
 
           {openDropdown && (
             <ul className={styles.taskView__dropdownMenu}>
-              <li>Edit Task</li>
+              <li onClick={onEditTask}>Edit Task</li>
               <li>Delete Task</li>
             </ul>
           )}

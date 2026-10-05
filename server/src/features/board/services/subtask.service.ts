@@ -52,10 +52,10 @@ export const updateSubtasks = async (
 ) => {
   const task = await verifyTask(boardId, columnId, taskId);
 
-  updates.forEach(({ id, subtask }) => {
+  updates.forEach(({ id, updates }) => {
     const target = task.subtasks.id(id);
     if (!target) throw new NotFoundError(`subtask with id ${id}`);
-    Object.assign(target, subtask);
+    Object.assign(target, updates);
   });
 
   await task.save();

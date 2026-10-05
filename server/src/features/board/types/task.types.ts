@@ -27,6 +27,6 @@ export type UpdateTaskBody = Partial<Omit<TaskSchema, "boardId" | "subtasks">>;
 export type CreateSubtasksBody = Omit<SubtaskSchema, "isCompleted">[];
 export type UpdateSubtasksBody = {
   id: string;
-  subtask: Partial<Omit<SubtaskSchema, "isCompleted">>;
+  updates: Partial<Omit<SubtaskSchema, "isCompleted">>;
 }[];
 export type DeleteSubtasksBody = { id: string }[];

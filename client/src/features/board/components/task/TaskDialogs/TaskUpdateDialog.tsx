@@ -1,0 +1,171 @@
+import styles from "./TaskDialog.module.scss";
+import { useTaskFormStore } from "@/features/board/stores/taskFormStore";
+import { useDropdown } from "@/shared/hooks/useDropdown";
+import {
+  FormDialog,
+  FormEditingList,
+  FormField,
+  FormListItem,
+  Map,
+} from "@/shared/components";
+import { useOpenBoardStore } from "@/features/board/stores/openBoardStore";
+import { useMemo } from "react";
+import { IoIosArrowDown } from "react-icons/io";
+import { useUpdateTask } from "@/features/board/hooks/api/useTasks";
+import { useDialogStore, useToastStore } from "@/shared/stores";
+import {
+  useCreateSubtasks,
+  useDeleteSubtasks,
+  useUpdateSubtasks,
+} from "@/features/board/hooks/api/useSubtasks";
+
+export const TaskUpdateDialog = ({ taskId }: { taskId: string }) => {
+  const { dropdownRef, openDropdown, toggle } = useDropdown();
+  const task = useTaskFormStore((s) => s.task);
+  const {
+    setTask,
+    addSubtask,
+    removeSubtask,
+    setSubtaskName,
+    buildCreateSubtasksArray,
+    buildDeleteSubtasksArray,
+    buildUpdateSubtasksArray,
+  } = useTaskFormStore.getState();
+  const boardColumns = useOpenBoardStore((s) => s.openBoard.columns);
+  const boardId = useOpenBoardStore((s) => s.openBoard.id);
+  const { mutate: updateTask } = useUpdateTask(boardId);
+  const { mutate: createSubtasks } = useCreateSubtasks();
+  const { mutate: updateSubtasks } = useUpdateSubtasks();
+  const { mutate: deleteSubtasks } = useDeleteSubtasks();
+  const closeDialog = useDialogStore((s) => s.closeDialog);
+  const addToast = useToastStore((s) => s.addToast);
+
+  const columnSelection = useMemo(() => {
+    if (!boardColumns || !task) return [];
+    return boardColumns.map((column) => ({
+      id: column._id,
+      name: column.name,
+      isActive: task.columnId === column._id,
+    }));
+  }, [boardColumns, task]);
+
+  const selectedColumn = columnSelection.find((c) => c.isActive)?.name;
+
+  const handleChangeColumn = (id: string) => {
+    setTask({ columnId: id });
+    toggle();
+  };
+
+  if (!task) return null;
+
+  const onUpdateTask = () => {
+    const selectedColumn = columnSelection.find((col) => col.isActive);
+    if (!selectedColumn) return;
+
+    updateTask(
+      {
+        taskId,
+        updates: {
+          name: task.name,
+          description: task.description,
+          columnId: task.columnId,
+        },
+      },
+      {
+        onSuccess: ({ message }) => {
+          const toCreateSubtasks = buildCreateSubtasksArray();
+          if (toCreateSubtasks.length > 0) {
+            createSubtasks({
+              boardId,
+              columnId: task.columnId,
+              taskId,
+              subtasks: toCreateSubtasks,
+            });
+          }
+
+          const toUpdateSubtasks = buildUpdateSubtasksArray();
+          if (toUpdateSubtasks.length > 0) {
+            updateSubtasks({
+              boardId,
+              columnId: task.columnId,
+              taskId,
+              updates: toUpdateSubtasks,
+            });
+          }
+
+          const toDeleteSubtasks = buildDeleteSubtasksArray();
+          if (toDeleteSubtasks.length > 0) {
+            deleteSubtasks({
+              boardId,
+              columnId: task.columnId,
+              taskId,
+              subtaskIds: toDeleteSubtasks,
+            });
+          }
+
+          addToast({ message, type: "success" });
+          closeDialog();
+        },
+      },
+    );
+  };
+
+  return (
+    <FormDialog
+      title="Update Task"
+      onSubmit={onUpdateTask}
+      submitLabel="Save Changes"
+    >
+      <FormField
+        label="Name"
+        placeholder="e.g. Take coffee break"
+        value={task.name}
+        onChange={(e) => setTask({ name: e.target.value })}
+      />
+      <FormField
+        as="textarea"
+        label="Description"
+        placeholder="e.g. It’s always good to take a break. This 15 minute break will
+recharge the batteries a little."
+        value={task.description}
+        onChange={(e) => setTask({ description: e.target.value })}
+      />
+      <FormEditingList
+        title="Subtasks"
+        list={task.subtasks}
+        render={(s) => (
+          <FormListItem
+            key={s.id}
+            placeholder="e.g. Todos, Doing, etc."
+            value={s.subtask.name}
+            onChange={(e) => setSubtaskName(s.id, e.target.value)}
+            onRemove={() => removeSubtask(s.id)}
+          />
+        )}
+        onAdd={addSubtask}
+        buttonLabel="+ Add new subtask"
+      />
+      <div className={styles.dropdown} ref={dropdownRef}>
+        <h2 className={styles.dropdown__title}>Status</h2>
+        <button
+          type="button"
+          className={styles.dropdown__toggle}
+          onClick={toggle}
+        >
+          {selectedColumn ?? "Select column"} <IoIosArrowDown />
+        </button>
+
+        {openDropdown && (
+          <ul className={styles.dropdown__menu}>
+            <Map
+              data={columnSelection}
+              render={(c) => (
+                <li onClick={() => handleChangeColumn(c.id)}>{c.name}</li>
+              )}
+            />
+          </ul>
+        )}
+      </div>
+    </FormDialog>
+  );
+};

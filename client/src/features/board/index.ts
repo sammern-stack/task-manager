@@ -4,6 +4,7 @@ export { CreateBoard } from "./components/board/Board/CreateBoard";
 export { BoardCreateDialog } from "./components/board/BoardDialogs/BoardCreateDialog";
 export { BoardUpdateDialog } from "./components/board/BoardDialogs/BoardUpdateDialog";
 export { TaskCreateDialog } from "./components/task/TaskDialogs/TaskCreateDialog";
+export { TaskUpdateDialog } from "./components/task/TaskDialogs/TaskUpdateDialog";
 export { BoardView } from "./components/board/BoardView/BoardView";
 export { Column } from "./components/column/Column/Column";
 export { CreateColumn } from "./components/column/CreateColumn/CreateColumn";
