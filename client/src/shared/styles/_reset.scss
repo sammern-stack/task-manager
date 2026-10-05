@@ -45,6 +45,10 @@ select {
   font: inherit; // inputs don't inherit font by default
 }
 
+textarea {
+  resize: none;
+}
+
 p,
 h1,
 h2,

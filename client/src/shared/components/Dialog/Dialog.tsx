@@ -1,6 +1,10 @@
 import styles from "./Dialog.module.scss";
 import { useDialogStore } from "@/shared/stores";
-import { BoardCreateDialog, BoardUpdateDialog } from "@/features/board";
+import {
+  BoardCreateDialog,
+  BoardUpdateDialog,
+  TaskCreateDialog,
+} from "@/features/board";
 import { Confirm } from "../Confirm/Confirm";
 import { RxCross1 } from "react-icons/rx";
 
@@ -30,6 +34,7 @@ export const Dialog = () => {
           />
         )}
         {type === "updateBoard" && <BoardUpdateDialog />}
+        {type === "createTask" && <TaskCreateDialog />}
       </dialog>
       <div className={styles.dialog__backdrop} onClick={closeDialog}></div>
     </>

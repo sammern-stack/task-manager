@@ -20,12 +20,14 @@ export type TaskSchema = {
 export type Subtask = Omit<SubtaskSchema, "_id" | "createdAt" | "updatedAt">;
 export type Task = Omit<TaskSchema, "_id" | "createdAt" | "updatedAt">;
 
-export type CreateTaskBody = Omit<Task, "boardId">;
+export type CreateTaskBody = Omit<Task, "boardId" | "subtasks"> & {
+  subtasks: CreateSubtaskBody[];
+};
 export type UpdateTaskBody = Partial<Omit<Task, "boardId" | "subtasks">>;
 
 export type CreateSubtaskBody = Omit<Subtask, "isCompleted">;
 export type UpdateSubtaskBody = {
   id: string;
-  subtask: Partial<Omit<Subtask, "isCompleted">>;
+  updates: Partial<Omit<Subtask, "isCompleted">>;
 };
 export type DeleteSubtaskBody = { id: string };
