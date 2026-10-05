@@ -4,13 +4,18 @@ import { useDropdown } from "@/shared/hooks/useDropdown";
 import { Button } from "@/shared/components";
 import { useDialogStore } from "@/shared/stores";
 import VerticalEllipsisIcon from "@/assets/icon-vertical-ellipsis.svg?react";
+import { useTaskFormStore } from "@/features/board/stores/taskFormStore";
 
 export const Header = () => {
   const { dropdownRef, openDropdown, toggle } = useDropdown();
   const { onEditBoard, onDeleteBoard, boardName } = useHeader();
   const openDialog = useDialogStore((s) => s.openDialog);
+  const startCreateTask = useTaskFormStore((s) => s.startCreateTask);
 
-  const handleCreateTask = () => openDialog("createTask");
+  const handleCreateTask = () => {
+    startCreateTask();
+    openDialog("createTask");
+  };
   const handleEditBoard = () => (onEditBoard(), toggle());
   const handleDeleteBoard = () => (onDeleteBoard(), toggle());
 
