@@ -1,4 +1,4 @@
-import { FormField } from "@/shared/components";
+import { FormEditingList, FormField, FormListItem } from "@/shared/components";
 import { useBoardError } from "@/features/board/hooks/useBoardError";
 import {
   useUpdateBoard,
@@ -9,7 +9,6 @@ import {
 import { useOpenBoardStore } from "@/features/board/stores/openBoardStore";
 import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
-import { EditingColumns } from "../../column/EditingColumns/EditingColumns";
 import { FormDialog } from "@/shared/components";
 
 export const BoardUpdateDialog = () => {
@@ -25,6 +24,9 @@ export const BoardUpdateDialog = () => {
   const board = useCurrentBoardStore((s) => s.board);
   const {
     setBoardName,
+    addColumn,
+    setColumnName,
+    removeColumn,
     buildCreateColumnsArray,
     buildUpdateColumnsArray,
     buildDeleteColumnsArray,
@@ -73,7 +75,21 @@ export const BoardUpdateDialog = () => {
         error={getError("boardName")}
         helperText="Optional - defaults to 'Untitled Board' if empty"
       />
-      <EditingColumns columns={board.columns} />
+      <FormEditingList
+        title="Board Columns"
+        list={board.columns}
+        render={(c) => (
+          <FormListItem
+            key={c.id}
+            placeholder="e.g. Todos, Doing, etc."
+            value={c.column.name}
+            onChange={(e) => setColumnName(c.id, e.target.value)}
+            onRemove={() => removeColumn(c.id)}
+          />
+        )}
+        onAdd={addColumn}
+        buttonLabel="+ Add new column"
+      />
     </FormDialog>
   );
 };

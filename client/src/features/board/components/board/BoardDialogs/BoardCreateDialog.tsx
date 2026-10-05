@@ -2,10 +2,14 @@ import { useDialogStore, useToastStore } from "@/shared/stores";
 import { useOpenBoardStore } from "../../../stores/openBoardStore";
 import { useCreateBoard } from "../../../hooks/api/useBoards";
 import { useCreateColumns } from "../../../hooks/api/useColumns";
-import { FormDialog, FormField } from "@/shared/components";
+import {
+  FormDialog,
+  FormEditingList,
+  FormField,
+  FormListItem,
+} from "@/shared/components";
 import { useCurrentBoardStore } from "@/features/board/stores/currentBoardStore";
 import { useBoardError } from "@/features/board/hooks/useBoardError";
-import { EditingColumns } from "../../column/EditingColumns/EditingColumns";
 import { normalizeColumns } from "@/features/board/utils/normalizeColumns";
 
 export const BoardCreateDialog = () => {
@@ -17,7 +21,8 @@ export const BoardCreateDialog = () => {
   const closeDialog = useDialogStore((s) => s.closeDialog);
   const addToast = useToastStore((s) => s.addToast);
   const board = useCurrentBoardStore((s) => s.board);
-  const { setBoardName } = useCurrentBoardStore.getState();
+  const { setBoardName, addColumn, setColumnName, removeColumn } =
+    useCurrentBoardStore.getState();
 
   if (!board) return null;
 
@@ -53,7 +58,21 @@ export const BoardCreateDialog = () => {
         error={getError("boardName")}
         helperText="Optional - defaults to 'Untitled Board' if empty"
       />
-      <EditingColumns columns={board.columns} />
+      <FormEditingList
+        title="Board Columns"
+        list={board.columns}
+        render={(c) => (
+          <FormListItem
+            key={c.id}
+            placeholder="e.g. Todos, Doing, etc."
+            value={c.column.name}
+            onChange={(e) => setColumnName(c.id, e.target.value)}
+            onRemove={() => removeColumn(c.id)}
+          />
+        )}
+        onAdd={addColumn}
+        buttonLabel="+ Add new column"
+      />
     </FormDialog>
   );
 };
